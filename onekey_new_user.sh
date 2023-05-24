@@ -73,5 +73,14 @@ echo "用户 '${new_user}' 已成功添加到组 '${new_group[@]}'。"
 printf "\n${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
 printf "${MY_UTILS_COLOR_GREEN}=================  STEP 4 ===============${MY_UTILS_COLOR_RESET} \n"
 printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
-su - "${new_user}" -c "mkdir -p ~/.ssh && chmod 700 ~/.ssh && touch ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+
+su - "${new_user}" -c "
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh 
+ssh-keygen -t rsa -b 4096 -C "${new_user}@example.com"
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys 
+chmod 600 ~/.ssh/authorized_keys"
+
+printf "完成SSH秘钥配置\n"
+
 exit 0
