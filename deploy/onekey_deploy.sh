@@ -19,13 +19,9 @@ if ! id -u "${new_user}"; then
     exit 1
 fi
 
-# 使用 $0 获取脚本绝对路径
+# 获取脚本绝对路径
 source_file_path="$(pwd)"
 target_home_path="/home/${new_user}"
-
-# proxy_ip_address="10.176.25.111"
-proxy_ip_address="127.0.0.1"
-port="7890"
 
 sudo su -c "
 cp ${source_file_path}/template.zshrc ${target_home_path}/template.zshrc

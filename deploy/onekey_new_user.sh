@@ -28,17 +28,21 @@ function yn_prompt() {
     done
 }
 
+function printStep() {
+    local current_step=$1
+    printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+    printf "${MY_UTILS_COLOR_GREEN}=================  STEP ${current_step} ===============${MY_UTILS_COLOR_RESET} \n"
+    printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+}
+
 # 检查脚本是否以 root 用户执行
 if [[ "$(id -u)" -ne 0 ]]; then
     printf "${MY_UTILS_COLOR_RED} 请使用 root 用户运行此脚本。${MY_UTILS_COLOR_RESET}" >&2
     exit 1
 fi
 
-# 获取新用户名
-printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=================  STEP 1 ===============${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
-
+################################### 获取新用户名 ###################################
+printStep 1
 read -p "请输入新用户名: " new_user
 
 # 检查用户是否已经存在
@@ -59,10 +63,9 @@ fi
 adduser ${new_user}
 printf "用户已经创建: ${MY_UTILS_COLOR_GREEN}%s${MY_UTILS_COLOR_RESET}\n" "${new_user}"
 
-# 获取新用户组名
-printf "\n${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=================  STEP 2 ===============${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+
+################################### 获取新用户组名 ###################################
+printStep 2
 
 printf "请输入用户组名，支持连续输入，用空格间隔，如 [docker wheel sudo] 等等\n"
 read -a new_groups
@@ -85,42 +88,38 @@ for new_group in "${new_groups[@]}"; do
     fi
 done
 
-# 设置用户密码
-printf "\n${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=================  STEP 3 ===============${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+################################## 设置用户密码 ##################################
+printStep 3
 
-# 设置新用户的密码
 passwd "${new_user}"
-
 echo "用户 '${new_user}' 已成功添加到组 '${new_group[@]}'。"
 
-# 设置软链接
-printf "\n${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=================  STEP 4 ===============${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+
+################################### 设置软链接 ###################################
+printStep 4
 
 real_data_dir="/data/${new_user}"
 symlink_dir="/home/${new_user}/data"
 
 if [[ ! -d "${real_data_dir}" ]]; then
-    mkdir "${real_data_dir}" && ln -s "${real_data_dir}" "${symlink_dir}"
+    mkdir "${real_data_dir}" &&
+        chown -R "${new_user}" "${real_data_dir}" &&
+        ln -s "${real_data_dir}" "${symlink_dir}"
+
     printf "${MY_UTILS_COLOR_CYAN} 建立符号链接，实际物理目录: ${real_data_dir}, 符号链接目录: ${symlink_dir} ${MY_UTILS_COLOR_RESET}\n"
+    printf " ll /data 结果如下\n"
+    eval "ls -al /data"
 else
     printf "${MY_UTILS_COLOR_RED} ${real_data_dir} 已经存在，请修正 ${MY_UTILS_COLOR_RESET} \n"
 fi
 
-# 设置复制相关文件
-printf "\n${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=================  STEP 5 ===============${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+################################### 设置复制相关文件 ################################### 
+printStep 5
 
-bash "../deploy/onekey_deploy.sh"
+bash "./onekey_deploy.sh"
 
-# 设置 SSH
-printf "\n${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=================  STEP 6 ===============${MY_UTILS_COLOR_RESET} \n"
-printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+################################### 设置 SSH ###################################
+printStep 6
 
 su - "${new_user}" -c "
 mkdir -p ~/.ssh

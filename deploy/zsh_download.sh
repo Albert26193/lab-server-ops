@@ -37,3 +37,9 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 
 # install zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# 删除不必要的所有附带文件
+rm -i "${HOME}/.zshrc"
+rm -i "${HOME}/.zco*"
+rm -i "${HOME}/.zsh_history"
+rm -i "${HOME}/*.pre-oh-my-zsh"
