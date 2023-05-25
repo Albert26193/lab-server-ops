@@ -137,4 +137,7 @@ else
     printf "\n ${MY_UTILS_COLOR_RED}已取消。${MY_UTILS_COLOR_RESET}\n"
     exit 1
 fi
+
+printf "配置完成\n"
+
 exit 0
