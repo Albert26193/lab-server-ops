@@ -3,7 +3,9 @@
 ## usage:
 
 ### step 1
+
 ```bash
+$ chmod -R 755 .
 $ bash ./deploy/onekey_new_user.sh
 ```
 
