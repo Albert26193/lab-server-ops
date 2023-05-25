@@ -27,6 +27,7 @@ sudo su -c "
 cp ${source_file_path}/template.zshrc ${target_home_path}/template.zshrc
 cp ${source_file_path}/template.vimrc ${target_home_path}/template.vimrc
 cp ${source_file_path}/zsh_download.sh ${target_home_path}/zsh_download.sh
-chown ${new_user} ${target_home_path}/template.* ${target_home_path}/zsh_download.sh"
+cp ${source_file_path}/login.sh ${target_home_path}/login.sh
+chown ${new_user} ${target_home_path}/template.* ${target_home_path}/zsh_download.sh ${target_home_path}/login.sh"
 
 exit 0
