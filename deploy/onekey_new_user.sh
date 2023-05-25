@@ -63,7 +63,6 @@ fi
 adduser ${new_user}
 printf "用户已经创建: ${MY_UTILS_COLOR_GREEN}%s${MY_UTILS_COLOR_RESET}\n" "${new_user}"
 
-
 ################################### 获取新用户组名 ###################################
 printStep 2
 
@@ -94,7 +93,6 @@ printStep 3
 passwd "${new_user}"
 echo "用户 '${new_user}' 已成功添加到组 '${new_group[@]}'。"
 
-
 ################################### 设置软链接 ###################################
 printStep 4
 
@@ -113,7 +111,7 @@ else
     printf "${MY_UTILS_COLOR_RED} ${real_data_dir} 已经存在，请修正 ${MY_UTILS_COLOR_RESET} \n"
 fi
 
-################################### 设置复制相关文件 ################################### 
+################################### 设置复制相关文件 ###################################
 printStep 5
 
 bash "./new_deploy.sh"
@@ -130,4 +128,13 @@ chmod 600 ~/.ssh/authorized_keys"
 
 printf "完成SSH秘钥配置\n"
 
+################################### 是否决定对用户禁用 ###################################
+printStep 7
+if yn_prompt "是否决定对用户禁用 su"; then
+    printf "\n继续执行...\n"
+    eval "visudo"
+else
+    printf "\n ${MY_UTILS_COLOR_RED}已取消。${MY_UTILS_COLOR_RESET}\n"
+    exit 1
+fi
 exit 0
