@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!bin/bash
 MY_UTILS_COLOR_RED="\033[31m"
 MY_UTILS_COLOR_GREEN="\033[32m"
 MY_UTILS_COLOR_YELLOW="\033[33m"
@@ -13,24 +13,27 @@ MY_UTILS_COLOR_RESET="\033[0m"
 
 # first check whether zsh is installed
 if [[ ! -x /bin/zsh ]]; then
-    printf "${MY_UTILS_COLOR_RED} ${}zsh is not installed, please install it first $MY_UTILS_COLOR_RESET}\n"
+    printf "${MY_UTILS_COLOR_RED} zsh is not installed, please install it first $MY_UTILS_COLOR_RESET}\n"
     exit 1
 fi
 
+# change to zsh, set it to default shell
+# chsh -s /bin/zsh
+
 #  check whether zsh is the default shell
-if [[ "$(echo $SHELL)" != "/bin/zsh" ]]; then
-    printf "${MY_UTILS_COLOR_RED} ${}zsh is not the default shell, please set it first $MY_UTILS_COLOR_RESET}\n"
-    exit 1
-fi
+# if [[ "$(echo $SHELL)" != "/bin/zsh" ]]; then
+#     printf "${MY_UTILS_COLOR_RED} zsh is not the default shell, please set it first $MY_UTILS_COLOR_RESET}\n"
+#     exit 1
+# fi
 
 # checkout whether oh-my-zsh is installed
 if [[ -d ~/.oh-my-zsh ]]; then
-    printf "${MY_UTILS_COLOR_RED} ${}oh-my-zsh is already installed, nothing to do $MY_UTILS_COLOR_RESET}\n"
+    printf "${MY_UTILS_COLOR_RED} oh-my-zsh is already installed, nothing to do $MY_UTILS_COLOR_RESET}\n"
     exit 1
 fi
 
 # install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 
 # install zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -40,6 +43,14 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 # 删除不必要的所有附带文件
 rm -i "${HOME}/.zshrc"
-rm -i "${HOME}/.zco*"
 rm -i "${HOME}/.zsh_history"
-rm -i "${HOME}/*.pre-oh-my-zsh"
+rm -i "${HOME}/.shell.pre-oh-my-zsh"
+rm -i "${HOME}/.zshrc.pre-oh-my-zsh"
+rm -i ${HOME}/.zcompdump*
+
+# 创建新的zshrc文件
+mv "${HOME}/template.zshrc" "${HOME}/.zshrc"
+mv "${HOME}/template.vimrc" "${HOME}/.vimrc"
+
+# source
+source "${HOME}/.zshrc"
