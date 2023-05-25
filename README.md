@@ -6,7 +6,9 @@
 
 ```bash
 $ chmod -R 755 .
-$ sudo bash ./deploy/onekey_new_user.sh
+$ cd ./deploy
+# because use the relative path, so you must execute the following command in the deploy directory
+$ sudo bash ./onekey_new_user.sh
 ```
 
 ### step 2
