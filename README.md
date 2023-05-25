@@ -6,7 +6,7 @@
 
 ```bash
 $ chmod -R 755 .
-$ bash ./deploy/onekey_new_user.sh
+$ sudo bash ./deploy/onekey_new_user.sh
 ```
 
 ### step 2
