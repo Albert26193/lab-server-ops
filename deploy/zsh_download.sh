@@ -17,14 +17,11 @@ if [[ ! -x /bin/zsh ]]; then
     exit 1
 fi
 
-# change to zsh, set it to default shell
-# chsh -s /bin/zsh
-
-#  check whether zsh is the default shell
-# if [[ "$(echo $SHELL)" != "/bin/zsh" ]]; then
-#     printf "${MY_UTILS_COLOR_RED} zsh is not the default shell, please set it first $MY_UTILS_COLOR_RESET}\n"
-#     exit 1
-# fi
+proxy_ip_address="10.176.25.111"
+port="7890"
+export http_proxy="http://${proxy_ip_address}:${port}"
+export https_proxy="http://${proxy_ip_address}:${port}"
+export all_proxy="socks5://${proxy_ip_address}:${port}"
 
 # checkout whether oh-my-zsh is installed
 if [[ -d ~/.oh-my-zsh ]]; then
@@ -54,3 +51,6 @@ mv "${HOME}/template.vimrc" "${HOME}/.vimrc"
 
 # source
 source "${HOME}/.zshrc"
+
+# 设置当前文件的执行权限为400
+chmod 400 "${HOME}/zsh_download.sh"
