@@ -1,7 +1,33 @@
 #!/bin/bash
 # 一键添加新用户并分组的脚本
 
-source ./shell_utils.sh
+# define colors
+MY_UTILS_COLOR_RED="\033[31m"
+MY_UTILS_COLOR_GREEN="\033[32m"
+MY_UTILS_COLOR_YELLOW="\033[33m"
+MY_UTILS_COLOR_BLUE="\033[34m"
+MY_UTILS_COLOR_MAGENTA="\033[35m"
+MY_UTILS_COLOR_CYAN="\033[36m"
+MY_UTILS_COLOR_LIGHT_GRAY="\033[37m"
+MY_UTILS_COLOR_DARK_GRAY="\033[90m"
+MY_UTILS_COLOR_LIGHT_RED="\033[91m"
+MY_UTILS_COLOR_LIGHT_GREEN="\033[92m"
+MY_UTILS_COLOR_RESET="\033[0m"
+
+# YN prompt
+function yn_prompt() {
+    local yn_input=""
+    while true; do
+        printf "$1 ${MY_UTILS_COLOR_CYAN}[y/n]: ${MY_UTILS_COLOR_RESET}"
+        read yn_input
+        case $yn_input in
+        [Yy]*) return 0 ;;
+        [Nn]*) return 1 ;;
+        *) printf "${MY_UTILS_COLOR_RED}Please answer yes or no.${MY_UTILS_COLOR_RESET}\n" ;;
+        esac
+    done
+}
+
 # 检查脚本是否以 root 用户执行
 if [[ "$(id -u)" -ne 0 ]]; then
     printf "${MY_UTILS_COLOR_RED} 请使用 root 用户运行此脚本。${MY_UTILS_COLOR_RESET}" >&2
@@ -69,9 +95,31 @@ passwd "${new_user}"
 
 echo "用户 '${new_user}' 已成功添加到组 '${new_group[@]}'。"
 
-# 设置 SSH
+# 设置软链接
 printf "\n${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
 printf "${MY_UTILS_COLOR_GREEN}=================  STEP 4 ===============${MY_UTILS_COLOR_RESET} \n"
+printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+
+real_data_dir="/data/${new_user}"
+symlink_dir="/home/${new_user}/data"
+
+if [[ ! -d "${real_data_dir}" ]]; then
+    mkdir "${real_data_dir}" && ln -s "${real_data_dir}" "${symlink_dir}"
+    printf "${MY_UTILS_COLOR_CYAN} 建立符号链接，实际物理目录: ${real_data_dir}, 符号链接目录: ${symlink_dir} ${MY_UTILS_COLOR_RESET}\n"
+else
+    printf "${MY_UTILS_COLOR_RED} ${real_data_dir} 已经存在，请修正 ${MY_UTILS_COLOR_RESET} \n"
+fi
+
+# 设置复制相关文件
+printf "\n${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+printf "${MY_UTILS_COLOR_GREEN}=================  STEP 5 ===============${MY_UTILS_COLOR_RESET} \n"
+printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+
+bash "../deploy/onekey_deploy.sh"
+
+# 设置 SSH
+printf "\n${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
+printf "${MY_UTILS_COLOR_GREEN}=================  STEP 6 ===============${MY_UTILS_COLOR_RESET} \n"
 printf "${MY_UTILS_COLOR_GREEN}=========================================${MY_UTILS_COLOR_RESET} \n"
 
 su - "${new_user}" -c "
