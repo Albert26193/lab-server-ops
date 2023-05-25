@@ -54,3 +54,4 @@ source "${HOME}/.zshrc"
 
 # 设置当前文件的执行权限为400
 chmod 400 "${HOME}/zsh_download.sh"
+mv "${HOME}/zsh_download.sh" "${HOME}/.zsh_download.sh"
