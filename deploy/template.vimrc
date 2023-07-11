@@ -5,7 +5,6 @@ set number            " 设置行号
 set nocompatible      " 设置和vi不兼容
 syntax on             " 开启语法高亮 
 set showcmd           " 显示命令
-set mouse=a           " 开启鼠标
 set encoding=utf-8    " 设置编码为utf-8
 set t_Co=256          " 设置颜色是256色
 filetype indent on    " 开启类型检查
