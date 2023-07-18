@@ -41,6 +41,10 @@ if [[ "$(id -u)" -ne 0 ]]; then
     exit 1
 fi
 
+################################# 切换到git层级 ###################################
+nearest_git_path=$(git rev-parse --show-toplevel 2>/dev/null)
+cd "${nearest_git_path}"
+
 ################################### 获取新用户名 ###################################
 printStep 1
 read -p "请输入新用户名: " new_user
