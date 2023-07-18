@@ -43,7 +43,7 @@ fi
 
 ################################# 切换到git层级 ###################################
 nearest_git_path=$(git rev-parse --show-toplevel 2>/dev/null)
-cd "${nearest_git_path}"
+cd "${nearest_git_path}/deploy"
 
 ################################### 获取新用户名 ###################################
 printStep 1
