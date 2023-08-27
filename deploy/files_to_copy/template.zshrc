@@ -1,7 +1,7 @@
-# --------------------- oh-my-zsh ---------------
+# ---------------------- oh-my-zsh ----------------
 export ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="agnoster"
+ZSH_THEME="fino-time"
 
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 
@@ -10,10 +10,10 @@ ZSH_COMPDUMP="${ZSH}/cache/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
 source $ZSH/oh-my-zsh.sh
 
-# --------------------- zsh --------------------
+# --------------------- zsh -----------------------
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
 
-# --------------------- general --------------------
+# --------------------- general -------------------
 export TERM="xterm-256color"
 user_name=$(whoami)
 echo "\e[35m nice to meet you, ${user_name} 🚀\e[0m"
@@ -29,7 +29,7 @@ alias "lg"="lazygit"
 alias "ll"="ls -l"
 alias "la"="ls -al"
 
-# --------------------- proxy --------------------
+# ---------------------  proxy  -------------------
 function proxy_on() {
     local proxy_ip_address="127.0.0.1"
     local port="7890"
@@ -57,7 +57,7 @@ function proxy_off() {
     curl cip.cc
 }
 
-# --------------------- prompt --------------------
+# -------------------- prompt ---------------------
 printf "\033[36m \n\n prompt 1: \n"
 printf "\033[31m =================================== \033[0m \n"
 printf "\033[31m          当前目录下磁盘空间为           \033[0m \n"
