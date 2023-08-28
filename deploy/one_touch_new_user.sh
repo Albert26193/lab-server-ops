@@ -4,10 +4,10 @@ function one_touch() {
 	source "${git_root}/utils/utils.sh"
 
 	# Check if the script is executed as root
-	# if [[ "$(id -u)" -ne 0 ]]; then
-	# 	printf "${MY_UTILS_COLOR_RED} Please run this script as root. ${MY_UTILS_COLOR_RESET}" >&2
-	# 	exit 1
-	# fi
+	if [[ "$(id -u)" -ne 0 ]]; then
+		printf "${MY_UTILS_COLOR_RED} Please run this script as root. ${MY_UTILS_COLOR_RESET}" >&2
+		exit 1
+	fi
 
 	################################# Switch to git level #################################
 	deploy_dir_path="${git_root}/deploy/deploy_steps"
@@ -55,4 +55,4 @@ function one_touch() {
 	deploy_visudo "${new_user}"
 }
 
-one_touch()
+one_touch

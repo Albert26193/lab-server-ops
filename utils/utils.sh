@@ -6,15 +6,17 @@ UTILS_COLOR_BLUE="\033[34m"
 UTILS_COLOR_MAGENTA="\033[35m"
 UTILS_COLOR_CYAN="\033[36m"
 UTILS_COLOR_WHITE="\033[97m"
+UTILS_COLOR_GRAY="\033[90m"
 UTILS_COLOR_RESET="\033[0m"
 
-print_red() { printf "${UTILS_COLOR_RED}%s${UTILS_COLOR_RESET}\n" "$1"; }
-print_green() { printf "${UTILS_COLOR_GREEN}%s${UTILS_COLOR_RESET}\n" "$1"; }
-print_yellow() { printf "${UTILS_COLOR_YELLOW}%s${UTILS_COLOR_RESET}\n" "$1"; }
-print_blue() { printf "${UTILS_COLOR_BLUE}%s${UTILS_COLOR_RESET}\n" "$1"; }
-print_magenta() { printf "${UTILS_COLOR_MAGENTA}%s${UTILS_COLOR_RESET}\n" "$1"; }
-print_cyan() { printf "${UTILS_COLOR_CYAN}%s${UTILS_COLOR_RESET}\n" "$1"; }
-print_white() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1"; }
+utils_print_red() { printf "${UTILS_COLOR_RED}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
+utils_print_green() { printf "${UTILS_COLOR_GREEN}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
+utils_print_yellow() { printf "${UTILS_COLOR_YELLOW}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
+utils_print_blue() { printf "${UTILS_COLOR_BLUE}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
+utils_print_magenta() { printf "${UTILS_COLOR_MAGENTA}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
+utils_print_cyan() { printf "${UTILS_COLOR_CYAN}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
+utils_print_gray() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
+utils_print_white() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
 
 # YN prompt
 function utils_yn_prompt() {

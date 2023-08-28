@@ -6,7 +6,7 @@ function deploy_group() {
 	git_root=$(git rev-parse --show-toplevel 2>/dev/null)
 	source "${git_root}/utils/utils.sh"
 
-	print_white "Please enter group names, support continuous input, separated by spaces, such as [docker wheel sudo] etc."
+	utils_print_white "Please enter group names, support continuous input, separated by spaces, such as [docker wheel sudo] etc."
 	local new_groups=""
 	read -a new_groups
 
@@ -14,7 +14,7 @@ function deploy_group() {
 	for new_group in "${new_groups[@]}"; do
 		# Check if the group exists, if not create it
 		if ! grep -q "^${new_group}:" /etc/group; then
-			print_red "Group ${new_group} does not exist, please create it manually."
+			utils_print_red "Group ${new_group} does not exist, please create it manually."
 		fi
 
 		# Add new user and specify group
@@ -23,18 +23,18 @@ function deploy_group() {
 		local usermod_status=$?
 
 		if [[ ${usermod_status} -ne 0 ]]; then
-			print_red "Failed to add ${new_user} to group ${new_group}" >&2
+			utils_print_red "Failed to add ${new_user} to group ${new_group}" >&2
 			exit 1
 		else
-			print_green "Do you decide to add ${new_user} to the ${new_group} group?"
+			utils_print_green "Do you decide to add ${new_user} to the ${new_group} group?"
 
 			if utils_yn_prompt "Confirm?"; then
-				print_white "Continuing..."
+				utils_print_white "Continuing..."
 			else
-				print_red "Cancelled."
+				utils_print_red "Cancelled."
 				exit 1
 			fi
-			print_green "user ${new_user} is added to ${new_group}"
+			utils_print_green "user ${new_user} is added to ${new_group}"
 		fi
 
 	done
