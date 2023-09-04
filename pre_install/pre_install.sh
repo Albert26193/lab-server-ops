@@ -19,6 +19,7 @@ function pre_install {
 		"neovim"
 		"git"
 		"xclip"
+		"tree"
 	)
 
 	for package in "${to_install_list[@]}"; do
