@@ -8,8 +8,8 @@ function deploy_link() {
 
 	local new_user=$1
 
-	real_data_dir="/data/${new_user}"
-	symlink_dir="/home/${new_user}/data"
+	local real_data_dir="/data/${new_user}"
+	local symlink_dir="/home/${new_user}/data"
 
 	if [[ ! -d "/data" ]]; then
 		utils_print_green "your system do not /data mount point"

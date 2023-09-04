@@ -17,25 +17,18 @@ function deploy_group() {
 			utils_print_red "Group ${new_group} does not exist, please create it manually."
 		fi
 
+		utils_print_green "Do you decide to add ${new_user} to the ${new_group} group?"
+
+		if utils_yn_prompt "Confirm?"; then
+			utils_print_white "Continuing..."
+		else
+			utils_print_red "Cancelled."
+			exit 1
+		fi
+
 		# Add new user and specify group
 		usermod -aG "${new_group}" "${new_user}"
-
-		local usermod_status=$?
-
-		if [[ ${usermod_status} -ne 0 ]]; then
-			utils_print_red "Failed to add ${new_user} to group ${new_group}" >&2
-			exit 1
-		else
-			utils_print_green "Do you decide to add ${new_user} to the ${new_group} group?"
-
-			if utils_yn_prompt "Confirm?"; then
-				utils_print_white "Continuing..."
-			else
-				utils_print_red "Cancelled."
-				exit 1
-			fi
-			utils_print_green "user ${new_user} is added to ${new_group}"
-		fi
+		utils_print_green "user ${new_user} is added to ${new_group}"
 
 	done
 }

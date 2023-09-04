@@ -12,22 +12,22 @@ UTILS_COLOR_RESET="\033[0m"
 utils_print_red() { printf "${UTILS_COLOR_RED}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
 utils_print_green() { printf "${UTILS_COLOR_GREEN}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
 utils_print_yellow() { printf "${UTILS_COLOR_YELLOW}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
-utils_print_blue() { printf "${UTILS_COLOR_BLUE}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
-utils_print_magenta() { printf "${UTILS_COLOR_MAGENTA}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
-utils_print_cyan() { printf "${UTILS_COLOR_CYAN}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
-utils_print_gray() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
-utils_print_white() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1" >&2;}
+utils_print_blue() { printf "${UTILS_COLOR_BLUE}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
+utils_print_magenta() { printf "${UTILS_COLOR_MAGENTA}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
+utils_print_cyan() { printf "${UTILS_COLOR_CYAN}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
+utils_print_gray() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
+utils_print_white() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1" >&2; }
 
 # YN prompt
 function utils_yn_prompt() {
 	local yn_input=""
 	while true; do
-		printf "$1 ${UTILS_COLOR_CYAN}[y/n]: ${UTILS_COLOR_RESET}"
+		printf "$1 ${UTILS_COLOR_CYAN}[y/n]: ${UTILS_COLOR_RESET}" >&2
 		read yn_input
-		case $yn_input in
+		case "${yn_input}" in
 		[Yy]*) return 0 ;;
 		[Nn]*) return 1 ;;
-		*) print_red "Please answer yes or no." ;;
+		*) utils_print_red "Please answer yes[y] or no[n]." ;;
 		esac
 	done
 }
@@ -35,9 +35,9 @@ function utils_yn_prompt() {
 # print step
 function utils_print_step() {
 	local current_step=$1
-	print_green "========================================="
-	print_green "================= STEP ${current_step} ================"
-	print_green "========================================="
+	utils_print_green "========================================="
+	utils_print_green "================= STEP ${current_step} ================"
+	utils_print_green "========================================="
 }
 
 # check system
@@ -60,16 +60,12 @@ function utils_check_os() {
 		local OS=$(uname -s)
 	fi
 
-	echo $OS
-
 	case $OS in
 	"Ubuntu" | "Debian" | "CentOS" | "macOS")
-		return $OS
+		echo $OS
 		;;
 	*)
-		return ""
+		echo ""
 		;;
 	esac
-
-	return ""
 }

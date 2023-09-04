@@ -5,8 +5,8 @@ function one_touch() {
 
 	# Check if the script is executed as root
 	if [[ "$(id -u)" -ne 0 ]]; then
-		printf "${MY_UTILS_COLOR_RED} Please run this script as root. ${MY_UTILS_COLOR_RESET}" >&2
-		exit 1
+		utils_print_red "Please run this script as root." >&2
+		return 1
 	fi
 
 	################################# Switch to git level #################################
@@ -16,8 +16,9 @@ function one_touch() {
 	utils_print_step 1
 
 	source "${deploy_dir_path}/1.deploy_new_user.sh"
-	local new_user="$(deploy_new_user)"
+	deploy_new_user
 
+	echo "new user is : ${new_user}"
 	################################ step2 add to group ###################################
 	utils_print_step 2
 
