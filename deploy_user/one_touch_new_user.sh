@@ -10,7 +10,7 @@ function one_touch() {
 	fi
 
 	################################# Switch to git level #################################
-	deploy_dir_path="${git_root}/deploy/deploy_steps"
+	deploy_dir_path="${git_root}/deploy_user/deploy_steps"
 
 	################################### step1 add new user ################################
 	utils_print_step 1

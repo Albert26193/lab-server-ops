@@ -16,7 +16,7 @@ function deploy_user_files() {
 		return 1
 	fi
 
-	local source_file_path="${git_root}/deploy/files_to_copy"
+	local source_file_path="${git_root}/deploy_user/files_to_copy"
 	local target_home_path="/home/${new_user}"
 
 	sudo su -c "
@@ -24,10 +24,11 @@ function deploy_user_files() {
         cp ${source_file_path}/template.vimrc ${target_home_path}/template.vimrc
         cp ${source_file_path}/zsh_download.sh ${target_home_path}/zsh_download.sh
         cp ${source_file_path}/login.sh ${target_home_path}/login.sh
-        chown ${new_user} ${target_home_path}/template.* ${target_home_path}/zsh_download.sh ${target_home_path}/login.sh"
+        cp ${source_file_path}/fzf_config.sh ${target_home_path}/.fzf_config.sh
+        chown ${new_user} ${target_home_path}/template.* ${target_home_path}/zsh_download.sh ${target_home_path}/login.sh ${target_home_path}/.fzf_config.sh"
 
 	utils_print_cyan "copy files to user's dir"
 
-	ls -al ${target_home_path}
+	sudo su -c "ls -al ${target_home_path}"
 	return 0
 }

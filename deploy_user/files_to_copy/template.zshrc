@@ -29,59 +29,29 @@ alias "lg"="lazygit"
 alias "ll"="ls -l"
 alias "la"="ls -al"
 
-# ---------------------  proxy  -------------------
-function proxy_on() {
-    local proxy_ip_address="127.0.0.1"
-    local port="7890"
+# ---------------------  script  -------------------
+source "${HOME}/.fzf_config.sh"
+my_scripts_dir="/etc/deploy_etc/scripts/"
+my_scripts=(
+    "script_shell/shell_utils.sh"
+    "script_shell/shell_cl.sh"
+    "script_shell/shell_tree_du.sh"
+    "script_shell/shell_man_nvim.sh"
+    "script_out/out_go.sh"
+    "script_fzf/fzf_search.sh"
+    "script_fzf/fzf_edit.sh"
+    "script_fzf/fzf_jump.sh"
+    "script_fzf/fzf_history.sh"
+)
 
-    if [[ -n "$1" ]]; then
-        proxy_ip_address="$1"
+for single_script in "${my_scripts[@]}"; do
+    current_script="${my_scripts_dir}${single_script}"
+    if [[ ! -f ${current_script} ]]; then
+        echo "${current_script} does not exist"
+    else
+        source "${current_script}"
     fi
-
-    if [[ -n "$2" ]]; then
-        port="$2"
-    fi
-
-    export http_proxy="http://${proxy_ip_address}:${port}"
-    export https_proxy="http://${proxy_ip_address}:${port}"
-    export all_proxy="socks5://${proxy_ip_address}:${port}"
-    echo -e "proxy on, ip is ${proxy_ip_address}, port is ${port}"
-    curl cip.cc
-}
-
-function proxy_off() {
-    unset http_proxy
-    unset https_proxy
-    unset all_proxy
-    echo -e "proxy turn off"
-    curl cip.cc
-}
+done
 
 # -------------------- prompt ---------------------
-printf "\033[36m \n\n prompt 1: \n"
-printf "\033[31m =================================== \033[0m \n"
-printf "\033[31m          当前目录下磁盘空间为           \033[0m \n"
-eval "df -h ."
-
-printf "\033[31m =================================== \033[0m \n"
-printf "\033[31m          /data 目录下磁盘空间为           \033[0m \n"
-eval "df -h /data"
-
-printf "\033[31m =================================== \033[0m \n"
-printf "\033[31m 大容量数据请写入 ${HOME}/data,\n 该目录已经和 /data/$(whoami) 建立软链接 \033[0m \n"
-printf "\n"
-
-printf "\033[36m prompt 2: \n"
-printf "\033[32m 如果需要在当前终端中访问外部网络, 请输入魔法指令:\n proxy_on 10.176.25.111 7890 \033[0m \n"
-printf "\n"
-
-printf "\033[36m prompt 3: \n"
-printf "\033[32m 当前你所使用的终端是ZSH, 读取的Shell配置文件为 ${HOME}/.zshrc \n 如需添加环境变量，请编辑该文件\033[0m \n"
-printf "\n"
-
-printf "\033[36m prompt 4: \n"
-printf "\033[32m 当前用户 $(whoami) 已经禁用 su 命令，如果需要提权，请联系管理员 \033[0m \n"
-printf "\n"
-
-printf "\033[36m prompt 5: \n"
-printf "\033[32m 如果需要取消这些prompt, 请手动修改 ${HOME}/.zshrc,\n 去掉结尾的 prompt部分 \033[0m \n"
+bash "/etc/deploy_etc/broadcast/broadcast.sh"
