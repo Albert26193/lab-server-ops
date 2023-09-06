@@ -4,6 +4,7 @@
 # return: none
 function deploy_user_files {
 	local target_dir="/etc/deploy_etc"
+	local git_root=$(git rev-parse --show-toplevel 2>/dev/null)
 
 	if [[ ! -d "${target_dir}" ]]; then
 		printf '%s\n' "${target_dir} not existed, create it"
@@ -11,8 +12,8 @@ function deploy_user_files {
 	fi
 
 	sudo su -c "
-    cp -r ./scripts/ ${target_dir}
-    cp -r ./broadcast/ ${target_dir}
+    cp -r ${git_root}/deploy_etc/scripts/ ${target_dir}
+    cp -r ${git_root}/deploy_etc/broadcast/ ${target_dir}
     "
 
 	if [[ -d "${target_dir}/scripts" ]] && [[ -d "${target_dir}/broadcast" ]]; then
