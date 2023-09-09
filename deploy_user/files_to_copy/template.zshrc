@@ -30,7 +30,6 @@ alias "ll"="ls -l"
 alias "la"="ls -al"
 
 # ---------------------  script  -------------------
-source "${HOME}/.fzf_config.sh"
 my_scripts_dir="/etc/deploy_etc/scripts/"
 my_scripts=(
     "script_shell/shell_utils.sh"
@@ -38,6 +37,7 @@ my_scripts=(
     "script_shell/shell_tree_du.sh"
     "script_shell/shell_man_nvim.sh"
     "script_out/out_go.sh"
+    "script_fzf/fzf_export.sh"
     "script_fzf/fzf_search.sh"
     "script_fzf/fzf_edit.sh"
     "script_fzf/fzf_jump.sh"
@@ -53,5 +53,5 @@ for single_script in "${my_scripts[@]}"; do
     fi
 done
 
-# -------------------- prompt ---------------------
+# ------------------- broadcast ---------------------
 bash "/etc/deploy_etc/broadcast/broadcast.sh"
