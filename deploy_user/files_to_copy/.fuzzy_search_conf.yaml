@@ -1,0 +1,24 @@
+# dirs to fuzzy search
+fuzzy_search_dirs:
+  #  - "${HOME}/CodeSpace"
+  # - "${HOME}/.config"
+  # - "${HOME}/.ssh"
+  # - "${HOME}/temp"
+  - "${HOME}"
+
+# dirs to ignore
+fuzzy_search_ignore_dirs:
+  # - "node_modules"
+  # - ".git"
+  # - "dist"
+  # - ".cache"
+  # - "from-github"
+  # - "assets"
+  # - "image"
+  # - "images"
+  # - "static"
+  # - "data"
+  # - "raycast"
+  # - "obsidian-*"
+  # - "zlt-*"
+  - ".*"

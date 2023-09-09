@@ -8,17 +8,17 @@ function deploy_user_files {
 
 	if [[ ! -d "${target_dir}" ]]; then
 		printf '%s\n' "${target_dir} not existed, create it"
-		sudo su -c "mkdir ${target_dir}"
+		sudo bash -c "mkdir ${target_dir}"
 	fi
 
-	sudo su -c "
-    cp -r ${git_root}/deploy_etc/scripts/ ${target_dir}
-    cp -r ${git_root}/deploy_etc/broadcast/ ${target_dir}
-    "
+	sudo bash -c "cp -r ${git_root}/deploy_etc/scripts ${target_dir}"
+	sudo bash -c "cp -r ${git_root}/deploy_etc/broadcast ${target_dir}"
 
 	if [[ -d "${target_dir}/scripts" ]] && [[ -d "${target_dir}/broadcast" ]]; then
 		printf '%s\n' "${target_dir} copy succeed."
 		ls -al "${target_dir}"
+	else
+		printf '%s\n' "${target_dir} copy failed."
 	fi
 
 	return 0

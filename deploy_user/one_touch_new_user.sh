@@ -1,7 +1,15 @@
 #!/bin/bash
 function one_touch() {
-	git_root=$(git rev-parse --show-toplevel 2>/dev/null)
-	source "${git_root}/utils/utils.sh"
+	local util_file_path="/etc/deploy_etc/scripts/script_shell/shell_utils.sh"
+	local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+	local deploy_etc_file_path="${git_root}/deploy_etc/one_touch_deploy_etc.sh"
+
+	if [[ ! -f "${util_file_path}" ]]; then
+		printf "%s\n" "${util_file_path} do not exist."
+		printf "%s\n" "execute ${deploy_etc_file_path} first."
+	else
+		source "${util_file_path}"
+	fi
 
 	# Check if the script is executed as root
 	if [[ "$(id -u)" -ne 0 ]]; then

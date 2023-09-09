@@ -8,7 +8,7 @@ function deploy_user_files() {
 
 	local new_user=$1
 
-	utils_print_cyan "now, copyt config files to user's home, input the username: "
+	utils_print_cyan "now, copy config files to user's home, input the username: "
 	read new_user
 
 	if ! id -u "${new_user}"; then
@@ -19,16 +19,16 @@ function deploy_user_files() {
 	local source_file_path="${git_root}/deploy_user/files_to_copy"
 	local target_home_path="/home/${new_user}"
 
-	sudo su -c "
-        cp ${source_file_path}/template.zshrc ${target_home_path}/template.zshrc
-        cp ${source_file_path}/template.vimrc ${target_home_path}/template.vimrc
-        cp ${source_file_path}/zsh_download.sh ${target_home_path}/zsh_download.sh
-        cp ${source_file_path}/login.sh ${target_home_path}/login.sh
-        cp ${source_file_path}/fzf_config.sh ${target_home_path}/.fzf_config.sh
-        chown ${new_user} ${target_home_path}/template.* ${target_home_path}/zsh_download.sh ${target_home_path}/login.sh ${target_home_path}/.fzf_config.sh"
+	local files=("template.zshrc" "template.vimrc" "zsh_download.sh" "login.sh" ".fuzzy_search_conf.yaml")
+
+	sudo bash -c "
+	for file in ${files[@]}; do
+		cp ${source_file_path}/${file} ${target_home_path}/${file}
+		chown ${new_user} ${target_home_path}/${file}
+	done"
 
 	utils_print_cyan "copy files to user's dir"
 
-	sudo su -c "ls -al ${target_home_path}"
+	sudo bash -c "ls -al ${target_home_path}"
 	return 0
 }

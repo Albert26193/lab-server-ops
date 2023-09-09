@@ -1,5 +1,6 @@
+#!/bin/bash
+
 function show_all_files {
-	# 显示文件内容
 	local currentPath=$(pwd)
 	local normalFileNum=$(ls -al | grep "^-" | wc -l | tr -d ' ')
 	local dirFileNum=$(ls -al | grep "^d" | wc -l | tr -d ' ')
