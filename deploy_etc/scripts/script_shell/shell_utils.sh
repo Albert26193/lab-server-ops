@@ -20,7 +20,7 @@ utils_print_gray() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1";
 utils_print_white() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1"; }
 
 # YN prompt
-function utils_yn_prompt() {
+function utils_yn_prompt {
 	local yn_input=""
 	while true; do
 		printf "$1 ${UTILS_COLOR_CYAN}[y/n]: ${UTILS_COLOR_RESET}"
