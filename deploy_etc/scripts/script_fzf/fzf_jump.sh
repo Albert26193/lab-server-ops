@@ -27,6 +27,6 @@ function jj {
 		cd "${father_dir}" && show_all_files
 	else
 		#exit 1
-		printf "exit fuzzy search ..."
+		printf "%s\n" "exit fuzzy search ..."
 	fi
 }

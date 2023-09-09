@@ -34,7 +34,7 @@ function utils_yn_prompt() {
 }
 
 # print step
-function utils_print_step() {
+function utils_print_step {
 	local current_step=$1
 	utils_print_green "========================================="
 	utils_print_green "================= STEP ${current_step} ================"
@@ -42,7 +42,7 @@ function utils_print_step() {
 }
 
 # check system
-function utils_check_os() {
+function utils_check_os {
 	if [[ -f /etc/os-release ]]; then
 		source /etc/os-release
 		local OS=$(echo $NAME | awk '{print$1}')
@@ -72,7 +72,7 @@ function utils_check_os() {
 }
 
 # parse yaml
-function utils_parse_yaml() {
+function utils_parse_yaml {
 	local filename="$1"
 	local expression="$2"
 
@@ -80,7 +80,7 @@ function utils_parse_yaml() {
 
 	while IFS= read -r line; do
 		yaml_array+=("$line")
-	done < <(yq e "$expression" "$filename")
+	done < <(yq "$expression" "$filename")
 
 	echo "${yaml_array[@]}"
 }

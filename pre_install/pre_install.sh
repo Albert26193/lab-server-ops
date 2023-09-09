@@ -20,6 +20,8 @@ function pre_install {
 		"git"
 		"xclip"
 		"tree"
+		"jq"
+		"yq"
 	)
 
 	for package in "${to_install_list[@]}"; do
