@@ -37,7 +37,7 @@ my_scripts=(
     "script_shell/shell_tree_du.sh"
     "script_shell/shell_man_nvim.sh"
     "script_out/out_go.sh"
-    "script_fzf/fzf_export.sh"
+    "script_fzf/fzf_source.sh"
     "script_fzf/fzf_search.sh"
     "script_fzf/fzf_edit.sh"
     "script_fzf/fzf_jump.sh"

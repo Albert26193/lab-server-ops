@@ -2,8 +2,9 @@
 
 FUZZY_SEARCH_DIRS=()
 FUZZY_SEARCH_IGNORE_DIRS=()
+FUZZY_SEARCH_PREVIEW="false"
 
-function export_fuzzy_dirs {
+function source_fuzzy_dirs {
 	local util_file_path="/etc/deploy_etc/scripts/script_shell/shell_utils.sh"
 	local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
 	local deploy_etc_file_path="${git_root}/deploy_etc/one_touch_deploy_etc.sh"
@@ -25,7 +26,7 @@ function export_fuzzy_dirs {
 
 	FUZZY_SEARCH_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_search_conf.yaml" ".fuzzy_search_dirs[]"))
 	FUZZY_SEARCH_IGNORE_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_search_conf.yaml" ".fuzzy_search_ignore_dirs[]"))
-
+	FUZZY_SEARCH_PREVIEW=($(utils_parse_yaml "${HOME}/.fuzzy_search_conf.yaml" ".fuzzy_search_preview.enable"))
 }
 
-export_fuzzy_dirs
+source_fuzzy_dirs

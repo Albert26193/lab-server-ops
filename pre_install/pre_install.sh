@@ -22,6 +22,7 @@ function pre_install {
 		"tree"
 		"jq"
 		"yq"
+		"exa"
 	)
 
 	for package in "${to_install_list[@]}"; do

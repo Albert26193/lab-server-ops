@@ -22,3 +22,11 @@ fuzzy_search_ignore_dirs:
   # - "obsidian-*"
   # - "zlt-*"
   - ".*"
+
+# choose preview
+# if use 'preview', you can see content of file, but it will pay some cost of speed
+# if not use 'preview', speed can be little faster
+fuzzy_search_preview:
+  enable: true
+  # enable: false
+

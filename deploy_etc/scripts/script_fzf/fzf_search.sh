@@ -22,14 +22,18 @@ function fs {
 
 	local current_os="$(utils_check_os)"
 	local fd_command=""
+	local bat_command=""
 
 	# todo: add more os to test
 	if [[ "${current_os}" == "macOS" ]]; then
 		fd_command="fd"
+		bat_command="bat"
 	elif [[ ${current_os} == "Debian" ]]; then
 		fd_command="fdfind"
+		bat_command="batcat"
 	else
 		fd_command="fd"
+		bat_command="batcat"
 	fi
 
 	local fuzzy_search_dirs=()
@@ -44,12 +48,18 @@ function fs {
 		exclude_args+=("--exclude" "${dir}")
 	done
 
+	local preview_command=""
+	if [[ "${FUZZY_SEARCH_PREVIEW}" == "true" ]]; then
+		preview_command="if [[ -d {} ]]; then exa --tree --level 2 {}; else head -n 50 {} | ${bat_command} --color=always --style=header,grid; fi"
+	else
+		preview_command="if [[ -d {} ]]; then ls -al {}; else head -n 50 {}; fi"
+
+	fi
 	local target_file=$(
 		printf "%s\n" "${fuzzy_search_dirs[@]}" |
 			xargs -I {} ${fd_command} --hidden "${exclude_args[@]}" --search-path "{}" |
-			fzf --query="$1$2"
+			fzf --query="$1$2" --ansi --preview-window 'right:60%' --preview "$preview_command"
 	)
-
 	echo "${target_file}"
 	return 0
 }
