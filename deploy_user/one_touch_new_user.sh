@@ -1,12 +1,12 @@
 #!/bin/bash
 function one_touch() {
-	local util_file_path="/etc/deploy_etc/scripts/script_shell/shell_utils.sh"
+	local util_file_path="/opt/deploy_opt/scripts/script_shell/shell_utils.sh"
 	local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
-	local deploy_etc_file_path="${git_root}/deploy_etc/one_touch_deploy_etc.sh"
+	local deploy_opt_file_path="${git_root}/deploy_opt/one_touch_deploy_opt.sh"
 
 	if [[ ! -f "${util_file_path}" ]]; then
 		printf "%s\n" "${util_file_path} do not exist."
-		printf "%s\n" "execute ${deploy_etc_file_path} first."
+		printf "%s\n" "execute ${deploy_opt_file_path} first."
 	else
 		source "${util_file_path}"
 	fi
