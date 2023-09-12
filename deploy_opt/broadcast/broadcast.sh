@@ -36,9 +36,6 @@ function greeting {
 
 # --------------------- prompt --------------------
 function prompt {
-	local util_path="/etc/deploy_etc/scripts/script_shell/shell_utils.sh"
-	source "${util_path}"
-
 	printf "\033[36m prompt 1: \n"
 	eval "duf / /home /data"
 	printf "\033[31m 大容量数据请写入 ${HOME}/data,\n 该目录已经和 /data/$(whoami) 建立软链接 \033[0m \n"

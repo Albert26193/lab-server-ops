@@ -3,7 +3,7 @@
 # paragram: new_user
 # return: none
 function deploy_user_files {
-	local target_dir="/etc/deploy_etc"
+	local target_dir="/opt/deploy_opt"
 	local git_root=$(git rev-parse --show-toplevel 2>/dev/null)
 
 	if [[ ! -d "${target_dir}" ]]; then
@@ -11,8 +11,8 @@ function deploy_user_files {
 		sudo bash -c "mkdir ${target_dir}"
 	fi
 
-	sudo bash -c "cp -r ${git_root}/deploy_etc/scripts ${target_dir}"
-	sudo bash -c "cp -r ${git_root}/deploy_etc/broadcast ${target_dir}"
+	sudo bash -c "cp -r ${git_root}/deploy_opt/scripts ${target_dir}"
+	sudo bash -c "cp -r ${git_root}/deploy_opt/broadcast ${target_dir}"
 
 	if [[ -d "${target_dir}/scripts" ]] && [[ -d "${target_dir}/broadcast" ]]; then
 		printf '%s\n' "${target_dir} copy succeed."
