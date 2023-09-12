@@ -7,20 +7,22 @@ fuzzy_search_dirs:
   - "${HOME}"
 
 # dirs to ignore
+# you do not need to give full path
+# it will ignore path which INCLUDES string below
 fuzzy_search_ignore_dirs:
-  # - "node_modules"
+  # - ".bin"
   # - ".git"
-  # - "dist"
   # - ".cache"
-  # - "from-github"
+  # - "node_modules"
+  # - "bin"
+  # - "pkg"
+  # - "dist"
   # - "assets"
   # - "image"
   # - "images"
   # - "static"
   # - "data"
   # - "raycast"
-  # - "obsidian-*"
-  # - "zlt-*"
   - ".*"
 
 # choose preview

@@ -45,6 +45,7 @@ function fs {
 	done
 
 	for dir in "${fuzzy_search_ignore_dirs[@]}"; do
+		dir="$(eval echo "${dir}")"
 		exclude_args+=("--exclude" "${dir}")
 	done
 
@@ -58,7 +59,7 @@ function fs {
 	local target_file=$(
 		printf "%s\n" "${fuzzy_search_dirs[@]}" |
 			xargs -I {} ${fd_command} --hidden "${exclude_args[@]}" --search-path "{}" |
-			fzf --query="$1$2" --ansi --preview-window 'right:60%' --preview "$preview_command"
+			fzf --query="$1$2" --ansi --preview-window 'right:40%' --preview "$preview_command"
 	)
 	echo "${target_file}"
 	return 0
