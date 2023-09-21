@@ -22,9 +22,9 @@ done
 '
 
 function rr {
-	local dirs=("remote-codespace/task/fintech-backend" "a-better-shell" "temp")
+	local dirs=("CodeSpace" "temp")
 
-	local ignore_dirs=("**/node_modules/**" "**/tempGp/**" "**/*.html" "**/*.css")
+	local ignore_dirs=("**/node_modules/**" "**/tempGp/**" "**/*.html" "**/*.css" "**/Library/**")
 
 	local base_root="${HOME}"
 	# Create include and exclude parameters for rg
