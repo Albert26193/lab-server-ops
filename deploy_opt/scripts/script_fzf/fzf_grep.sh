@@ -22,18 +22,21 @@ done
 '
 
 function rr {
-	local dirs=("CodeSpace" "temp")
+	local fuzzy_grep_dirs=(${FUZZY_GREP_DIRS[@]})
 
-	local ignore_dirs=("**/node_modules/**" "**/tempGp/**" "**/*.html" "**/*.css" "**/Library/**")
+	local ignore_dirs=(${FUZZY_GREP_IGNORE_DIRS[@]})
 
 	local base_root="${HOME}"
+
 	# Create include and exclude parameters for rg
 	local rg_params=()
-	for dir in "${dirs[@]}"; do
+	for dir in "${fuzzy_grep_dirs[@]}"; do
+		dir="$(eval echo "${dir}")"
 		rg_params+=(-g "${dir}/**")
 	done
 
 	for ignore_dir in "${ignore_dirs[@]}"; do
+		ignore_dir="$(eval echo "${ignore_dir}")"
 		rg_params+=(-g "!${ignore_dir}")
 	done
 
