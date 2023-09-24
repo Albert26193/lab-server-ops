@@ -45,7 +45,7 @@ function fs {
 	done
 
 	for dir in "${fuzzy_search_ignore_dirs[@]}"; do
-		#dir="$(eval echo "${dir}")"
+		dir="$(eval echo "${dir}")"
 		exclude_args+=("--exclude" "${dir}")
 	done
 
