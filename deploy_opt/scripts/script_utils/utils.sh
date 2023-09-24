@@ -93,7 +93,7 @@ function show_all_files {
 	local dirFileNum=$(ls -al | grep "^d" | wc -l | tr -d ' ')
 	local totalNum=$((${normalFileNum} + ${dirFileNum}))
 
-	printf "pwd: \033[1;30m\033[42m%s\033[0m\n" "${currentPath}"
+	printf "jump to: \033[1;30m\033[42m%s\033[0m\n" "${currentPath}"
 	printf "file count: \033[1;30m\033[42m%s\033[0m\n" "${totalNum}"
 	printf "%s\n" "============="
 
