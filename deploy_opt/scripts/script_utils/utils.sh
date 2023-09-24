@@ -85,3 +85,23 @@ function utils_parse_yaml {
 
 	echo ${yaml_array[@]}
 }
+
+# show all files
+function show_all_files {
+	local currentPath=$(pwd)
+	local normalFileNum=$(ls -al | grep "^-" | wc -l | tr -d ' ')
+	local dirFileNum=$(ls -al | grep "^d" | wc -l | tr -d ' ')
+	local totalNum=$((${normalFileNum} + ${dirFileNum}))
+
+	printf "pwd: \033[1;30m\033[42m%s\033[0m\n" "${currentPath}"
+	printf "file count: \033[1;30m\033[42m%s\033[0m\n" "${totalNum}"
+	printf "%s\n" "============="
+
+	if [[ ${totalNum} -le 15 ]]; then
+		ls -al | tail -n +2
+	elif [[ ${totalNum} -ge 101 ]]; then
+		echo "files in current directory is more than 100"
+	else
+		ls -a
+	fi
+}

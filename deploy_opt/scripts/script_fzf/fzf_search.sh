@@ -58,7 +58,6 @@ function fs {
 	fi
 
 	#echo ${exclude_args[@]}
-
 	local target_file=$(
 		printf "%s\n" "${fuzzy_search_dirs[@]}" |
 			xargs -I {} ${fd_command} --hidden ${exclude_args[@]} --search-path {} |
@@ -68,4 +67,23 @@ function fs {
 	return 0
 }
 
-#fs
+# fuzzy edit
+function ff {
+	local target_file="$(fs $1 $2)"
+	local father_dir=$(dirname "${target_file}")
+	cd ${father_dir} && nvim ${target_file}
+}
+
+# fuzzy jump
+function jj {
+	local target_file="$(fs $1 $2)"
+    if [[ -d "${target_file}" ]]; then
+        cd "${target_file}" && show_all_files
+    elif [[ -f "${target_file}" ]]; then
+        local father_dir=$(dirname "${target_file}")
+        cd "${father_dir}" && show_all_files
+    else
+        #exit 1
+        printf "%s\n" "exit fuzzy search ..."
+    fi
+}
