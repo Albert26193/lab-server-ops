@@ -97,7 +97,7 @@ function show_all_files {
 	printf "file count: \033[1;30m\033[42m%s\033[0m\n" "${totalNum}"
 	printf "%s\n" "============="
 
-	if [[ ${totalNum} -le 24 ]]; then
+	if [[ ${totalNum} -le 35 ]]; then
 		ls -al | tail -n +2
 	elif [[ ${totalNum} -ge 101 ]]; then
 		echo "files in current directory is more than 100"
