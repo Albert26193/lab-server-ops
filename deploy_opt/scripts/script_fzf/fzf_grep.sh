@@ -31,12 +31,12 @@ function rr {
 	# Create include and exclude parameters for rg
 	local rg_params=()
 	for dir in "${fuzzy_grep_dirs[@]}"; do
-		dir="$(echo "${dir}")"
+		dir="$(bash -c "echo ${dir}")"
 		rg_params+=(-g "${dir}/**")
 	done
 
 	for ignore_dir in "${ignore_dirs[@]}"; do
-        ignore_dir="$(echo "${ignore_dir}")"
+		ignore_dir="$(bash -c "echo ${ignore_dir}")"
 		rg_params+=(-g "!${ignore_dir}")
 	done
 
