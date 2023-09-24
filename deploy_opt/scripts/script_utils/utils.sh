@@ -80,8 +80,8 @@ function utils_parse_yaml {
 	local yaml_array=()
 
 	while IFS= read -r line; do
-		yaml_array+=("$line")
+		yaml_array+=($line)
 	done < <(yq "$expression" "$filename")
 
-	echo "${yaml_array[@]}"
+	echo ${yaml_array[@]}
 }
