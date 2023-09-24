@@ -41,7 +41,7 @@ function fs {
 	local exclude_args=()
 
 	for dir in "${FUZZY_SEARCH_DIRS[@]}"; do
-		fuzzy_search_dirs+=("$(eval echo "${dir}")")
+		fuzzy_search_dirs+=("$(bash -c "echo ${dir}")")
 	done
 
 	for dir in "${fuzzy_search_ignore_dirs[@]}"; do
