@@ -71,7 +71,7 @@ function rr {
 function ee {
 	local target_file="$(fr)"
 	local father_dir=$(dirname "${target_file}")
-	cd ${father_dir}
-	nvim ${target_file}
+	local editor=$(bash -c "echo ${FUZZY_GREP_EDITOR}")
+	cd ${father_dir} && ${editor} ${target_file}
 	return 0
 }

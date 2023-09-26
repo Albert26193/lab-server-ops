@@ -71,19 +71,20 @@ function fs {
 function ff {
 	local target_file="$(fs $1 $2)"
 	local father_dir=$(dirname "${target_file}")
-	cd ${father_dir} && nvim ${target_file}
+	local editor=$(bash -c "echo ${FUZZY_SEARCH_EDITOR}")
+	cd ${father_dir} && ${editor} ${target_file}
 }
 
 # fuzzy jump
 function jj {
 	local target_file="$(fs $1 $2)"
-    if [[ -d "${target_file}" ]]; then
-        cd "${target_file}" && show_all_files
-    elif [[ -f "${target_file}" ]]; then
-        local father_dir=$(dirname "${target_file}")
-        cd "${father_dir}" && show_all_files
-    else
-        #exit 1
-        printf "%s\n" "exit fuzzy search ..."
-    fi
+	if [[ -d "${target_file}" ]]; then
+		cd "${target_file}" && show_all_files
+	elif [[ -f "${target_file}" ]]; then
+		local father_dir=$(dirname "${target_file}")
+		cd "${father_dir}" && show_all_files
+	else
+		#exit 1
+		printf "%s\n" "exit fuzzy search ..."
+	fi
 }

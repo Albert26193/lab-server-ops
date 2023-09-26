@@ -3,6 +3,11 @@
 FUZZY_SEARCH_DIRS=()
 FUZZY_SEARCH_IGNORE_DIRS=()
 FUZZY_SEARCH_PREVIEW="false"
+FUZZY_SEARCH_EDITOR=""
+
+FUZZY_GREP_DIRS=()
+FUZZY_GREP_IGNORE_DIRS=()
+FUZZY_GREP_EDITOR=""
 
 function source_fuzzy_dirs {
 	local util_file_path="/opt/deploy_opt/scripts/script_utils/utils.sh"
@@ -27,9 +32,11 @@ function source_fuzzy_dirs {
 	FUZZY_SEARCH_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_dirs[]"))
 	FUZZY_SEARCH_IGNORE_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_ignore_dirs[]"))
 	FUZZY_SEARCH_PREVIEW=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_preview.enable"))
+	FUZZY_SEARCH_EDITOR=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_editor"))
 
 	FUZZY_GREP_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_grep_dirs[]"))
 	FUZZY_GREP_IGNORE_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_grep_ignore_dirs[]"))
+	FUZZY_GREP_EDITOR=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_editor"))
 }
 
 source_fuzzy_dirs
