@@ -15,8 +15,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
 
 # --------------------- general -------------------
 export TERM="xterm-256color"
-user_name=$(whoami)
-echo "\e[35m nice to meet you, ${user_name} 🚀\e[0m"
+
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LS_COLORS=${LS_COLORS}:'di=01;35'

@@ -23,6 +23,7 @@ function pre_install {
 		"jq"
 		"yq"
 		"exa"
+		"ripgrep"
 	)
 
 	for package in "${to_install_list[@]}"; do
