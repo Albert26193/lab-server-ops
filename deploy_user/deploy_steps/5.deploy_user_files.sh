@@ -33,7 +33,7 @@ function deploy_user_files() {
 	local source_file_path="${git_root}/deploy_user/files_to_copy"
 	local target_home_path="/home/${new_user}"
 
-	local files=("template.zshrc" "template.vimrc" "zsh_download.sh" "login.sh" ".fuzzy_search_conf.yaml")
+	local files=("template.zshrc" "template.vimrc" "zsh_download.sh" "login.sh" ".fuzzy_conf.yaml")
 
 	for file in ${files[@]}; do
 		sudo bash -c "cp "${source_file_path}/${file}" "${target_home_path}/${file}""
