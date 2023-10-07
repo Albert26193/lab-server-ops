@@ -30,18 +30,16 @@ function greeting {
                           |_   |_ 
     "
 
-	printf '\033[97m %s \033[0m \n' "${output_string}"
+	printf '\033[36m %s \033[0m \n' "${output_string}"
 	return 0
 }
 
 # --------------------- prompt --------------------
 function prompt {
-	echo -e "\033[35m nice to meet you, $(whoami) 🚀\033[0m"
 	echo -e "\033[1;30m\033[42m 请阅读服务器使用说明: https://docs.lab-server.cn/ \033[0m"
 }
 
-eval "neofetch"
+#eval "neofetch"
+greeting
 prompt
-
 echo ""
-#greeting
