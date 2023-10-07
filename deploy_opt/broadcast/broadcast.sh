@@ -53,6 +53,6 @@ function prompt {
 	printf "\033[32m 如果需要取消这些prompt, 请手动修改 ${HOME}/.zshrc,\n 去掉结尾的 prompt 部分 \033[0m \n"
 }
 
-prompt
+# prompt
 eval "neofetch"
 greeting

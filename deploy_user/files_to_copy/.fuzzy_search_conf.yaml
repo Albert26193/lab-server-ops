@@ -1,34 +1,94 @@
 # dirs to fuzzy search
 fuzzy_search_dirs:
-  #  - "${HOME}/CodeSpace"
+  # - "${HOME}/CodeSpace"
   # - "${HOME}/.config"
   # - "${HOME}/.ssh"
   # - "${HOME}/temp"
   - "${HOME}"
 
 # dirs to ignore
-# you do not need to give full path
-# it will ignore path which INCLUDES string below
 fuzzy_search_ignore_dirs:
-  # - ".bin"
-  # - ".git"
-  # - ".cache"
-  # - "node_modules"
-  # - "bin"
-  # - "pkg"
-  # - "dist"
-  # - "assets"
-  # - "image"
-  # - "images"
-  # - "static"
-  # - "data"
-  # - "raycast"
-  - ".*"
+  - ".git"
+  - .local
+  - ".m2"
+  - ".gradle"
+  - ".wns"
+  - ".nvm"
+  - ".npm"
+  - ".nrm"
+  - ".red-hat"
+  - ".oh-my-zsh"
+  - ".github"
+  - ".cache"
+  - ".config"
+  - ".cargo"
+  - ".rustup"
+  - ".vscode"
+  - ".vscode-insiders"
+  - ".vscode-server-insiders"
+  - "lib"
+  - "node_modules"
+  - "pkg"
+  - "bin"
+  - "dist"
+  - "pkgs"
+  - "from-github"
+  - "assets"
+  - "image"
+  - "images"
+  - "static"
+  - "data"
+  - "raycast"
+  - "obsidian-*"
+  - "zlt-*"
+  - "anaconda3"
+  - "Applications"
+  - "Downloads"
+  - "Documents"
+  - "Desktop"
+  - "Library"
+  - "Movies"
+  - "Music"
+  - "Pictures"
+  - "Public"
+  - "Remote"
+  - "Zotero"
+  - "EVPlayer2_download"
+
+  #  - ".*"
 
 # choose preview
-# if use 'preview', you can see content of file, but it will pay some cost of speed
-# if not use 'preview', speed can be little faster
 fuzzy_search_preview:
   enable: true
   # enable: false
+
+fuzzy_search_editor: "nvim"
+
+fuzzy_grep_dirs:
+  #  - "temp"
+  - "CodeSpace"
+
+fuzzy_grep_ignore_dirs:
+  - "**/Library/**"
+  - "**/from-github/**"
+  - "**/obsidian*/**"
+  - "**/lib/**"
+  - "**/node_modules/**"
+  - "**/.obsidian/**"
+  - "**/pkg/**"
+  - "**/bin/**"
+  - "**/.git/**"
+  - "**/dist/**"
+  - "**/pkgs/**"
+  - "**/.cache/**"
+  - "**/assets/**"
+  - "**/image/**"
+  - "**/images/**"
+  - "**/static/**"
+  - "**/data/**"
+  - "**/raycast/**"
+  - "**/*.java"
+  - "**/.idea/**"
+
+fuzzy_grep_editor: "nvim"
 
