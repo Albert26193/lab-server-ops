@@ -1,4 +1,10 @@
 #!/bin/bash
+
+###################################################
+# description: make output colorful
+#          $1: input content
+#      return: nothing
+###################################################
 UTILS_COLOR_RED="\033[31m"
 UTILS_COLOR_GREEN="\033[32m"
 UTILS_COLOR_YELLOW="\033[33m"
@@ -8,7 +14,6 @@ UTILS_COLOR_CYAN="\033[36m"
 UTILS_COLOR_WHITE="\033[97m"
 UTILS_COLOR_GRAY="\033[90m"
 UTILS_COLOR_RESET="\033[0m"
-
 utils_print_red() { printf "${UTILS_COLOR_RED}%s${UTILS_COLOR_RESET}\n" "$1"; }
 utils_print_green() { printf "${UTILS_COLOR_GREEN}%s${UTILS_COLOR_RESET}\n" "$1"; }
 utils_print_yellow() { printf "${UTILS_COLOR_YELLOW}%s${UTILS_COLOR_RESET}\n" "$1"; }
@@ -18,7 +23,13 @@ utils_print_cyan() { printf "${UTILS_COLOR_CYAN}%s${UTILS_COLOR_RESET}\n" "$1"; 
 utils_print_gray() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1"; }
 utils_print_white() { printf "${UTILS_COLOR_WHITE}%s${UTILS_COLOR_RESET}\n" "$1"; }
 
-# YN prompt
+
+
+###################################################
+# description: give colorful yn_prompt
+#          $1: custom prompt to print
+#      return: 0 or 1
+###################################################
 function utils_yn_prompt() {
 	local yn_input=""
 	while true; do
@@ -32,7 +43,13 @@ function utils_yn_prompt() {
 	done
 }
 
-# print step
+
+
+###################################################
+# description: print step information
+#          $1: current step description
+#      return: nothing
+###################################################
 function utils_print_step() {
 	local current_step=$1
 	utils_print_green "========================================="
@@ -40,7 +57,12 @@ function utils_print_step() {
 	utils_print_green "========================================="
 }
 
-# check system
+
+
+###################################################
+# description: give current os judgement
+#      return: Ubuntu | macOS | Debian | CentOS
+###################################################
 function utils_check_os() {
 	if [[ -f /etc/os-release ]]; then
 		source /etc/os-release
