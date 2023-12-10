@@ -21,7 +21,7 @@ function step_new_user() {
         return 1
     fi
 
-    # adduser --gecos "" "${new_user}"
+    # useradd -m "${new_user}"
 
     return 0
 }

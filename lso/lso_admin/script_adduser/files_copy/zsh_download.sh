@@ -1,10 +1,10 @@
 #!bin/bash
-MY_UTILS_COLOR_RED="\033[31m"
-MY_UTILS_COLOR_RESET="\033[0m"
+MY_COLOR_RED="\033[31m"
+MY_COLOR_RESET="\033[0m"
 
 # first check whether zsh is installed
 if [[ ! -x /bin/zsh ]]; then
-    printf "${MY_UTILS_COLOR_RED} zsh is not installed, please install it first $MY_UTILS_COLOR_RESET}\n"
+    printf "${MY_COLOR_RED} zsh is not installed, please install it first $MY_COLOR_RESET}\n"
     exit 1
 fi
 
@@ -16,7 +16,7 @@ export all_proxy="socks5://${proxy_ip_address}:${port}"
 
 # checkout whether oh-my-zsh is installed
 if [[ -d ~/.oh-my-zsh ]]; then
-    printf "${MY_UTILS_COLOR_RED} oh-my-zsh is already installed, nothing to do $MY_UTILS_COLOR_RESET}\n"
+    printf "${MY_COLOR_RED} oh-my-zsh is already installed, nothing to do $MY_COLOR_RESET}\n"
     exit 1
 fi
 
