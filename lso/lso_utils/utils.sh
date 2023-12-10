@@ -18,6 +18,7 @@ LSO_BACKGROUND_YELLOW="\033[43m"
 LSO_BACKGROUND_RED="\033[41m"
 LSO_BACKGROUND_GREEN="\033[42m"
 LSO_COLOR_WHITE="\033[97m"
+LSO_COLOR_BLACK="\033[1;30m"
 
 lso_print_red_line() { printf "${LSO_COLOR_RED}%s${LSO_COLOR_RESET}\n" "$1"; }
 lso_print_green_line() { printf "${LSO_COLOR_GREEN}%s${LSO_COLOR_RESET}\n" "$1"; }
@@ -37,13 +38,13 @@ lso_print_cyan() { printf "${LSO_COLOR_CYAN}%s${LSO_COLOR_RESET} " "$1"; }
 lso_print_gray() { printf "${LSO_COLOR_WHITE}%s${LSO_COLOR_RESET} " "$1"; }
 lso_print_white() { printf "${LSO_COLOR_WHITE}%s${LSO_COLOR_RESET} " "$1"; }
 
-lso_print_warning_line() { printf "${LSO_BACKGROUND_YELLOW}${LSO_COLOR_WHITE}%s${LSO_COLOR_RESET}\n" "$1"; }
-lso_print_error_line() { printf "${LSO_BACKGROUND_RED}${LSO_COLOR_WHITE}%s${LSO_COLOR_RESET}\n" "$1"; }
-lso_print_info_line() { printf "${LSO_BACKGROUND_GREEN}${LSO_COLOR_WHITE}%s${LSO_COLOR_RESET}\n" "$1"; }
+lso_print_warning_line() { printf "${LSO_BACKGROUND_YELLOW}${LSO_COLOR_BLACK}%s${LSO_COLOR_RESET}\n" "$1"; }
+lso_print_error_line() { printf "${LSO_BACKGROUND_RED}${LSO_COLOR_BLACK}%s${LSO_COLOR_RESET}\n" "$1"; }
+lso_print_info_line() { printf "${LSO_BACKGROUND_GREEN}${LSO_COLOR_BLACK}%s${LSO_COLOR_RESET}\n" "$1"; }
 
-lso_print_warning() { printf "${LSO_BACKGROUND_YELLOW}${LSO_COLOR_WHITE}%s${LSO_COLOR_RESET}" "$1"; }
-lso_print_error() { printf "${LSO_BACKGROUND_RED}${LSO_COLOR_WHITE}%s${LSO_COLOR_RESET}" "$1"; }
-lso_print_info() { printf "${LSO_BACKGROUND_GREEN}${LSO_COLOR_WHITE}%s${LSO_COLOR_RESET}" "$1"; }
+lso_print_warning() { printf "${LSO_BACKGROUND_YELLOW}${LSO_COLOR_BLACK}%s${LSO_COLOR_RESET}" "$1"; }
+lso_print_error() { printf "${LSO_BACKGROUND_RED}${LSO_COLOR_BLACK}%s${LSO_COLOR_RESET}" "$1"; }
+lso_print_info() { printf "${LSO_BACKGROUND_GREEN}${LSO_COLOR_BLACK}%s${LSO_COLOR_RESET}" "$1"; }
 
 ###################################################
 # description: give colorful yn_prompt

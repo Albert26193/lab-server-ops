@@ -9,16 +9,6 @@
 # output:
 #       search result
 function fs {
-	local util_file_path="/opt/deploy_opt/scripts/script_utils/utils.sh"
-	local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
-	local deploy_opt_file_path="${git_root}/deploy_opt/one_touch_deploy_opt.sh"
-
-	if [[ ! -f "${util_file_path}" ]]; then
-		printf "%s\n" "${util_file_path} do not exist."
-		printf "%s\n" "execute ${deploy_opt_file_path} first."
-	else
-		source "${util_file_path}"
-	fi
 
 	local current_os="$(utils_check_os)"
 	local fd_command=""

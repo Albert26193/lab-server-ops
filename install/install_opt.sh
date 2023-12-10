@@ -43,32 +43,33 @@ function deploy_user_files {
     fi
 
     if [[ $(ls -A "${target_dir}") ]]; then
-        lso_print_white_line "ls -al ${target_dir} as below:"
+        lso_print_green_line "ls -al ${target_dir} as below:"
         ls -al "${target_dir}"
         lso_print_warning_line "You should keep ${target_dir} empty."
-        if ! lso_yn_prompt "${target_dir} is not empty, do you want to remove all files in it?"; then
+        if ! lso_yn_prompt "${target_dir} is not empty, do you want to remove all files in it and continue?"; then
             lso_print_info_line "You should keep ${target_dir} empty. Remove all files in it manaully."
             lso_print_white_line "Exit Now..."
             return 1
         fi
         bash -c "rm -rf ${target_dir}/*"
         lso_print_green_line "${target_dir} is clear now."
-        lso_print_white_line "press any key to continue copying files to /opt ..."
-        read -n 1
     fi
 
     bash -c "cp -r ${git_root}/lso/lso_admin ${target_dir}"
     bash -c "cp -r ${git_root}/lso/lso_user ${target_dir}"
+    bash -c "cp -r ${git_root}/lso/lso_utils ${target_dir}"
 
-    if [[ -d "${target_dir}/lso_admin" ]] && [[ -d "${target_dir}/lso_user" ]]; then
-        lso_print_green_line "${target_dir} copy succeed."
-        lso_print_white "ls -al"
+    if [[ -d "${target_dir}/lso_admin" ]] && [[ -d "${target_dir}/lso_user" ]] && [[ -d "${target_dir}/lso_utils" ]]; then
+        lso_print_white "copy successfully, ls -al"
         lso_print_info "${target_dir}"
         lso_print_white_line " as below:"
         ls -al "${target_dir}"
     else
         printf '%s\n' "${target_dir} copy failed."
     fi
+
+    lso_print_info "LSO files are deployed to ${target_dir} sucessfully. Congratulations!"
+    echo " 🎉️"
 
     return 0
 }
