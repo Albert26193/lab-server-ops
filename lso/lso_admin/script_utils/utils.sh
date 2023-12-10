@@ -79,7 +79,7 @@ function lso_print_step() {
 # description: get git root path
 #      return: git root path
 ###################################################
-function lso_get_gitroot () {
+function lso_get_gitroot() {
     local git_root=$(git rev-parse --show-toplevel 2>/dev/null)
 
     if [[ -z "${git_root}" ]]; then
@@ -137,10 +137,9 @@ function lso_check_dir() {
         lso_print_error_line "Error: "${dir}" not exist, please INSTALL IT FIRST."
         lso_print_white_line "-----------------------------------------------------"
         lso_print_white_line "| You can install it by running:                    |"
-        lso_print_white_line "|     1. cd to xxx/lab-server-ops                   |" 
-        lso_print_white_line "|     2. run ./deploy_opt/deploy_lso.sh   |" 
+        lso_print_white_line "|     1. cd to xxx/lab-server-ops                   |"
+        lso_print_white_line "|     2. run ./deploy_opt/deploy_lso.sh             |"
         lso_print_white_line "-----------------------------------------------------"
         return 1
     fi
 }
-
