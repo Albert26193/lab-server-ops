@@ -126,7 +126,7 @@ function lso_check_os() {
 }
 
 ###################################################
-# description: check if /opt/LSO exists
+# description: check if dir exists
 #          $1: dir to check
 #      return: 0: exist | 1: not exist
 ###################################################

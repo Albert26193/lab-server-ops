@@ -2,11 +2,13 @@
 
 ###################################################
 # description: add new user to groups
+#       input: new_user
 #      return: 0: success | 1: fail
 ###################################################
 function step_group() {
-
     lso_print_white_line "Please enter group names, support continuous input, separated by spaces, such as [docker wheel sudo] etc."
+    lso_print_cyan_line "If you don't want to add any group, just press Enter."
+
     local new_groups=""
     read -a new_groups
 
@@ -28,11 +30,11 @@ function step_group() {
 
         if ! lso_yn_prompt "Confirm?"; then
             lso_print_red_line "Cancelled."
-            return 1
+            continue
         fi
 
         # Add new user and specify group
-        # usermod -aG "${new_group}" "${new_user}"
+        usermod -aG "${new_group}" "${new_user}"
         lso_print_white "user ${new_user} is added to "
         lso_print_cyan "${new_group}"
         lso_print_white_line " group."

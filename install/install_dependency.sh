@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# paragrams: none
-# return: none
+###################################################
+# description: install dependency
+#       input: none
+#      return: 0: success | 1: fail
+###################################################
+
 function pre_install {
     local common_install=(
         "tmux"

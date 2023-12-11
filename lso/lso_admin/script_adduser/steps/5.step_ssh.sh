@@ -2,6 +2,7 @@
 
 ###################################################
 # description: ssh key configuration
+#       input: $1: new_user
 #      return: 0: success | 1: fail
 ###################################################
 function step_ssh() {

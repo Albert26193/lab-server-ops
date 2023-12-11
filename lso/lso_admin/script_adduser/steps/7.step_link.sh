@@ -2,6 +2,7 @@
 
 ###################################################
 # description: link /data/${new_user} to /home/${new_user}/data
+#       input: $1: new_user
 #      return: 0: success | 1: fail
 ###################################################
 function step_link() {

@@ -4,10 +4,11 @@
 # return: none
 
 ###################################################
-# description: install LSO files to /opt/lso
+# description: install LSO files to /opt/lab-server-ops
+#       input: none
 #      return: 0: succeed | 1: failed
 ###################################################
-function deploy_user_files {
+function install_lso {
     local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
     local util_file_path="${git_root}/utils/utils.sh"
 
@@ -25,7 +26,7 @@ function deploy_user_files {
         return 1
     fi
 
-    local target_dir="/opt/lso"
+    local target_dir="/opt/lab-server-ops"
 
     if [[ ! -d "${target_dir}" ]]; then
         lso_print_warning_line "${target_dir} not existed, create it"
@@ -74,4 +75,4 @@ function deploy_user_files {
     return 0
 }
 
-deploy_user_files
+install_lso

@@ -2,9 +2,10 @@
 
 ###################################################
 # description: copy files to user's dir
+#       input: $1: new_user
 #      return: 0: success | 1: fail
 ###################################################
-function step_user_files() {
+function step_dotfiles() {
     local new_user=$1
 
     if [[ -z "${new_user}" ]]; then
@@ -20,7 +21,7 @@ function step_user_files() {
     local source_file_path="${lso_root}/lso_admin/script_adduser/files_copy"
     local target_home_path="/home/${new_user}"
 
-    local files=("template.zshrc" "template.vimrc" "zsh_download.sh" "login.sh" ".fuzzy_conf.yaml")
+    local files=("template.zshrc" "template.vimrc" "zsh_download.sh" "login.sh" ".fuzzy.yaml")
 
     for file in ${files[@]}; do
         sudo bash -c "cp "${source_file_path}/${file}" "${target_home_path}/${file}""
