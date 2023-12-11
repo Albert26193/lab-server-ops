@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# paragram: new_user
-# return: none
-
 ###################################################
 # description: install LSO files to /opt/lab-server-ops
 #       input: none

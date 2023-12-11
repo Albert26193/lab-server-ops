@@ -1,30 +1,52 @@
 #!/bin/bash
 
-FUZZY_SEARCH_DIRS=()
-FUZZY_SEARCH_IGNORE_DIRS=()
-FUZZY_SEARCH_PREVIEW="false"
-FUZZY_SEARCH_EDITOR=""
+lso_search_dirs=()
+lso_search_ignore_dirs=()
+lso_search_preview="false"
+lso_search_editor=""
 
-FUZZY_GREP_DIRS=()
-FUZZY_GREP_IGNORE_DIRS=()
-FUZZY_GREP_EDITOR=""
+###################################################
+# description: parse yaml file
+#       input: $1: file to parse
+#       input: $2: parse expression
+#      return: 0: exist | 1: not exist
+###################################################
+function lso_parse_yaml {
+    local file_to_parse="$1"
+    local expression="$2"
+    local yaml_array=()
 
-function source_fuzzy_dirs {
-    local fuzzy_search_conf="${HOME}/.fuzzy_conf.yaml"
+    while IFS= read -r line; do
+        yaml_array+=($line)
+    done < <(yq "$expression" "$file_to_parse")
 
-    if [[ ! -f "${fuzzy_search_conf}" ]]; then
-        printf "%s\n" "${fuzzy_search_conf} do not exist."
+    if [[ $? -ne 0 ]]; then
+        echo "Error: parse yaml file failed."
         return 1
     fi
 
-    FUZZY_SEARCH_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_dirs[]"))
-    FUZZY_SEARCH_IGNORE_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_ignore_dirs[]"))
-    FUZZY_SEARCH_PREVIEW=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_preview.enable"))
-    FUZZY_SEARCH_EDITOR=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_editor"))
-
-    FUZZY_GREP_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_grep_dirs[]"))
-    FUZZY_GREP_IGNORE_DIRS=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_grep_ignore_dirs[]"))
-    FUZZY_GREP_EDITOR=($(utils_parse_yaml "${HOME}/.fuzzy_conf.yaml" ".fuzzy_search_editor"))
+    echo ${yaml_array[@]}
+    return 0
 }
 
-source_fuzzy_dirs
+###################################################
+# description: source fuzzy search dirs and ingore dirs
+#       input: none
+#      return: 0 success | 1 fail
+###################################################
+function lso_fuzzy_load() {
+    # load lso config
+    local lso_conf="${HOME}/.lso.yaml"
+
+    if [[ ! -f "${lso_conf}" ]]; then
+        printf "%s\n" "${lso_conf} do not exist."
+        return 1
+    fi
+
+    lso_search_dirs=($(lso_parse_yaml "${lso_conf}" ".search_dirs[]"))
+    lso_search_ignore_dirs=($(lso_parse_yaml "${lso_conf}" ".search_ignore_dirs[]"))
+    lso_search_preview=($(lso_parse_yaml "${lso_conf}" ".search_preview.enable"))
+    lso_search_editor=($(lso_parse_yaml "${lso_conf}" ".search_editor"))
+}
+
+lso_fuzzy_load

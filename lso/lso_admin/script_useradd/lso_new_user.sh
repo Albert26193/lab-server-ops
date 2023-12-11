@@ -5,17 +5,17 @@
 #       input: none
 #      return: 0: success | 1: fail
 ###################################################
-function lso_newuser() {
+function lso_new_user() {
     local lso_root="/opt/lab-server-ops"
     local util_file_path="${lso_root}/lso_utils/utils.sh"
 
     if [[ ! -f "${util_file_path}" ]]; then
-        printf "%s\n" "${util_file_path} do not exist. Install LSO first."
+        printf "%s\n" "${util_file_path} do not exist. Install lab-server-ops first."
         printf "%s\n" "Exit Now..."
         return 1
     else
         source "${util_file_path}"
-        lso_print_info_line "LSO utils.sh sourced."
+        lso_print_info_line "lab-server-ops utils.sh sourced."
     fi
 
     # Check if the script is executed as root
@@ -25,7 +25,7 @@ function lso_newuser() {
     fi
 
     # get deploy dir path
-    local deploy_dir_path="${lso_root}/lso_admin/script_adduser/steps"
+    local deploy_dir_path="${lso_root}/lso_admin/script_useradd/steps"
 
     # local local_test="demo"
     # source "${deploy_dir_path}/test.sh"
@@ -126,4 +126,4 @@ function lso_newuser() {
     lso_print_info_line "Congratulations! ${new_user} is added successfully.🍺️"
 }
 
-lso_newuser
+lso_new_user

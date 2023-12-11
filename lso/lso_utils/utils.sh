@@ -2,7 +2,7 @@
 
 ###################################################
 # description: make output colorful
-#          $1: input content
+#       input: $1: input content
 #      return: nothing
 ###################################################
 LSO_COLOR_RED="\033[31m"
@@ -48,7 +48,7 @@ lso_print_info() { printf "${LSO_BACKGROUND_GREEN}${LSO_COLOR_BLACK}%s${LSO_COLO
 
 ###################################################
 # description: give colorful yn_prompt
-#          $1: custom prompt to print
+#       input: $1: custom prompt to print
 #      return: 0: yes | 1: no
 ###################################################
 function lso_yn_prompt() {
@@ -66,7 +66,7 @@ function lso_yn_prompt() {
 
 ###################################################
 # description: print step information
-#          $1: current step description
+#       input: $1: current step description
 #      return: nothing
 ###################################################
 function lso_print_step() {
@@ -78,6 +78,7 @@ function lso_print_step() {
 
 ###################################################
 # description: get git root path
+#       input: none
 #      return: git root path
 ###################################################
 function lso_get_gitroot() {
@@ -94,6 +95,7 @@ function lso_get_gitroot() {
 
 ###################################################
 # description: give current os judgement
+#      input: none
 #      return: Ubuntu | macOS | Debian | CentOS
 ###################################################
 function lso_check_os() {
@@ -127,7 +129,7 @@ function lso_check_os() {
 
 ###################################################
 # description: check if dir exists
-#          $1: dir to check
+#       input: $1: dir to check
 #      return: 0: exist | 1: not exist
 ###################################################
 function lso_check_dir() {
@@ -142,5 +144,29 @@ function lso_check_dir() {
         lso_print_white_line "|     2. run ./deploy_opt/deploy_lso.sh             |"
         lso_print_white_line "-----------------------------------------------------"
         return 1
+    fi
+}
+
+###################################################
+# description: show files in current directory
+#       input: none
+#      return: 0: success | 1: fail
+###################################################
+function lso_show_files {
+    local currentPath=$(pwd)
+    local normalFileNum=$(ls -al | tail -n +4 | grep "^-" | wc -l | tr -d ' ')
+    local dirFileNum=$(ls -al | tail -n +4 | grep "^d" | wc -l | tr -d ' ')
+    local totalNum=$((${normalFileNum} + ${dirFileNum}))
+
+    printf "\033[1;30m\033[44mjump to: \033[1;30m\033[42m%s\033[0m\n" "${currentPath}"
+    printf "\033[1;30m\033[44mfile count: \033[1;30m\033[42m%s\033[0m\n" "${totalNum}"
+    printf "%s\n" "============="
+
+    if [[ ${totalNum} -le 35 ]]; then
+        ls -al | tail -n +2
+    elif [[ ${totalNum} -ge 101 ]]; then
+        echo "files in current directory is more than 100"
+    else
+        ls -a
     fi
 }

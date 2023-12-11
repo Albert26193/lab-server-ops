@@ -18,10 +18,10 @@ function step_dotfiles() {
         return 1
     fi
 
-    local source_file_path="${lso_root}/lso_admin/script_adduser/files_copy"
+    local source_file_path="${lso_root}/lso_admin/script_useradd/files_copy"
     local target_home_path="/home/${new_user}"
 
-    local files=("template.zshrc" "template.vimrc" "zsh_download.sh" "login.sh" ".fuzzy.yaml")
+    local files=("template.zshrc" "template.vimrc" "zsh_download.sh" "login.sh" ".lso.yaml")
 
     for file in ${files[@]}; do
         sudo bash -c "cp "${source_file_path}/${file}" "${target_home_path}/${file}""

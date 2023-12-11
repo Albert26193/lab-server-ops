@@ -36,6 +36,9 @@ function step_new_user() {
     if [[ $? -ne 0 ]]; then
         lso_print_error_line "new user add failed, please check it."
         return 1
+    else
+        lso_print_white_line "new user add success, ls -l /home:"
+        ls -l /home
     fi
 
     return 0

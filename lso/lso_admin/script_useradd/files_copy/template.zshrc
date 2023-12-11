@@ -20,26 +20,24 @@ export LC_ALL=en_US.UTF-8
 export LS_COLORS=${LS_COLORS}:'di=01;35'
 
 #  --------------------- alias --------------------
-alias "pc"="proxychains4"
 alias "nv"="nvim"
 alias "tm"="tmux"
-alias "lg"="lazygit"
 alias "ll"="ls -l"
 alias "la"="ls -al"
 
-# ---------------------  script  -------------------
-my_scripts_dir="/opt/deploy_opt/scripts/"
+# ------------------  lab-server-ops script  ----------------
+my_scripts_dir="/opt/lab-server-ops/lso_user/"
 my_scripts=(
-    "script_utils/utils.sh"
     "script_shell/shell_cl.sh"
     "script_shell/shell_tree_du.sh"
     "script_shell/shell_man_nvim.sh"
-    "script_out/out_go.sh"
+    "script_out/out.sh"
     "script_fzf/fzf_source.sh"
-    "script_fzf/fzf_grep.sh"
     "script_fzf/fzf_search.sh"
     "script_fzf/fzf_history.sh"
 )
+
+#source "/opt/lab-server-ops/lso_utils/utils.sh"
 
 for single_script in "${my_scripts[@]}"; do
     current_script="${my_scripts_dir}${single_script}"
@@ -50,5 +48,10 @@ for single_script in "${my_scripts[@]}"; do
     fi
 done
 
+alias "fs"="lso_fuzzy_search"
+alias "fj"="lso_fuzzy_jump"
+alias "fe"="lso_fuzzy_edit"
+alias "hh"="lso_fuzzy_history"
+
 # ------------------- broadcast ---------------------
-bash "/opt/deploy_opt/broadcast/broadcast.sh"
+bash "/opt/lab-server-ops/lso_user/script_broadcast/broadcast.sh"
