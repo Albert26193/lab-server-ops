@@ -30,7 +30,7 @@ function install_lso {
         bash -c "mkdir ${target_dir}"
     fi
 
-    if ! lso_yn_prompt "Do you want to copy ${git_root}/lso to ${target_dir} ?"; then
+    if ! lso_yn_prompt "Do you want to copy ${LSO_COLOR_GREEN}${git_root}/lso (current dir)${LSO_COLOR_RESET} to ${LSO_BACKGROUND_GREEN}${target_dir}(install dir)${LSO_COLOR_RESET} ?"; then
         lso_print_white_line "Exit Now..."
         return 1
     fi
@@ -57,7 +57,9 @@ function install_lso {
     bash -c "cp -r ${git_root}/lso/lso_user ${target_dir}"
     bash -c "cp -r ${git_root}/lso/lso_utils ${target_dir}"
 
-    if [[ -d "${target_dir}/lso_admin" ]] && [[ -d "${target_dir}/lso_user" ]] && [[ -d "${target_dir}/lso_utils" ]]; then
+    if [[ -d "${target_dir}/lso_admin" ]] &&
+        [[ -d "${target_dir}/lso_user" ]] &&
+        [[ -d "${target_dir}/lso_utils" ]]; then
         lso_print_white "copy successfully, ls -al"
         lso_print_info "${target_dir}"
         lso_print_white_line " as below:"

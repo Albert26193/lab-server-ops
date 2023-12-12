@@ -39,12 +39,29 @@ function lso_zsh_download() {
     fi
 
     # checkout whether oh-my-zsh is installed
-    if [[ -d ${current_home}/.oh-my-zsh ]]; then
+    if [[ -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
         lso_print_yellow_line "oh-my-zsh is already installed, nothing to do"
     else
+        if [[ -e ${current_home}/.oh-my-zsh ]]; then
+            lso_print_yellow_line "oh-my-zsh dir is already exist, but oh-my-zsh.sh not exist, remove it"
+            rm -rf "${current_home}/.oh-my-zsh"
+        fi
         lso_print_cyan_line "oh-my-zsh is not installed, install it now"
         # install oh-my-zsh
-        bash -c "curl -fsSL https://gitee.com/albert26193/ohmyzsh/raw/master/tools/install.sh | sh"
+        bash -c "curl -fsSL https://gitee.com/mirrors/ohmyzsh/raw/master/tools/install.sh | sh"
+
+        if [[ $? -ne 0 ]]; then
+            lso_print_yellow_line "oh-my-zsh install failed because of network."
+            lso_print_white_line "Now, try to install oh-my-zsh from github."
+            bash -c "$(curl -fsSL https://install.ohmyz.sh/)"
+        fi
+
+        if [[ $? -ne 0 ]]; then
+            lso_print_yellow_line "oh-my-zsh install failed because of network."
+            lso_print_white_line "Now, try to install oh-my-zsh from gitee."
+            bash -c "curl -fsSL https://gitee.com/albert26193/ohmyzsh/raw/master/tools/install.sh | sh"
+            return 1
+        fi
     fi
 
     # install zsh-auto-suggestions
@@ -69,8 +86,8 @@ function lso_zsh_download() {
         mv "${current_home}/.zshrc" "${current_home}/.zshrc.pre-oh-my-zsh"
     fi
 
-    echo ${current_home}
-    if [[ -f "${current_home}/template.zshrc" ]] && [[ -f "${current_home}/template.vimrc" ]]; then
+    if [[ -f "${current_home}/template.zshrc" ]] &&
+        [[ -f "${current_home}/template.vimrc" ]]; then
         lso_print_white_line "this is first time install, remove some files"
         # remove files not need
         rm "${current_home}/.zshrc"

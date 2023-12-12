@@ -36,8 +36,8 @@ function step_group() {
         # Add new user and specify group
         usermod -aG "${new_group}" "${new_user}"
         lso_print_white "user ${new_user} is added to "
-        lso_print_cyan "${new_group}"
-        lso_print_white_line " group."
+        lso_print_cyan "group: ["
+        lso_print_cyan_line "${new_group}]."
     done
 
     return 0

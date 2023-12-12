@@ -42,15 +42,26 @@ function lso_fuzzy_search {
         bat_command="batcat"
     fi
 
-    local search_dirs=()
-    local ignore_dirs=(${lso_search_ignore_dirs[@]})
+    # variable load
+    local lso_var_file="${HOME}/.lso.env"
+
+    if [[ -z "${lso_search_dirs}" ]] || [[ -z "${lso_search_preview}" ]] || [[ -z "${lso_editor}" ]]; then
+        lso_print_red_line "some of env variable is empty, please check it in "${HOME}/.lso.env"."
+        lso_print_white_line "Now, try to source ${lso_var_file} ..."
+        if [[ -f "${lso_var_file}" ]]; then
+            source "${lso_var_file}"
+        else
+            lso_print_red_line "${lso_var_file} not exist, please check it."
+            return 1
+        fi
+    fi
+
+    # for dir in "${lso_search_dirs[@]}"; do
+    #     search_dirs+=("$(bash -c "echo ${dir}")")
+    # done
+
     local exclude_args=()
-
-    for dir in "${lso_search_dirs[@]}"; do
-        search_dirs+=("$(bash -c "echo ${dir}")")
-    done
-
-    for dir in "${ignore_dirs[@]}"; do
+    for dir in "${lso_search_ignore_dirs[@]}"; do
         dir=$(bash -c "echo ${dir}")
         exclude_args+=("--exclude" ${dir})
     done
@@ -64,7 +75,7 @@ function lso_fuzzy_search {
     fi
 
     local target_file=$(
-        printf "%s\n" "${search_dirs[@]}" |
+        printf "%s\n" "${lso_search_dirs[@]}" |
             xargs -I {} ${fd_command} --hidden ${exclude_args[@]} --search-path {} |
             fzf --query="$1$2" --ansi --preview-window 'right:40%' --preview "$preview_command"
     )
@@ -89,12 +100,17 @@ function lso_fuzzy_search {
 function lso_fuzzy_edit {
     local target_file="$(lso_fuzzy_search $1 $2)"
     local father_dir=$(dirname "${target_file}")
-    local editor=$(bash -c "echo ${FUZZY_SEARCH_EDITOR}")
 
     if [[ -z "${target_file}" ]]; then
         return 1
     fi
 
+    if [[ -z "${lso_editor}" ]]; then
+        lso_print_red_line "env '$lso_editor' is empty, please check it."
+        return 1
+    fi
+
+    local editor=$(bash -c "echo ${lso_editor}")
     cd ${father_dir} && ${editor} ${target_file}
 
     if [[ $? -eq 0 ]]; then

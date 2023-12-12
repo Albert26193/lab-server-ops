@@ -50,7 +50,7 @@ function step_link() {
     # link /data/${new_user} to /home/${new_user}/data
     if lso_yn_prompt "Do you want to link ${real_data_dir} to ${symlink_dir}?"; then
         mkdir -p "${real_data_dir}" &&
-            chown -R "${new_user}" "${real_data_dir}" &&
+            chown -R "${new_user}:${new_user}" "${real_data_dir}" &&
             ln -s "${real_data_dir}" "${symlink_dir}"
         lso_print_green_line "established symbolic link:"
         lso_print_green_line "actual physical directory: ${real_data_dir}, symbolic link directory: ${symlink_dir}"

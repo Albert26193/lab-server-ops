@@ -61,7 +61,7 @@ function step_dotfiles() {
 
     for file in ${files[@]}; do
         sudo bash -c "cp "${source_file_path}/${file}" "${target_home_path}/${file}""
-        sudo bash -c "chown "${new_user}" "${target_home_path}/${file}""
+        sudo bash -c "chown "${new_user}:${new_user}" "${target_home_path}/${file}""
     done
 
     # load config files
@@ -69,7 +69,16 @@ function step_dotfiles() {
 
     clear
 
-    lso_print_green_line "copy files to user's dir, ls /home/${new_user} as below:"
+    if [[ ! -f "${target_home_path}/.oh-my-zsh/oh-my-zsh.sh" ]] ||
+        [[ ! -d "${target_home_path}/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]] ||
+        [[ ! -d "${target_home_path}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then
+        lso_print_red_line "load config files failed, cd to ${target_home_path} and run '.lso_zsh.sh' manually."
+        return 1
+    else
+        lso_print_info_line "load config files successfully."
+    fi
+
+    lso_print_green_line "copy files to user's dir, ls ${target_home_path} as below:"
     sudo bash -c "ls -al ${target_home_path} | tail -n +4"
 
     return 0

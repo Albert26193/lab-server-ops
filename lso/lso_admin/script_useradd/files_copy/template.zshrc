@@ -1,7 +1,7 @@
 # ---------------------- oh-my-zsh ----------------
 export ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="agnoster"
+ZSH_THEME="ys"
 
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions docker)
 
@@ -26,18 +26,13 @@ alias "ll"="ls -l"
 alias "la"="ls -al"
 
 # ------------------  lab-server-ops script  ----------------
+source "~/.lso.env"
 my_scripts_dir="/opt/lab-server-ops/lso_user/"
 my_scripts=(
-    "script_shell/shell_cl.sh"
-    "script_shell/shell_tree_du.sh"
-    "script_shell/shell_man_nvim.sh"
     "script_out/out.sh"
-    "script_fzf/fzf_source.sh"
     "script_fzf/fzf_search.sh"
     "script_fzf/fzf_history.sh"
 )
-
-#source "/opt/lab-server-ops/lso_utils/utils.sh"
 
 for single_script in "${my_scripts[@]}"; do
     current_script="${my_scripts_dir}${single_script}"
