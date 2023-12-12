@@ -59,6 +59,10 @@ function lso_install_dependency() {
 
     local current_os="$(lso_check_os)"
     local all_install_list=()
+
+    lso_print_green_line "----------------------------------------------"
+    lso_print_white_line " detected OS: ${current_os} "
+    lso_print_green_line "----------------------------------------------"
     # TODO: add more os to test
     if [[ "${current_os}" == "macOS" ]]; then
         all_install_list=("${common_install[@]} ${mac_install[@]}")
