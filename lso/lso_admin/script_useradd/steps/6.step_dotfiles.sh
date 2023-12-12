@@ -65,7 +65,9 @@ function step_dotfiles() {
     done
 
     # load config files
-    sudo su - ${new_user} -c "bash ${target_home_path}/.lso_zsh.sh" 2>&1 >/dev/null
+    sudo su - ${new_user} -c "bash ${target_home_path}/.lso_zsh.sh" >/dev/null
+
+    clear
 
     lso_print_green_line "copy files to user's dir, ls /home/${new_user} as below:"
     sudo bash -c "ls -al ${target_home_path} | tail -n +4"
