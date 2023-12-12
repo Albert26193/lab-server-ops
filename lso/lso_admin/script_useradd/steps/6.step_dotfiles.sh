@@ -29,7 +29,19 @@ function step_dotfiles() {
     done
 
     lso_print_green_line "copy files to user's dir"
-
     sudo bash -c "ls -al ${target_home_path}"
+
+    lso_print_cyan "ZSH(🍺️Recommand):"
+    if lso_yn_prompt "Do you want to change shell ZSH for the ${new_user}?"; then
+        sudo bash -c "chsh -s /bin/zsh ${new_user}"
+        if [[ $? -ne 0 ]]; then
+            lso_print_error_line "change shell ZSH failed, please check it."
+            return 1
+        else
+            lso_print_green_line "grep in /etc/passwd as below:"
+            sudo bash -c "grep -E "^${new_user}:" /etc/passwd"
+        fi
+    fi
+
     return 0
 }

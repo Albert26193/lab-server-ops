@@ -6,6 +6,7 @@
 #      return: 0: success | 1: fail
 ###################################################
 function lso_new_user() {
+
     local lso_root="/opt/lab-server-ops"
     local util_file_path="${lso_root}/lso_utils/utils.sh"
 
@@ -112,7 +113,7 @@ function lso_new_user() {
 
     ##################################### step7 add link ###################################
     lso_print_step 7
-    lso_print_cyan_line "step7: linke ${new_user}/data to /data/${new_user}, and set permission"
+    lso_print_cyan_line "step7: linke ${new_user}/data to /data/${new_user}, to save space for /home"
 
     source "${deploy_dir_path}/7.step_link.sh"
     if step_link "${new_user}"; then
