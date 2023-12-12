@@ -140,8 +140,8 @@ function lso_check_dir() {
         lso_print_error_line "Error: "${dir}" not exist, please INSTALL IT FIRST."
         lso_print_white_line "-----------------------------------------------------"
         lso_print_white_line "| You can install it by running:                    |"
-        lso_print_white_line "|     1. cd to xxx/lab-server-ops                   |"
-        lso_print_white_line "|     2. run ./deploy_opt/deploy_lso.sh             |"
+        lso_print_white_line "|     1. cd to <your download dir>/lab-server-ops   |"
+        lso_print_white_line "|     2. run ./install/install_lso.sh               |"
         lso_print_white_line "-----------------------------------------------------"
         return 1
     fi
@@ -152,21 +152,23 @@ function lso_check_dir() {
 #       input: none
 #      return: 0: success | 1: fail
 ###################################################
-function lso_show_files {
-    local currentPath=$(pwd)
-    local normalFileNum=$(ls -al | tail -n +4 | grep "^-" | wc -l | tr -d ' ')
-    local dirFileNum=$(ls -al | tail -n +4 | grep "^d" | wc -l | tr -d ' ')
-    local totalNum=$((${normalFileNum} + ${dirFileNum}))
+function lso_check_devpency_basic() {
+    local check_list=(
+        "git"
+        "curl"
+        "zsh"
+        "vim"
+    )
 
-    printf "\033[1;30m\033[44mjump to: \033[1;30m\033[42m%s\033[0m\n" "${currentPath}"
-    printf "\033[1;30m\033[44mfile count: \033[1;30m\033[42m%s\033[0m\n" "${totalNum}"
-    printf "%s\n" "============="
-
-    if [[ ${totalNum} -le 35 ]]; then
-        ls -al | tail -n +2
-    elif [[ ${totalNum} -ge 101 ]]; then
-        echo "files in current directory is more than 100"
-    else
-        ls -a
-    fi
+    for sing_check in ${check_list[@]}; do
+        if [[ -z $(which ${sing_check}) ]]; then
+            lso_print_error_line "Error: ${sing_check} not installed, please INSTALL IT FIRST."
+            lso_print_white_line "-----------------------------------------------------"
+            lso_print_white_line "| You can install it by running:                    |"
+            lso_print_white_line "|     1. cd to <your download dir>/lab-server-ops   |"
+            lso_print_white_line "|     2. run ./install/install_dependency.sh        |"
+            lso_print_white_line "-----------------------------------------------------"
+            return 1
+        fi
+    done
 }

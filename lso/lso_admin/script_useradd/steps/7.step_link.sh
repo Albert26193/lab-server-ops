@@ -56,7 +56,7 @@ function step_link() {
         lso_print_green_line "actual physical directory: ${real_data_dir}, symbolic link directory: ${symlink_dir}"
         lso_print_cyan_line "${symlink_dir} --> ${real_data_dir}"
         lso_print_white_line "ll /data results as follows: "
-        eval "ls -al /data"
+        eval "ls -al /data | grep -C 2 -E ${new_user}$"
     else
         lso_print_white_line "abort link ${real_data_dir} to ${symlink_dir}."
         return 1

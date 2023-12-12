@@ -105,6 +105,30 @@ function lso_fuzzy_edit {
 }
 
 ###################################################
+# description: show files in current directory
+#       input: none
+#      return: 0: success | 1: fail
+###################################################
+function lso_show_files {
+    local currentPath=$(pwd)
+    local normalFileNum=$(ls -al | tail -n +4 | grep "^-" | wc -l | tr -d ' ')
+    local dirFileNum=$(ls -al | tail -n +4 | grep "^d" | wc -l | tr -d ' ')
+    local totalNum=$((${normalFileNum} + ${dirFileNum}))
+
+    printf "\033[1;30m\033[44mjump to: \033[1;30m\033[42m%s\033[0m\n" "${currentPath}"
+    printf "\033[1;30m\033[44mfile count: \033[1;30m\033[42m%s\033[0m\n" "${totalNum}"
+    printf "%s\n" "============="
+
+    if [[ ${totalNum} -le 35 ]]; then
+        ls -al | tail -n +2
+    elif [[ ${totalNum} -ge 101 ]]; then
+        echo "files in current directory is more than 100"
+    else
+        ls -a
+    fi
+}
+
+###################################################
 # description: jump to dir by fuzzy search result
 #       input: $1: search keyword 1
 #       input: $2: search keyword 2

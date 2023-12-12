@@ -6,7 +6,7 @@
 #      return: 0: success | 1: fail
 ###################################################
 function lso_new_user() {
-
+    # Check if the script is sourced
     local lso_root="/opt/lab-server-ops"
     local util_file_path="${lso_root}/lso_utils/utils.sh"
 
@@ -124,7 +124,8 @@ function lso_new_user() {
         return 1
     fi
 
-    lso_print_info_line "Congratulations! ${new_user} is added successfully.🍺️"
+    lso_print_info "Congratulations! ${new_user} is added successfully."
+    lso_print_white_line " 🍺️"
 }
 
 lso_new_user

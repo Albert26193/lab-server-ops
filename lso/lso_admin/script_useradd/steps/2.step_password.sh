@@ -9,8 +9,8 @@ function step_password() {
     local new_user=$1
 
     # default password
-    # if you want to change the default password, please change it here
-    local lso_default_password="qqaazz"
+    local characters='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?'
+    local lso_default_password="lso-passwd-$(head /dev/urandom | tr -dc "$characters" | head -c 16)"
 
     if [ -z "${new_user}" ]; then
         lso_print_red_line "new_user is empty, please check it."
@@ -20,6 +20,8 @@ function step_password() {
     lso_print_white "the default password is:"
     lso_print_red_line "${lso_default_password}"
     echo "${new_user}:${lso_default_password}" | chpasswd
+    lso_print_warning "Watch out: "
+    lso_print_yellow_line "this password is random generated, only show ONCE, keep it or change it."
 
     if lso_yn_prompt "Do you want to change password for the ${new_user}?"; then
         lso_print_white_line "Please enter the password for the ${new_user}: "
