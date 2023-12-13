@@ -30,7 +30,7 @@ function install_lso {
         bash -c "mkdir ${target_dir}"
     fi
 
-    if ! lso_yn_prompt "Do you want to copy ${LSO_COLOR_GREEN}${git_root}/lso (current dir)${LSO_COLOR_RESET} to ${LSO_BACKGROUND_GREEN}${target_dir}(install dir)${LSO_COLOR_RESET} ?"; then
+    if ! lso_yn_prompt "Do you want to copy ${LSO_COLOR_GREEN}${git_root}/lso (current dir)${LSO_COLOR_RESET} to ${LSO_COLOR_GREEN}${target_dir}(install dir)${LSO_COLOR_RESET} ?"; then
         lso_print_white_line "Exit Now..."
         return 1
     fi

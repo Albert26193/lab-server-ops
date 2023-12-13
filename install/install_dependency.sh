@@ -26,9 +26,6 @@ function lso_install_dependency() {
 
     local common_install=(
         "tmux"
-        "rsync"
-        "zip"
-        "unzip"
         "vim"
         "git"
         "curl"
@@ -39,21 +36,14 @@ function lso_install_dependency() {
     local debian_ubuntu_install=(
         "fd-find"
         "fzf"
-        "duf"
-        "neofetch"
         "bat"
-        "neovim"
-        "xclip"
         "exa"
     )
 
     local mac_install=(
         "fd"
         "fzf"
-        "duf"
-        "neofetch"
         "bat"
-        "neovim"
         "exa"
     )
 
