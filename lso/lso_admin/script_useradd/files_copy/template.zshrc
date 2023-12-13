@@ -26,7 +26,7 @@ alias "ll"="ls -l"
 alias "la"="ls -al"
 
 # ------------------  lab-server-ops script  ----------------
-source "~/.lso.env"
+source "${HOME}/.lso.env"
 my_scripts_dir="/opt/lab-server-ops/lso_user/"
 my_scripts=(
     "script_out/out.sh"
