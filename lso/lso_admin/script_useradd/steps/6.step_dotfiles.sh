@@ -65,14 +65,14 @@ function step_dotfiles() {
     done
 
     # load config files
-    sudo su - ${new_user} -c "bash ${target_home_path}/.lso_zsh.sh" >/dev/null
+    sudo su - ${new_user} -c "bash ${target_home_path}/lso_zsh.sh"
 
     clear
 
     if [[ ! -f "${target_home_path}/.oh-my-zsh/oh-my-zsh.sh" ]] ||
         [[ ! -d "${target_home_path}/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]] ||
         [[ ! -d "${target_home_path}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then
-        lso_print_red_line "load config files failed, cd to ${target_home_path} and run '.lso_zsh.sh' manually."
+        lso_print_red_line "load config files failed, cd to ${target_home_path} and run 'lso_zsh.sh' manually."
         return 1
     else
         lso_print_info_line "load config files successfully."

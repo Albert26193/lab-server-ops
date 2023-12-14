@@ -22,6 +22,7 @@ function lso_proxy_on() {
     export https_proxy="http://${proxy_ip_address}:${port}"
     export all_proxy="socks5://${proxy_ip_address}:${port}"
     echo -e "proxy on, ip is ${proxy_ip_address}, port is ${port}"
+    echo -e "please wait for 3 seconds to test..."
 
     local google_result=$(curl -s --connect-timeout 3 -m 3 www.google.com)
     if [[ -z "${google_result}" ]]; then
