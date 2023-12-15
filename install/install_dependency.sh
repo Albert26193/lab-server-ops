@@ -40,13 +40,6 @@ function lso_install_dependency() {
         "exa"
     )
 
-    local mac_install=(
-        "fd"
-        "fzf"
-        "bat"
-        "exa"
-    )
-
     local current_os="$(lso_check_os)"
     local all_install_list=()
 
@@ -54,9 +47,7 @@ function lso_install_dependency() {
     lso_print_white_line " detected OS: ${current_os} "
     lso_print_green_line "----------------------------------------------"
     # TODO: add more os to test
-    if [[ "${current_os}" == "macOS" ]]; then
-        all_install_list=("${common_install[@]} ${mac_install[@]}")
-    elif [[ ${current_os} == "Debian" ]]; then
+    if [[ ${current_os} == "Debian" ]]; then
         all_install_list=("${common_install[@]}" "${debian_ubuntu_install[@]}")
     elif [[ ${current_os} == "Ubuntu" ]]; then
         all_install_list=("${common_install[@]}" "${debian_ubuntu_install[@]}")
@@ -91,10 +82,7 @@ function lso_install_dependency() {
     printf "\n"
     lso_print_cyan_line "total count to install: ${#to_install_list[@]}"
     if lso_yn_prompt "Do you want to ${LSO_COLOR_GREEN}install all dependency${LSO_COLOR_RESET}?"; then
-        if [[ "${current_os}" == "macOS" ]]; then
-            lso_print_white_line "install dependency for macOS..."
-            brew install "${to_install_list[@]}"
-        elif [[ ${current_os} == "Debian" ]]; then
+        if [[ ${current_os} == "Debian" ]]; then
             lso_print_white_line "install dependency for Debian..."
             apt-get update
             apt-get install -y "${to_install_list[@]}"
