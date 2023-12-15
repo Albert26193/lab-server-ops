@@ -5,12 +5,32 @@
 #       input: $1: new_user
 #      return: 0: success | 1: fail
 ###################################################
-function step_dotfiles() {
+function add_zsh_for_user() {
     local new_user=$1
+
+    # Check if the script is sourced
+    local lso_root="/opt/lab-server-ops"
+    local util_file_path="${lso_root}/lso_utils/utils.sh"
+
+    if [[ ! -f "${util_file_path}" ]]; then
+        printf "%s\n" "${util_file_path} do not exist. Install lab-server-ops first."
+        printf "%s\n" "Exit Now..."
+        return 1
+    else
+        source "${util_file_path}"
+        lso_print_info_line "lab-server-ops utils.sh sourced."
+    fi
+
+    # Check if the script is executed as root
+    if [[ "$(id -u)" -ne 0 ]]; then
+        lso_print_error_line "Please run this script as root." >&2
+        return 1
+    fi
 
     # check new_user
     if [[ -z "${new_user}" ]]; then
         lso_print_red_line "new_user is empty, please check it."
+        lso_print_red_line "you should input new_user as param, like 'bash lso_add_zsh.sh [new_user]'."
         return 1
     fi
 
@@ -40,7 +60,7 @@ function step_dotfiles() {
     fi
 
     # copy files
-    local source_file_path="${lso_root}/lso_admin/script_useradd/files_copy"
+    local source_file_path="${lso_root}/lso_admin/script_zsh/files_copy"
     local target_home_path="/home/${new_user}"
     local files=($(ls -al ${source_file_path} | tail -n +4 | awk '{print $9}'))
 
@@ -67,8 +87,6 @@ function step_dotfiles() {
     # load config files
     sudo su - ${new_user} -c "bash ${target_home_path}/lso_zsh.sh"
 
-    clear
-
     if [[ ! -f "${target_home_path}/.oh-my-zsh/oh-my-zsh.sh" ]] ||
         [[ ! -d "${target_home_path}/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]] ||
         [[ ! -d "${target_home_path}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then
@@ -83,3 +101,5 @@ function step_dotfiles() {
 
     return 0
 }
+
+add_zsh_for_user "$@"
