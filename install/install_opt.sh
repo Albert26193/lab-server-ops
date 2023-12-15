@@ -23,6 +23,14 @@ function install_lso {
         return 1
     fi
 
+    # check branch rule
+    if lso_branch_rule && lso_check_branch; then
+        lso_print_green_line "branch rule check success..."
+    else
+        lso_print_white_line "branch rule check failed, exit now..."
+        return 1
+    fi
+
     local target_dir="/opt/lab-server-ops"
 
     if [[ ! -d "${target_dir}" ]]; then

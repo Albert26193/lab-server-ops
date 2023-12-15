@@ -24,6 +24,7 @@ function lso_install_dependency() {
         return 1
     fi
 
+    # check branch rule
     if lso_branch_rule && lso_check_branch; then
         lso_print_green_line "branch rule check success..."
     else
@@ -50,9 +51,6 @@ function lso_install_dependency() {
     local current_os="$(lso_check_os)"
     local all_install_list=()
 
-    lso_print_green_line "----------------------------------------------"
-    lso_print_white_line " detected OS: ${current_os} "
-    lso_print_green_line "----------------------------------------------"
     # TODO: add more os to test
     if [[ ${current_os} == "Debian" ]]; then
         all_install_list=("${common_install[@]}" "${debian_ubuntu_install[@]}")
