@@ -2,7 +2,7 @@
 
 ###################################################
 # description: make output colorful
-#       input: $1: input content
+#          $1: input content
 #      return: nothing
 ###################################################
 LSO_COLOR_RED="\033[31m"
@@ -48,7 +48,7 @@ lso_print_info() { printf "${LSO_BACKGROUND_GREEN}${LSO_COLOR_BLACK}%s${LSO_COLO
 
 ###################################################
 # description: give colorful yn_prompt
-#       input: $1: custom prompt to print
+#          $1: custom prompt to print
 #      return: 0: yes | 1: no
 ###################################################
 function lso_yn_prompt() {
@@ -66,7 +66,7 @@ function lso_yn_prompt() {
 
 ###################################################
 # description: print step information
-#       input: $1: current step description
+#          $1: current step description
 #      return: nothing
 ###################################################
 function lso_print_step() {
@@ -78,7 +78,6 @@ function lso_print_step() {
 
 ###################################################
 # description: get git root path
-#       input: none
 #      return: git root path
 ###################################################
 function lso_get_gitroot() {
@@ -95,7 +94,6 @@ function lso_get_gitroot() {
 
 ###################################################
 # description: give current os judgement
-#      input: none
 #      return: Ubuntu | macOS | Debian | CentOS
 ###################################################
 function lso_check_os() {
@@ -122,14 +120,14 @@ function lso_check_os() {
         echo $OS
         ;;
     *)
-        echo ""
+        echo "Other"
         ;;
     esac
 }
 
 ###################################################
-# description: check if dir exists
-#       input: $1: dir to check
+# description: check if /opt/lab-server-ops exists
+#          $1: dir to check
 #      return: 0: exist | 1: not exist
 ###################################################
 function lso_check_dir() {
@@ -140,35 +138,118 @@ function lso_check_dir() {
         lso_print_error_line "Error: "${dir}" not exist, please INSTALL IT FIRST."
         lso_print_white_line "-----------------------------------------------------"
         lso_print_white_line "| You can install it by running:                    |"
-        lso_print_white_line "|     1. cd to <your download dir>/lab-server-ops   |"
-        lso_print_white_line "|     2. run ./install/install_lso.sh               |"
+        lso_print_white_line "|     1. cd to xxx/lab-server-ops                   |"
+        lso_print_white_line "|     2. run ./deploy_opt/deploy_lso.sh             |"
         lso_print_white_line "-----------------------------------------------------"
         return 1
     fi
 }
 
 ###################################################
-# description: show files in current directory
-#       input: none
-#      return: 0: success | 1: fail
+# description: check branch name is matched with OS
+#       input: branch to check
+#      return: 0: exist | 1: not exist
 ###################################################
-function lso_check_devpency_basic() {
-    local check_list=(
-        "git"
-        "curl"
-        "zsh"
-        "vim"
-    )
+function lso_check_branch() {
+    local current_branch="$(git branch --show-current)"        # master | linux | linux-minimum | mac-personal
+    local current_os="$(lso_check_os)"                         # Ubuntu | macOS | Debian | CentOS
+    local linux_release_version="$(uname -r | cut -d "." -f1)" # 5.4.0-42-generic --> 5
 
-    for sing_check in ${check_list[@]}; do
-        if [[ -z $(which ${sing_check}) ]]; then
-            lso_print_error_line "Error: ${sing_check} not installed, please INSTALL IT FIRST."
-            lso_print_white_line "-----------------------------------------------------"
-            lso_print_white_line "| You can install it by running:                    |"
-            lso_print_white_line "|     1. cd to <your download dir>/lab-server-ops   |"
-            lso_print_white_line "|     2. run ./install/install_dependency.sh        |"
-            lso_print_white_line "-----------------------------------------------------"
+    if [[ ${current_os} == "macOS" ]] &&
+        [[ ${current_branch} != "mac-personal" ]]; then
+        lso_print_white_line "current OS: ${current_os}"
+        lso_print_white_line "current Branch: ${current_branch}"
+        lso_print_yellow_line "Warning: current branch is ${current_branch}, please checkout to mac-personal."
+        if lso_yn_prompt "Would you like to checkout to ${LSO_COLOR_GREEN}branch:mac-personal${LSO_COLOR_RESET}?"; then
+            git checkout mac-personal
+            if [[ $? -ne 0 ]]; then
+                lso_print_red_line "checkout to mac-personal failed, please check it."
+                return 1
+            else
+                lso_print_green_line "checkout to mac-personal successfully."
+                return 0
+            fi
+        else
+            lso_print_red_line "abort checkout to branch:'mac-personal' ..."
             return 1
         fi
-    done
+    fi
+
+    if [[ ${current_os} != "Ubuntu" ]] && [[ ${current_os} != "Debian" ]] &&
+        [[ ${current_os} != "CentOS" ]] && [[ ${current_os} != "macOS" ]]; then
+        lso_print_red_line "Error: current os is NOT Support, please check it."
+        lso_print_white_line "Support OS: Ubuntu | Debian | CentOS | macOS "
+        return 1
+    fi
+
+    if [[ ${linux_release_version} -lt "5" ]] &&
+        [[ ${current_branch} != "linux-minimum" ]]; then
+        lso_print_white_line "current Release Version: "$(uname -r)""
+        lso_print_yellow_line "your Linux Release Version is lower than 5, please check to linux-minimum branch."
+        if lso_yn_prompt "Would you like to checkout to ${LSO_COLOR_GREEN}branch:linux-minimum${LSO_COLOR_RESET}?"; then
+            git checkout linux-minimum
+            if [[ $? -ne 0 ]]; then
+                lso_print_red_line "checkout to 'linux-minimum' failed, please check it."
+                return 1
+            else
+                lso_print_green_line "checkout to 'linux-minimum' successfully."
+                return 0
+            fi
+        else
+            lso_print_red_line "abort checkout to branch:'linux-minimum' ..."
+            return 1
+        fi
+    fi
+
+    if [[ ${linux_release_version} -ge "5" ]] &&
+        [[ ${current_branch} != "linux" ]]; then
+        lso_print_white_line "current Release Version: "$(uname -r)""
+        lso_print_yellow_line "your Linux Release Version is higher than 5, please check to 'linux' branch."
+        if lso_yn_prompt "Would you like to checkout to ${LSO_COLOR_GREEN}branch:linux${LSO_COLOR_RESET}?"; then
+            git checkout linux
+            if [[ $? -ne 0 ]]; then
+                lso_print_red_line "checkout to 'linux' failed, please check it."
+                return 1
+            else
+                lso_print_green_line "checkout to 'linux' successfully."
+                return 0
+            fi
+        else
+            lso_print_red_line "abort checkout to branch:'linux' ..."
+            return 1
+        fi
+    fi
+
+    lso_print_white_line "current OS              : ${current_os}"
+    lso_print_white_line "current Release Version : "$(uname -r)""
+    lso_print_white_line "current Branch          : ${current_branch}"
+    lso_print_green_line "Your OS and Branch are matched 🟩, continue..."
+    return 0
+}
+
+###################################################
+# description: print branch rules
+#      return: 0: success | 1: fail
+###################################################
+function lso_branch_rule() {
+    lso_print_white_line "-----------------------------------------------------"
+    lso_print_cyan_line "Support OS: Ubuntu | Debian | CentOS | macOS "
+    lso_print_magenta_line "Current OS: $(lso_check_os)"
+    lso_print_white_line "-----------------------------------------------------"
+    lso_print_white "For"
+    lso_print_green "MacOS(personal-use) ---> "
+    lso_print_white_line "branch: mac-personal"
+
+    lso_print_white "For"
+    lso_print_green "Linux(kernel < 5): Ubuntu < 19.04 | CentOS 7/8 | Debian < 10 ---> "
+    lso_print_white_line "branch: linux-minimum"
+
+    lso_print_white "For"
+    lso_print_green "Linux(kernel >= 5): Ubuntu >= 19.04 | Debian >=10 ---> "
+    lso_print_white_line "branch: linux"
+
+    lso_print_white_line "-----------------------------------------------------"
+    printf "\n"
+
+    return 0
 }

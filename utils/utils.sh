@@ -120,7 +120,7 @@ function lso_check_os() {
         echo $OS
         ;;
     *)
-        echo ""
+        echo "Other"
         ;;
     esac
 }
@@ -147,7 +147,7 @@ function lso_check_dir() {
 
 ###################################################
 # description: check branch name is matched with OS
-#       input: dir to check
+#       input: branch to check
 #      return: 0: exist | 1: not exist
 ###################################################
 function lso_check_branch() {
@@ -155,10 +155,10 @@ function lso_check_branch() {
     local current_os="$(lso_check_os)"                         # Ubuntu | macOS | Debian | CentOS
     local linux_release_version="$(uname -r | cut -d "." -f1)" # 5.4.0-42-generic --> 5
 
-    if [[ ${current_os} -eq "macOS" ]] &&
-        [[ ${current_branch} -ne "mac-personal" ]]; then
-        lso_print_white_line "current OS: ${LSO_COLOR_CYAN}${current_os}${LSO_COLOR_RESET}"
-        lso_print_white_line "current Branch: ${LSO_COLOR_CYAN}${current_branch}${LSO_COLOR_RESET}"
+    if [[ ${current_os} == "macOS" ]] &&
+        [[ ${current_branch} != "mac-personal" ]]; then
+        lso_print_white_line "current OS: ${current_os}"
+        lso_print_white_line "current Branch: ${current_branch}"
         lso_print_red_line "Error: current branch is ${current_branch}, please checkout to mac-personal."
         if lso_yn_prompt "Would you like to checkout to ${LSO_COLOR_GREEN}branch:mac-personal${LSO_COLOR_RESET}?"; then
             git checkout mac-personal
@@ -170,21 +170,21 @@ function lso_check_branch() {
                 return 0
             fi
         else
-            lso_print_red_line "checkout to mac-personal failed, please check it."
+            lso_print_red_line "abort checkout to branch:'mac-personal' ..."
             return 1
         fi
     fi
 
-    if [[ ${current_os} -ne "Ubuntu" ]] && [[ ${current_os} -ne "Debian" ]] &&
-        [[ ${current_os} -ne "CentOS" ]] && [[ ${current_os} -ne "macOS" ]]; then
+    if [[ ${current_os} != "Ubuntu" ]] && [[ ${current_os} != "Debian" ]] &&
+        [[ ${current_os} != "CentOS" ]] && [[ ${current_os} != "macOS" ]]; then
         lso_print_red_line "Error: current os is NOT Support, please check it."
         lso_print_white_line "Support OS: Ubuntu | Debian | CentOS | macOS "
         return 1
     fi
 
     if [[ ${linux_release_version} -lt "5" ]] &&
-        [[ ${current_branch} -ne "linux-minimum" ]]; then
-        lso_print_white_line "current Release Version: ${LSO_COLOR_CYAN}"$(uname -r)"${LSO_COLOR_RESET}"
+        [[ ${current_branch} != "linux-minimum" ]]; then
+        lso_print_white_line "current Release Version: "$(uname -r)""
         lso_print_yellow_line "your Linux Release Version is lower than 5, please check to linux-minimum branch."
         if lso_yn_prompt "Would you like to checkout to ${LSO_COLOR_GREEN}branch:linux-minimum${LSO_COLOR_RESET}?"; then
             git checkout linux-minimum
@@ -196,15 +196,15 @@ function lso_check_branch() {
                 return 0
             fi
         else
-            lso_print_red_line "checkout to 'linux-minimum' failed, please check it."
+            lso_print_red_line "abort checkout to branch:'linux-minimum' ..."
             return 1
         fi
     fi
 
     if [[ ${linux_release_version} -ge "5" ]] &&
-        [[ ${current_branch} -ne "linux" ]]; then
-        lso_print_white_line "current Release Version: ${LSO_COLOR_CYAN}"$(uname -r)"${LSO_COLOR_RESET}"
-        lso_print_yellow_line "your Linux Release Version is higher than 5, please check to linux branch."
+        [[ ${current_branch} != "linux" ]]; then
+        lso_print_white_line "current Release Version: "$(uname -r)""
+        lso_print_yellow_line "your Linux Release Version is higher than 5, please check to 'linux' branch."
         if lso_yn_prompt "Would you like to checkout to ${LSO_COLOR_GREEN}branch:linux${LSO_COLOR_RESET}?"; then
             git checkout linux
             if [[ $? -ne 0 ]]; then
@@ -215,12 +215,41 @@ function lso_check_branch() {
                 return 0
             fi
         else
-            lso_print_red_line "checkout to 'linux' failed, please check it."
+            lso_print_red_line "abort checkout to branch:'linux' ..."
             return 1
         fi
     fi
 
-    lso_print_white_line "current OS: ${LSO_COLOR_CYAN} ${current_os} ${LSO_COLOR_RESET}"
-    lso_print_white_line "current Branch: ${LSO_COLOR_CYAN}${current_branch}${LSO_COLOR_RESET}"
-    lso_print_green_line "Your OS and Branch are matched 🍻️, continue..."
+    lso_print_white_line "current OS              : ${current_os}"
+    lso_print_white_line "current Release Version : "$(uname -r)""
+    lso_print_white_line "current Branch          : ${current_branch}"
+    lso_print_green_line "Your OS and Branch are matched 🟩, continue..."
+    return 0
+}
+
+###################################################
+# description: print branch rules
+#      return: 0: success | 1: fail
+###################################################
+function lso_branch_rule() {
+    lso_print_white_line "-----------------------------------------------------"
+    lso_print_cyan_line "Support OS: Ubuntu | Debian | CentOS | macOS "
+    lso_print_magenta_line "Current OS: $(lso_check_os)"
+    lso_print_white_line "-----------------------------------------------------"
+    lso_print_white "For"
+    lso_print_green "MacOS(personal-use) ---> "
+    lso_print_white_line "branch: mac-personal"
+
+    lso_print_white "For"
+    lso_print_green "Linux(kernel < 5): Ubuntu < 19.04 | CentOS 7/8 | Debian < 10 ---> "
+    lso_print_white_line "branch: linux-minimum"
+
+    lso_print_white "For"
+    lso_print_green "Linux(kernel >= 5): Ubuntu >= 19.04 | Debian >=10 ---> "
+    lso_print_white_line "branch: linux"
+
+    lso_print_white_line "-----------------------------------------------------"
+    printf "\n"
+
+    return 0
 }

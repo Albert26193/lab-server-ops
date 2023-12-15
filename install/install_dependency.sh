@@ -24,6 +24,13 @@ function lso_install_dependency() {
         return 1
     fi
 
+    if lso_branch_rule && lso_check_branch; then
+        lso_print_green_line "branch rule check success..."
+    else
+        lso_print_white_line "branch rule check failed, exit now..."
+        return 1
+    fi
+
     local common_install=(
         "tmux"
         "vim"
