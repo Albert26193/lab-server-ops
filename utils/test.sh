@@ -120,7 +120,7 @@ function lso_check_os() {
         echo $OS
         ;;
     *)
-        echo ""
+        echo "Other"
         ;;
     esac
 }
@@ -229,6 +229,7 @@ function lso_check_branch() {
 function lso_branch_rule() {
     lso_print_white_line "-----------------------------------------------------"
     lso_print_cyan_line "Support OS: Ubuntu | Debian | CentOS | macOS "
+    lso_print_magenta_line "Current OS: $(lso_check_os)"
     lso_print_white_line "-----------------------------------------------------"
     lso_print_white "For"
     lso_print_green "MacOS(personal-use) ---> "
@@ -244,5 +245,3 @@ function lso_branch_rule() {
 
     lso_print_white_line "-----------------------------------------------------"
 }
-
-lso_branch_rule
