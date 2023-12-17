@@ -27,21 +27,7 @@ alias "la"="ls -al"
 
 # ------------------  lab-server-ops script  ----------------
 source "${HOME}/.lso.env"
-my_scripts_dir="/opt/lab-server-ops/lso_user/"
-my_scripts=(
-    "script_out/out.sh"
-    "script_fzf/fzf_search.sh"
-    "script_fzf/fzf_history.sh"
-)
-
-for single_script in "${my_scripts[@]}"; do
-    current_script="${my_scripts_dir}${single_script}"
-    if [[ ! -f ${current_script} ]]; then
-        echo "${current_script} does not exist"
-    else
-        source "${current_script}"
-    fi
-done
+source "/opt/lab-server-ops/lso_user/lso.sh"
 
 alias "fs"="lso_fuzzy_search"
 alias "fj"="lso_fuzzy_jump"

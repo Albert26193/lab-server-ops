@@ -159,7 +159,7 @@ function lso_check_branch() {
         [[ ${current_branch} != "mac-personal" ]]; then
         lso_print_white_line "current OS: ${current_os}"
         lso_print_white_line "current Branch: ${current_branch}"
-        lso_print_red_line "Error: current branch is ${current_branch}, please checkout to mac-personal."
+        lso_print_yellow_line "Warning: current branch is ${current_branch}, please checkout to mac-personal."
         if lso_yn_prompt "Would you like to checkout to ${LSO_COLOR_GREEN}branch:mac-personal${LSO_COLOR_RESET}?"; then
             git checkout mac-personal
             if [[ $? -ne 0 ]]; then
@@ -220,6 +220,7 @@ function lso_check_branch() {
         fi
     fi
 
+    clear
     lso_print_white_line "current OS              : ${current_os}"
     lso_print_white_line "current Release Version : "$(uname -r)""
     lso_print_white_line "current Branch          : ${current_branch}"

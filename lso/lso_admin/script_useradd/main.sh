@@ -5,7 +5,7 @@
 #       input: none
 #      return: 0: success | 1: fail
 ###################################################
-function lso_new_user() {
+function lso_useradd() {
     # Check if the script is sourced
     local lso_root="/opt/lab-server-ops"
     local util_file_path="${lso_root}/lso_utils/utils.sh"
@@ -98,24 +98,11 @@ function lso_new_user() {
         return 1
     fi
 
-    #################################### step6 deploy dotfiles ################################
+    ##################################### step6 add link ###################################
     lso_print_step 6
-    lso_print_cyan_line "step6: add dotfiles for ${new_user}"
+    lso_print_cyan_line "step6: linke ${new_user}/data to /data/${new_user}, to save space for /home"
 
-    source "${deploy_dir_path}/6.step_dotfiles.sh"
-    if step_dotfiles "${new_user}"; then
-        lso_print_info "${new_user}"
-        lso_print_white_line " 's dotfiles has deployed."
-    else
-        lso_print_white_line "Exit Now..."
-        return 1
-    fi
-
-    ##################################### step7 add link ###################################
-    lso_print_step 7
-    lso_print_cyan_line "step7: linke ${new_user}/data to /data/${new_user}, to save space for /home"
-
-    source "${deploy_dir_path}/7.step_link.sh"
+    source "${deploy_dir_path}/6.step_link.sh"
     if step_link "${new_user}"; then
         lso_print_info "${new_user}"
         lso_print_white_line " is linked."
@@ -124,8 +111,22 @@ function lso_new_user() {
         return 1
     fi
 
+    #################################### step7 deploy dotfiles ################################
+    lso_print_step 7
+    lso_print_cyan_line "step7: add dotfiles for ${new_user}"
+
+    source "${deploy_dir_path}/7.step_dotfiles.sh"
+    if step_dotfiles "${new_user}"; then
+        lso_print_info "${new_user}"
+        lso_print_white_line " 's dotfiles has deployed."
+    else
+        lso_print_white_line "Exit Now..."
+        return 1
+    fi
+
+    ########################################################################################
     lso_print_info "Congratulations! ${new_user} is added successfully."
     lso_print_white_line " 🍺️"
 }
 
-lso_new_user
+lso_useradd

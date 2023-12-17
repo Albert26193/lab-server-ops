@@ -11,7 +11,7 @@ function step_new_user() {
 
     if id -u "${new_user}" >/dev/null 2>&1; then
         lso_print_warning_line "user: '${new_user}' already existed."
-        lso_print_warning_line "if you delete it, all data will be lost. command: 'userdel -r ${new_user}'"
+        lso_print_yellow_line "if you delete it, all data will be lost. command: 'userdel -r ${new_user}'"
         if lso_yn_prompt "Do you want to delete ${new_user}, and create a new one?"; then
             userdel -r "${new_user}"
             if [[ $? -ne 0 ]]; then

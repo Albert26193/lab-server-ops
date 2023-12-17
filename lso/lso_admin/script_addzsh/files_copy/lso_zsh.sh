@@ -55,18 +55,18 @@ function lso_zsh_download() {
         lso_print_yellow_line "if FAILED, please check your network. cd to ${current_home} and run lso_zsh.sh again."
 
         # install oh-my-zsh
-        bash -c "$(curl -m 5 -fsSL https://install.ohmyz.sh/)" >/dev/null
-
-        if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
-            lso_print_yellow_line "oh-my-zsh install failed because of network."
-            lso_print_white_line "Now, try to install oh-my-zsh from gitee."
-            bash -c "$(curl -m 5 -fsSL https://gitee.com/mirrors/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
-        fi
+        bash -c "$(curl -m 5 -fsSL https://gitee.com/mirrors/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
 
         if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
             lso_print_yellow_line "oh-my-zsh install failed because of network."
             lso_print_white_line "Now, try to install oh-my-zsh from another gitee repo."
             bash -c "$(curl -m 5 -fsSL https://gitee.com/albert26193/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
+        fi
+
+        if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
+            lso_print_yellow_line "oh-my-zsh install failed because of network."
+            lso_print_white_line "Now, try to install oh-my-zsh from offical."
+            bash -c "$(curl -m 5 -fsSL https://install.ohmyz.sh/)" >/dev/null
         fi
 
         if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
@@ -108,26 +108,27 @@ function lso_zsh_download() {
 
     # install zsh-completions
     if [[ -f "${current_home}/.zshrc" ]]; then
-        if lso_yn_prompt "Would you like to backup ~/.zshrc and create a new ~/.zshrc for you?"; then
-            lso_print_yellow_line "backup .zshrc to .zshrc.pre-oh-my-zsh"
-            mv "${current_home}/.zshrc" "${current_home}/.zshrc.pre-oh-my-zsh"
-        fi
+        lso_print_yellow_line "backup .zshrc to .zshrc.pre-oh-my-zsh"
+        mv "${current_home}/.zshrc" "${current_home}/.zshrc.pre-oh-my-zsh"
     fi
 
-    if [[ -f "${current_home}/template.zshrc" ]]; then
+    if [[ -f "${current_home}/template.zshrc" ]] &&
+        [[ -f "${current_home}/template.vimrc" ]]; then
         lso_print_white_line "this is first time install, remove some files"
         # remove files not need
-        mv "${current_home}/.zsh_history" "${current_home}/.oh-my-zsh/cache/.zsh_history"
+        rm "${current_home}/.zshrc"
+        rm "${current_home}/.zsh_history"
+        rm "${current_home}/.shell.pre-oh-my-zsh"
+        rm "${current_home}/.zshrc.pre-oh-my-zsh"
 
         # create new .zshrc
         mv "${current_home}/template.zshrc" "${current_home}/.zshrc"
+        mv "${current_home}/template.vimrc" "${current_home}/.vimrc"
 
         # source .zshrc
         source "${current_home}/.zshrc"
         rm "${current_home}/.zcompdump-*.zwc"
     fi
-
-    return 0
 }
 
 lso_zsh_download

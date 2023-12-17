@@ -220,6 +220,7 @@ function lso_check_branch() {
         fi
     fi
 
+    clear
     lso_print_white_line "current OS              : ${current_os}"
     lso_print_white_line "current Release Version : "$(uname -r)""
     lso_print_white_line "current Branch          : ${current_branch}"

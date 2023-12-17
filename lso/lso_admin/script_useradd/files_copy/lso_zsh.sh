@@ -55,18 +55,18 @@ function lso_zsh_download() {
         lso_print_yellow_line "if FAILED, please check your network. cd to ${current_home} and run lso_zsh.sh again."
 
         # install oh-my-zsh
-        bash -c "$(curl -m 5 -fsSL https://install.ohmyz.sh/)" >/dev/null
-
-        if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
-            lso_print_yellow_line "oh-my-zsh install failed because of network."
-            lso_print_white_line "Now, try to install oh-my-zsh from gitee."
-            bash -c "$(curl -m 5 -fsSL https://gitee.com/mirrors/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
-        fi
+        bash -c "$(curl -m 5 -fsSL https://gitee.com/mirrors/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
 
         if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
             lso_print_yellow_line "oh-my-zsh install failed because of network."
             lso_print_white_line "Now, try to install oh-my-zsh from another gitee repo."
             bash -c "$(curl -m 5 -fsSL https://gitee.com/albert26193/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
+        fi
+
+        if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
+            lso_print_yellow_line "oh-my-zsh install failed because of network."
+            lso_print_white_line "Now, try to install oh-my-zsh from offical."
+            bash -c "$(curl -m 5 -fsSL https://install.ohmyz.sh/)" >/dev/null
         fi
 
         if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
@@ -129,6 +129,7 @@ function lso_zsh_download() {
         source "${current_home}/.zshrc"
         rm "${current_home}/.zcompdump-*.zwc"
     fi
+
 }
 
 lso_zsh_download
