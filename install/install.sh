@@ -76,8 +76,15 @@ function install_lso {
         printf '%s\n' "${target_dir} copy failed."
     fi
 
-    lso_print_info "LSO files are deployed to ${target_dir} sucessfully. Congratulations!"
-    echo " 🎉️"
+    lso_print_green_line "LSO files are deployed to ${target_dir} sucessfully. Congratulations! 🍺️"
+
+    printf "---------------------------------------------\n"
+    lso_print_info_line "TIP: "
+    lso_print_white_line "add below to your ~/.bashrc or ~/.zshrc:"
+    lso_print_green_line "   source '"${target_dir}/lso_admin/lso.sh"'"
+    lso_print_white "then, use command: "
+    lso_print_cyan "lso_admin"
+    lso_print_white_line " to manage your server."
 
     return 0
 }
