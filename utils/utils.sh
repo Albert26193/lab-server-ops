@@ -94,7 +94,7 @@ function lso_get_gitroot() {
 
 ###################################################
 # description: give current os judgement
-#      return: Ubuntu | macOS | Debian | CentOS
+#      return: Ubuntu | macOS | Debian | CentOS | Raspbian | Other
 ###################################################
 function lso_check_os() {
     if [[ -f /etc/os-release ]]; then
@@ -116,7 +116,7 @@ function lso_check_os() {
     fi
 
     case $OS in
-    "Ubuntu" | "Debian" | "CentOS" | "macOS")
+    "Ubuntu" | "Debian" | "CentOS" | "macOS" | "Raspbian")
         echo $OS
         ;;
     *)
@@ -151,8 +151,9 @@ function lso_check_dir() {
 #      return: 0: exist | 1: not exist
 ###################################################
 function lso_check_branch() {
-    local current_branch="$(git branch --show-current)"        # master | linux | linux-minimum | mac-personal
-    local current_os="$(lso_check_os)"                         # Ubuntu | macOS | Debian | CentOS
+    local current_branch="$(git branch --show-current)" # master | linux | linux-minimum | mac-personal
+    local current_os="$(lso_check_os)"
+
     local linux_release_version="$(uname -r | cut -d "." -f1)" # 5.4.0-42-generic --> 5
 
     if [[ ${current_os} == "macOS" ]] &&
@@ -175,10 +176,13 @@ function lso_check_branch() {
         fi
     fi
 
-    if [[ ${current_os} != "Ubuntu" ]] && [[ ${current_os} != "Debian" ]] &&
-        [[ ${current_os} != "CentOS" ]] && [[ ${current_os} != "macOS" ]]; then
+    if [[ ${current_os} != "Ubuntu" ]] &&
+        [[ ${current_os} != "Debian" ]] &&
+        [[ ${current_os} != "CentOS" ]] &&
+        [[ ${current_os} != "Raspbian" ]] &&
+        [[ ${current_os} != "macOS" ]]; then
         lso_print_red_line "Error: current os is NOT Support, please check it."
-        lso_print_white_line "Support OS: Ubuntu | Debian | CentOS | macOS "
+        lso_print_white_line "Support OS: Ubuntu | Debian | CentOS | macOS | Raspbian"
         return 1
     fi
 
@@ -234,7 +238,7 @@ function lso_check_branch() {
 ###################################################
 function lso_branch_rule() {
     lso_print_white_line "-----------------------------------------------------"
-    lso_print_cyan_line "Support OS: Ubuntu | Debian | CentOS | macOS "
+    lso_print_cyan_line "Support OS: Ubuntu | Debian | CentOS | macOS | Raspbian "
     lso_print_magenta_line "Current OS: $(lso_check_os)"
     lso_print_white_line "-----------------------------------------------------"
     lso_print_white "For"
@@ -242,11 +246,11 @@ function lso_branch_rule() {
     lso_print_white_line "branch: mac-personal"
 
     lso_print_white "For"
-    lso_print_green "Linux(kernel < 5): Ubuntu < 19.04 | CentOS 7/8 | Debian < 10 ---> "
+    lso_print_green "Linux(kernel < 5): Ubuntu < 19.04 | CentOS 7/8 | Debian/Raspbian < 10 ---> "
     lso_print_white_line "branch: linux-minimum"
 
     lso_print_white "For"
-    lso_print_green "Linux(kernel >= 5): Ubuntu >= 19.04 | Debian >=10 ---> "
+    lso_print_green "Linux(kernel >= 5): Ubuntu >= 19.04 | Debian/Raspbian >=10 ---> "
     lso_print_white_line "branch: linux"
 
     lso_print_white_line "-----------------------------------------------------"
