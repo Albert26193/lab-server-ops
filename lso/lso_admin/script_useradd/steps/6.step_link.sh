@@ -23,13 +23,13 @@ function step_link() {
     # have ho /data dir
     if [[ ! -d "/data" ]]; then
         lso_print_yellow_line "your system do not /data dir. no need to link."
-        return 1
+        return 0
     fi
 
     # have the same mount point
     if [[ "${data_mount_point}" == "${home_mount_point}" ]]; then
         lso_print_yellow_line "the /data and /home are in the same partition, no need to link."
-        return 1
+        return 0
     else
         lso_print_white_line "/data mount point: ${data_mount_point}"
         lso_print_white_line "/home mount point: ${home_mount_point}"
@@ -43,7 +43,7 @@ function step_link() {
             lso_print_green_line "delete ${real_data_dir} successfully."
         else
             lso_print_white_line "abort delete ${real_data_dir}."
-            return 1
+            return 0
         fi
     fi
 
@@ -59,7 +59,7 @@ function step_link() {
         eval "ls -al /data | grep -C 2 -E ${new_user}$"
     else
         lso_print_white_line "abort link ${real_data_dir} to ${symlink_dir}."
-        return 1
+        return 0
     fi
     return 0
 }
