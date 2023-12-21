@@ -27,20 +27,20 @@ function lso_fuzzy_search {
     local fd_command=""
     local bat_command=""
 
-    # TODO: add more os to test
-    if [[ "${current_os}" == "macOS" ]]; then
+    case "${current_os}" in
+    "macOS")
         fd_command="fd"
         bat_command="bat"
-    elif [[ ${current_os} == "Debian" ]]; then
+        ;;
+    "Debian" | "Ubuntu" | "Raspbian")
         fd_command="fdfind"
         bat_command="batcat"
-    elif [[ ${current_os} == "Ubuntu" ]]; then
-        fd_command="fdfind"
-        bat_command="batcat"
-    else
+        ;;
+    *)
         fd_command="fd"
         bat_command="batcat"
-    fi
+        ;;
+    esac
 
     # variable load
     local lso_var_file="${HOME}/.lso.env"

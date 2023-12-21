@@ -5,7 +5,6 @@
 #       input: none
 #      return: 0: success | 1: fail
 ###################################################
-# TODO
 function lso_admin() {
     # Check if the script is existed
     local lso_root="/opt/lab-server-ops"
@@ -18,8 +17,6 @@ function lso_admin() {
     fi
 
     local file_useradd="${admin_dir}/script_useradd/main.sh"
-    local file_disk="${admin_dir}/script_disk/main.sh"
-    local file_network="${admin_dir}/script_network/main.sh"
     local file_addzsh="${admin_dir}/script_addzsh/main.sh"
 
     if [[ $1 == "help" ]]; then
@@ -27,16 +24,10 @@ function lso_admin() {
         printf "lso_admin help:\n"
         printf "---------------------------------------------------\n"
         printf "   \033[32m lso_admin useradd \033[0m: add new user step by step\n"
-        printf "   \033[32m lso_admin disk \033[0m   : check disk usage\n"
-        printf "   \033[32m lso_admin network \033[0m: check network status\n"
         printf "   \033[32m lso_admin addzsh\033[0m  : add zsh for existed user\n"
         printf "---------------------------------------------------\n"
     elif [[ $1 == "useradd" ]]; then
         sudo bash "${file_useradd}"
-    elif [[ $1 == "disk" ]]; then
-        sudo bash "${file_disk}"
-    elif [[ $1 == "network" ]]; then
-        sudo bash "${file_network}"
     elif [[ $1 == "addzsh" ]]; then
         sudo bash "${file_addzsh}"
     elif [[ -z $1 ]]; then
@@ -44,9 +35,7 @@ function lso_admin() {
         printf "choose one of the following commands:\n"
         printf "---------------------------------------------------\n"
         printf "  \033[32m [1] lso_admin useradd \033[0m: add new user step by step\n"
-        printf "  \033[32m [2] lso_admin disk \033[0m   : check disk usage\n"
-        printf "  \033[32m [3] lso_admin network \033[0m: check network status\n"
-        printf "  \033[32m [4] lso_admin addzsh\033[0m  : add zsh for existed user\n"
+        printf "  \033[32m [2] lso_admin addzsh\033[0m  : add zsh for existed user\n"
         printf "---------------------------------------------------\n"
 
         while true; do
@@ -60,14 +49,6 @@ function lso_admin() {
                 break
                 ;;
             2)
-                sudo bash "${file_disk}"
-                break
-                ;;
-            3)
-                sudo bash "${file_network}"
-                break
-                ;;
-            4)
                 sudo bash "${file_addzsh}"
                 break
                 ;;

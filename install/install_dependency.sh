@@ -41,7 +41,7 @@ function lso_install_dependency() {
         "tree"
     )
 
-    local debian_ubuntu_install=(
+    local debian_family_install=(
         "fd-find"
         "fzf"
         "bat"
@@ -52,13 +52,14 @@ function lso_install_dependency() {
     local all_install_list=()
 
     # TODO: add more os to test
-    if [[ ${current_os} == "Debian" ]]; then
-        all_install_list=("${common_install[@]}" "${debian_ubuntu_install[@]}")
-    elif [[ ${current_os} == "Ubuntu" ]]; then
-        all_install_list=("${common_install[@]}" "${debian_ubuntu_install[@]}")
-    else
+    case "${current_os}" in
+    "Debian" | "Ubuntu" | "Raspbian")
+        all_install_list=("${common_install[@]}" "${debian_family_install[@]}")
+        ;;
+    *)
         all_install_list=("${common_install[@]}")
-    fi
+        ;;
+    esac
 
     local to_install_list=()
     for package in "${all_install_list[@]}"; do
@@ -87,18 +88,17 @@ function lso_install_dependency() {
     printf "\n"
     lso_print_cyan_line "total count to install: ${#to_install_list[@]}"
     if lso_yn_prompt "Do you want to ${LSO_COLOR_GREEN}install all dependency${LSO_COLOR_RESET}?"; then
-        if [[ ${current_os} == "Debian" ]]; then
-            lso_print_white_line "install dependency for Debian..."
+        case "${current_os}" in
+        "Debian" | "Ubuntu" | "Raspbian")
+            lso_print_white_line "install dependency for ${current_os}..."
             apt-get update
             apt-get install -y "${to_install_list[@]}"
-        elif [[ ${current_os} == "Ubuntu" ]]; then
-            lso_print_white_line "install dependency for Ubuntu..."
-            apt-get update
-            apt-get install -y "${to_install_list[@]}"
-        else
+            ;;
+        *)
             lso_print_yellow_line "not support now, exit now..."
             return 1
-        fi
+            ;;
+        esac
     else
         lso_print_white_line "do not install dependency, exit now..."
         return 1
