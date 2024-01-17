@@ -156,8 +156,15 @@ function lso_check_branch() {
 
     local linux_release_version="$(uname -r | cut -d "." -f1)" # 5.4.0-42-generic --> 5
 
-    if [[ ${current_os} == "macOS" ]] &&
-        [[ ${current_branch} != "mac-personal" ]]; then
+    if [[ ${current_os} == "macOS" ]] && [[ ${current_branch} == "mac-personal" ]]; then
+        clear
+        lso_print_white_line "current OS: ${current_os}"
+        lso_print_white_line "current Branch: ${current_branch}"
+        lso_print_green_line "Your OS and Branch are matched 🟩, continue..."
+        return 0
+    fi
+
+    if [[ ${current_os} == "macOS" ]] && [[ ${current_branch} != "mac-personal" ]]; then
         lso_print_white_line "current OS: ${current_os}"
         lso_print_white_line "current Branch: ${current_branch}"
         lso_print_yellow_line "Warning: current branch is ${current_branch}, please checkout to mac-personal."

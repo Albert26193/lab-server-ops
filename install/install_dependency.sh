@@ -19,8 +19,8 @@ function lso_install_dependency() {
     fi
 
     # Check if the script is executed as root
-    if [[ "$(id -u)" -ne 0 ]]; then
-        lso_print_error_line "Please run this script as root." >&2
+    if [[ "$(id -u)" -eq 0 ]]; then
+        lso_print_error_line "DO NOT run this script as root." >&2
         return 1
     fi
 
@@ -32,39 +32,49 @@ function lso_install_dependency() {
         return 1
     fi
 
-    local common_install=(
-        "tmux"
-        "vim"
-        "git"
-        "curl"
-        "wget"
-        "tree"
-    )
-
-    local debian_family_install=(
-        "fd-find"
-        "fzf"
-        "bat"
-        "exa"
-        "nvim"
-    )
+    if ! command -v brew &>/dev/null; then
+        lso_print_red_line "brew not installed, install it."
+        return 1
+    fi
 
     local current_os="$(lso_check_os)"
-    local all_install_list=()
+    local all_install_list=(
+        "git"
+        "tmux"
+        "vim"
+        "tree"
+        "wget"
+        "curl"
+        "nvim"
+        "fd"
+        "fzf"
+        "exa"
+        "bat"
+    )
 
-    # TODO: add more os to test
-    case "${current_os}" in
-    "Debian" | "Ubuntu" | "Raspbian")
-        all_install_list=("${common_install[@]}" "${debian_family_install[@]}")
-        ;;
-    *)
-        all_install_list=("${common_install[@]}")
-        ;;
-    esac
-
+    # local to_install_list=()
+    # for package in "${all_install_list[@]}"; do
+    #     if ! dpkg -l | grep -q "^ii[ ]* ${package}"; then
+    #         lso_print_red "[ X ]"
+    #         lso_print_red "${package}"
+    #         lso_print_white_line "is not installed"
+    #         to_install_list+=("${package}")
+    #     else
+    #         lso_print_green "[ √ ]"
+    #         lso_print_blue "${package}"
+    #         lso_print_white_line "is already installed."
+    #     fi
+    # done
+    #
+    # # if all dependency installed, exit now
+    # if [[ ${#to_install_list[@]} -eq 0 ]]; then
+    #     lso_print_green_line "All dependency installed, exit now..."
+    #     return 0
+    # fi
     local to_install_list=()
+
     for package in "${all_install_list[@]}"; do
-        if ! dpkg -l | grep -q "^ii[ ]* ${package}"; then
+        if ! brew list "$package" &>/dev/null; then
             lso_print_red "[ X ]"
             lso_print_red "${package}"
             lso_print_white_line "is not installed"
@@ -89,17 +99,8 @@ function lso_install_dependency() {
     printf "\n"
     lso_print_cyan_line "total count to install: ${#to_install_list[@]}"
     if lso_yn_prompt "Do you want to ${LSO_COLOR_GREEN}install all dependency${LSO_COLOR_RESET}?"; then
-        case "${current_os}" in
-        "Debian" | "Ubuntu" | "Raspbian")
-            lso_print_white_line "install dependency for ${current_os}..."
-            apt-get update
-            apt-get install -y "${to_install_list[@]}"
-            ;;
-        *)
-            lso_print_yellow_line "not support now, exit now..."
-            return 1
-            ;;
-        esac
+        lso_print_white_line "install dependency for ${current_os}..."
+        brew install "${to_install_list[@]}"
     else
         lso_print_white_line "do not install dependency, exit now..."
         return 1
