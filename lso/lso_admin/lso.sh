@@ -39,17 +39,17 @@ function lso_admin() {
         printf "---------------------------------------------------\n"
 
         while true; do
-            printf "\033[36minput number of the command to execute\033[0m (1-4, default 1):\n"
+            printf "\033[36minput number of the command to execute\033[0m (1-2, default 1):\n"
             printf "(input q to quit)\n"
             local input_number="1"
             read -r input_number
             case $input_number in
             1)
-                sudo bash "${file_useradd}"
+                sudo -E bash "${file_useradd}"
                 break
                 ;;
             2)
-                sudo bash "${file_addzsh}"
+                sudo -E bash "${file_addzsh}"
                 break
                 ;;
             q)

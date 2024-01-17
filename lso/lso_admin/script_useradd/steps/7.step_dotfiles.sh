@@ -67,8 +67,6 @@ function step_dotfiles() {
     # load config files
     sudo su - ${new_user} -c "bash ${target_home_path}/lso_zsh.sh"
 
-    clear
-
     if [[ ! -f "${target_home_path}/.oh-my-zsh/oh-my-zsh.sh" ]] ||
         [[ ! -d "${target_home_path}/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]] ||
         [[ ! -d "${target_home_path}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then

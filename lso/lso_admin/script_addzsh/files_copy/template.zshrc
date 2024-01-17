@@ -33,6 +33,8 @@ alias "fs"="lso_fuzzy_search"
 alias "fj"="lso_fuzzy_jump"
 alias "fe"="lso_fuzzy_edit"
 alias "hh"="lso_fuzzy_history"
+alias "pon"="lso_proxy_on"
+alias "poff"="lso_proxy_off"
 
 # ------------------- broadcast ---------------------
 bash "/opt/lab-server-ops/lso_user/script_broadcast/broadcast.sh"
