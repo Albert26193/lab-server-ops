@@ -38,15 +38,6 @@ function lso_install_dependency() {
         "git"
         "curl"
         "wget"
-        "tree"
-    )
-
-    local debian_family_install=(
-        "fd-find"
-        "fzf"
-        "bat"
-        "exa"
-        "nvim"
     )
 
     local current_os="$(lso_check_os)"
@@ -94,6 +85,10 @@ function lso_install_dependency() {
             lso_print_white_line "install dependency for ${current_os}..."
             apt-get update
             apt-get install -y "${to_install_list[@]}"
+            ;;
+        "CentOS")
+            lso_print_white_line "installing dependencies for ${current_os}..."
+            yum -y install "${to_install_list[@]}"
             ;;
         *)
             lso_print_yellow_line "not support now, exit now..."
