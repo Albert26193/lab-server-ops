@@ -20,19 +20,13 @@ export LC_ALL=en_US.UTF-8
 export LS_COLORS=${LS_COLORS}:'di=01;35'
 
 #  --------------------- alias --------------------
-alias "nv"="nvim"
 alias "tm"="tmux"
 alias "ll"="ls -l"
 alias "la"="ls -al"
 
 # ------------------  lab-server-ops script  ----------------
-source "${HOME}/.lso.env"
 source "/opt/lab-server-ops/lso_user/lso.sh"
 
-alias "fs"="lso_fuzzy_search"
-alias "fj"="lso_fuzzy_jump"
-alias "fe"="lso_fuzzy_edit"
-alias "hh"="lso_fuzzy_history"
 alias "pon"="lso_proxy_on"
 alias "poff"="lso_proxy_off"
 
