@@ -51,25 +51,24 @@ function lso_zsh_download() {
         lso_print_white_line "⏰️ wait for 10 seconds, this may take a while... ⏰️"
         lso_print_warning_line "YOU should have PROXY to Bypass GFW, otherwise this may fail."
 
-        lso_print_green_line "!!! Input your PROXY <IP>:<Port> like '127.0.0.1:7890' "
+        lso_print_green_line "!!! Input your PROXY <IP>:<Port> like '127.0.0.1:7890', if you have no proxy, input 'no' "
         local proxy="127.0.0.1:7890"
-
         read proxy
-        export https_proxy=http://${proxy}
-        export http_proxy=http://${proxy}
-        export all_proxy=socks5://${proxy}
 
-        lso_print_yellow_line "if FAILED, please check your network. cd to ${current_home} and run lso_zsh.sh again."
-        bash -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+        if [[ proxy -eq "no" ]]; then
+            lso_print_yellow_line "No Proxy, probably faild !"
+        else
+            export https_proxy=http://${proxy}
+            export http_proxy=http://${proxy}
+            export all_proxy=socks5://${proxy}
+        fi
+
+        lso_print_red_line "if FAILED, please check your network. cd to ${current_home} and run lso_zsh.sh again."
+
+        bash -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended >/dev/null
 
         # install oh-my-zsh
         lso_print_white_line "Now, try to install oh-my-zsh from offical."
-
-        if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
-            lso_print_yellow_line "oh-my-zsh install failed because of network."
-            lso_print_white_line "Now, try to install oh-my-zsh from another gitee repo."
-            bash -c "$(curl -m 5 -fsSL https://gitee.com/albert26193/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
-        fi
 
         if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
             lso_print_yellow_line "oh-my-zsh install failed because of network."

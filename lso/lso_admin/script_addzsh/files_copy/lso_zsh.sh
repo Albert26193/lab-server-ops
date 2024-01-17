@@ -47,32 +47,39 @@ function lso_zsh_download() {
             rm -rf "${current_home}/.oh-my-zsh"
         fi
 
-        export GIT_HTTP_LOW_SPEED_LIMIT=5
-        export GIT_HTTP_LOW_SPEED_TIME=5
-
         lso_print_yellow_line "oh-my-zsh is not installed, install it now"
         lso_print_white_line "⏰️ wait for 10 seconds, this may take a while... ⏰️"
-        lso_print_yellow_line "if FAILED, please check your network. cd to ${current_home} and run lso_zsh.sh again."
+        lso_print_warning_line "YOU should have PROXY to Bypass GFW, otherwise this may fail."
 
-        # install oh-my-zsh
-        bash -c "$(curl -m 5 -fsSL https://gitee.com/mirrors/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
+        lso_print_green_line "!!! Input your PROXY <IP>:<Port> like '127.0.0.1:7890', if you have no proxy, input 'no' "
+        local proxy="127.0.0.1:7890"
+        read proxy
 
-        if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
-            lso_print_yellow_line "oh-my-zsh install failed because of network."
-            lso_print_white_line "Now, try to install oh-my-zsh from another gitee repo."
-            bash -c "$(curl -m 5 -fsSL https://gitee.com/albert26193/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
+        if [[ proxy -eq "no" ]]; then
+            lso_print_yellow_line "No Proxy, probably faild !"
+        else
+            export https_proxy=http://${proxy}
+            export http_proxy=http://${proxy}
+            export all_proxy=socks5://${proxy}
         fi
 
+        lso_print_red_line "if FAILED, please check your network. cd to ${current_home} and run lso_zsh.sh again."
+
+        bash -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended >/dev/null
+
+        # install oh-my-zsh
+        lso_print_white_line "Now, try to install oh-my-zsh from offical."
+
         if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
             lso_print_yellow_line "oh-my-zsh install failed because of network."
-            lso_print_white_line "Now, try to install oh-my-zsh from offical."
-            bash -c "$(curl -m 5 -fsSL https://install.ohmyz.sh/)" >/dev/null
+            lso_print_white_line "Now, try to install oh-my-zsh from gitee."
+            bash -c "$(curl -m 5 -fsSL https://gitee.com/mirrors/ohmyzsh/raw/master/tools/install.sh)" "" --unattended >/dev/null
         fi
 
         if [[ ! -e ${current_home}/.oh-my-zsh/oh-my-zsh.sh ]]; then
             lso_print_yellow_line "oh-my-zsh install failed because of network."
             lso_print_white_line "Now, try to install oh-my-zsh from origin github repo."
-            bash -c "$(curl -m 5 -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended >/dev/null
+            bash -c "$(curl -m 5 -fsSL https://install.ohmyz.sh/)"
         fi
     fi
 
@@ -81,12 +88,12 @@ function lso_zsh_download() {
         lso_print_yellow_line "zsh-autosuggestions is already installed, nothing to do"
     else
         lso_print_cyan_line "zsh-autosuggestions is not installed, install it now"
-        git clone https://gitee.com/albert26193/zsh-autosuggestions ${ZSH_CUSTOM:-${current_home}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-${current_home}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
         if [[ $? -ne 0 ]]; then
             lso_print_yellow_line "plugin install failed because of network."
-            lso_print_white_line "Now, try to install zsh-autosuggestions from origin github repo."
-            git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-${current_home}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+            lso_print_white_line "Now, try to install zsh-autosuggestions from gitee repo."
+            git clone https://gitee.com/albert26193/zsh-autosuggestions ${ZSH_CUSTOM:-${current_home}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
             return 1
         fi
     fi
@@ -96,12 +103,12 @@ function lso_zsh_download() {
         lso_print_yellow_line "zsh-syntax-highlighting is already installed, nothing to do"
     else
         lso_print_cyan_line "zsh-syntax-highlighting is not installed, install it now"
-        git clone https://gitee.com/albert26193/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-${current_home}/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-${current_home}/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
         if [[ $? -ne 0 ]]; then
             lso_print_yellow_line "plugin install failed because of network."
-            lso_print_white_line "Now, try to install zsh-syntax-highlighting from origin github repo."
-            git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-${current_home}/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+            lso_print_white_line "Now, try to install zsh-syntax-highlighting from gitee repo."
+            git clone https://gitee.com/albert26193/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-${current_home}/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
             return 1
         fi
     fi
@@ -129,6 +136,7 @@ function lso_zsh_download() {
         source "${current_home}/.zshrc"
         rm "${current_home}/.zcompdump-*.zwc"
     fi
+
 }
 
 lso_zsh_download
