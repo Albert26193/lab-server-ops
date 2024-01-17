@@ -26,6 +26,9 @@ function lso_source_user() {
     source "${user_dir}/script_fzf/fzf_history.sh"
     source "${user_dir}/script_fzf/fzf_search.sh"
     source "${user_dir}/script_out/out.sh"
+    source "${user_dir}/script_shell/shell_man_vim.sh"
+    source "${user_dir}/script_shell/shell_cl.sh"
+    source "${user_dir}/script_shell/shell_tree_du.sh"
 }
 
 lso_source_user

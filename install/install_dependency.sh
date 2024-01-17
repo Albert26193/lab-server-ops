@@ -46,6 +46,7 @@ function lso_install_dependency() {
         "fzf"
         "bat"
         "exa"
+        "nvim"
     )
 
     local current_os="$(lso_check_os)"
