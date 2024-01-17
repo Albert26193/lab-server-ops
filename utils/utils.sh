@@ -151,7 +151,7 @@ function lso_check_dir() {
 #      return: 0: exist | 1: not exist
 ###################################################
 function lso_check_branch() {
-    local current_branch="$(git branch --show-current)" # master | linux | linux-minimum | mac-personal
+    local current_branch="$(git rev-parse --abbrev-ref HEAD)" # master | linux | linux-minimum | mac-personal
     local current_os="$(lso_check_os)"
 
     local linux_release_version="$(uname -r | cut -d "." -f1)" # 5.4.0-42-generic --> 5
