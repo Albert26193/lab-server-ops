@@ -1,4 +1,4 @@
-mytreedu() {
+function lso_mytreedu() {
     local depth=''
 
     while getopts "L:" opt; do

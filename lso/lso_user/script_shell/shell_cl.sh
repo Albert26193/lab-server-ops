@@ -1,4 +1,4 @@
-function cl() {
+function lso_cl() {
     if [[ -z ${1} ]]; then
         echo "please input the path"
         return

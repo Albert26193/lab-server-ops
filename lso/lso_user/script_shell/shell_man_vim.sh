@@ -1,5 +1,5 @@
 #/bin/bash
-function manv {
+function lso_manv {
     nvim \
         -c ":Man $1 $2" \
         -c ":set foldlevel=1" \
