@@ -53,7 +53,7 @@ function lso_install_dependency() {
         "fzf"
         "bat"
         "exa"
-        "nvim"
+        "neovim"
     )
 
     local all_install_list=()
@@ -70,7 +70,7 @@ function lso_install_dependency() {
 
     local to_install_list=()
     for package in "${all_install_list[@]}"; do
-        if ! dpkg -l | grep -q "^ii[ ]* ${package}"; then
+        if ! command -v ${package} &>/dev/null; then
             lso_print_red "[ X ]"
             lso_print_red "${package}"
             lso_print_white_line "is not installed"
