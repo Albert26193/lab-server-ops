@@ -84,19 +84,28 @@ function install_lso {
 
     lso_print_green_line "LSO files are deployed to ${target_dir} sucessfully. Congratulations! 🍺️"
 
+    local current_user="${SUDO_USER:-${USER}}"
+    local target_home="/root"
+
+    if [[ ${current_user} != "root" ]]; then
+        target_home="/home/${current_user}"
+    fi
+
+    echo $target_home
+
     if [[ "${SHELL}" =~ "zsh" ]]; then
-        if cat "${HOME}/.zshrc" | grep -q "lso_admin/lso.sh"; then
+        if cat "${target_home}/.zshrc" | grep -q "lso_admin/lso.sh"; then
             echo "lso_admin already added to your ~/.zshrc"
         else
-            echo "---------- lab-server-ops admin ---------" >>"${HOME}/.zshrc"
-            echo "source '"${target_dir}"/lso_admin/lso.sh'" >>"${HOME}/.zshrc"
+            echo "#---------- lab-server-ops admin ---------" >>"${target_home}/.zshrc"
+            echo "source '"${target_dir}"/lso_admin/lso.sh'" >>"${target_home}/.zshrc"
         fi
     elif [[ "${SHELL}" =~ "bash" ]]; then
-        if cat "${HOME}/.bashrc" | grep -q "lso_admin/lso.sh"; then
+        if cat "${target_home}/.bashrc" | grep -q "lso_admin/lso.sh"; then
             echo "lso_admin already added to your ~/.bashrc"
         else
-            echo "---------- lab-server-ops admin ---------" >>"${HOME}/.bashrc"
-            echo "source '"${target_dir}"/lso_admin/lso.sh'" >>"${HOME}/.bashrc"
+            echo "#---------- lab-server-ops admin ---------" >>"${target_home}/.bashrc"
+            echo "source '"${target_dir}"/lso_admin/lso.sh'" >>"${target_home}/.bashrc"
         fi
     fi
 
@@ -104,7 +113,7 @@ function install_lso {
     lso_print_info_line "TIP: "
     lso_print_white_line "already added below to your ~/.bashrc or ~/.zshrc:"
     lso_print_green_line "   source '"${target_dir}/lso_admin/lso.sh"'"
-    lso_print_white "then, use command: "
+    lso_print_white "then, source ~/.zshrc or ~/.bashrc, and use command: "
     lso_print_cyan "lso_admin"
     lso_print_white_line " to manage your server."
 
