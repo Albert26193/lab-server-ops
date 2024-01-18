@@ -84,6 +84,29 @@ function install_lso {
 
     lso_print_green_line "LSO files are deployed to ${target_dir} sucessfully. Congratulations! 🍺️"
 
+    local current_user="${SUDO_USER:-${USER}}"
+    local target_home="/root"
+
+    if [[ ${current_user} != "root" ]]; then
+        target_home="/home/${current_user}"
+    fi
+
+    if [[ "${SHELL}" =~ "zsh" ]]; then
+        if cat "${target_home}/.zshrc" | grep -q "lso_admin/lso.sh"; then
+            echo "lso_admin already added to your ~/.zshrc"
+        else
+            echo "#---------- lab-server-ops admin ---------" >>"${target_home}/.zshrc"
+            echo "source '"${target_dir}"/lso_admin/lso.sh'" >>"${target_home}/.zshrc"
+        fi
+    elif [[ "${SHELL}" =~ "bash" ]]; then
+        if cat "${target_home}/.bashrc" | grep -q "lso_admin/lso.sh"; then
+            echo "lso_admin already added to your ~/.bashrc"
+        else
+            echo "#---------- lab-server-ops admin ---------" >>"${target_home}/.bashrc"
+            echo "source '"${target_dir}"/lso_admin/lso.sh'" >>"${target_home}/.bashrc"
+        fi
+    fi
+
     echo "---------------------------------------------"
     lso_print_info_line "TIP: "
     lso_print_white_line "add below to your ~/.bashrc or ~/.zshrc:"
