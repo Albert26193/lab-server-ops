@@ -1,71 +1,70 @@
+# lab-server-ops Documentation
 
-# lab-server-ops 说明文档
+- [1. Introduction](https://github.com/Albert26193/lab-server-ops#1-introduction)
+	- [1.1 Overview](https://github.com/Albert26193/lab-server-ops#11-overview)
+	- [1.2 Branch Description](https://github.com/Albert26193/lab-server-ops#12-branch-description)
+	- [1.3 Feature Preview](https://github.com/Albert26193/lab-server-ops#13-feature-preview)
+		- [1.3.1 User Distribution Feature](https://github.com/Albert26193/lab-server-ops#131-user-distribution-feature)
+		- [1.3.2 User Broadcast Feature](https://github.com/Albert26193/lab-server-ops#132-user-broadcast-feature)
+		- [1.3.3 User Basic Configuration](https://github.com/Albert26193/lab-server-ops#133-user-basic-configuration)
+		- [1.3.4 Convenience Enhancement Feature](https://github.com/Albert26193/lab-server-ops#134-convenience-enhancement-feature)
+- [2. Installation](https://github.com/Albert26193/lab-server-ops#2-installation)
+	- [2.1 Confirm Branch](https://github.com/Albert26193/lab-server-ops#21-confirm-branch)
+	- [2.2 Installation Process](https://github.com/Albert26193/lab-server-ops#22-installation-process)
+		- [2.2.1 `linux` Branch](https://github.com/Albert26193/lab-server-ops#221-linux-branch)
+		- [2.2.2 `linux-minimum` Branch](https://github.com/Albert26193/lab-server-ops#222-linux-minimum-branch)
+		- [2.2.3`mac-personal` Branch](https://github.com/Albert26193/lab-server-ops#223-mac-personal-branch)
+- [3. Usage](https://github.com/Albert26193/lab-server-ops#3-usage)
+	- [3.1 For `Linux` Administrators](https://github.com/Albert26193/lab-server-ops#31-for-linux-administrators)
+	- [3.2 For Ordinary Users](https://github.com/Albert26193/lab-server-ops#32-for-ordinary-users)
+- [4. Configuration](https://github.com/Albert26193/lab-server-ops#4-configuration)
+- [5. Development Plan](https://github.com/Albert26193/lab-server-ops#5-development-plan)
 
-- [1.简介](https://github.com/Albert26193/lab-server-ops#1-简介)
-	- [1.1 概览](https://github.com/Albert26193/lab-server-ops#11-概览)
-	- [1.2 分支说明](https://github.com/Albert26193/lab-server-ops#12-分支说明)
-	- [1.3 功能预览](https://github.com/Albert26193/lab-server-ops#13-功能预览)
-		- [1.3.1 分发用户功能](https://github.com/Albert26193/lab-server-ops#131-分发用户功能)
-		- [1.3.2 用户广播功能](https://github.com/Albert26193/lab-server-ops#132-用户广播功能)
-		- [1.3.3 用户基本配置](https://github.com/Albert26193/lab-server-ops#133-用户基本配置)
-		- [1.3.4 便捷性增强功能](https://github.com/Albert26193/lab-server-ops#134-便捷性增强功能)
-- [2. 安装](https://github.com/Albert26193/lab-server-ops#2-安装)
-	- [2.1 确认分支](https://github.com/Albert26193/lab-server-ops#21-确认分支)
-	- [2.2 安装过程](https://github.com/Albert26193/lab-server-ops#22-安装过程)
-		- [2.2.1 `linux` 分支](https://github.com/Albert26193/lab-server-ops#221-linux-分支)
-		- [2.2.2 `linux-minimum` 分支](https://github.com/Albert26193/lab-server-ops#222-linux-minimum-分支)
-		- [2.2.3`mac-personal` 分支](https://github.com/Albert26193/lab-server-ops#223-mac-personal-分支)
-- [3. 使用](https://github.com/Albert26193/lab-server-ops#3-使用)
-	- [3.1 对于 `Linux` 管理员](https://github.com/Albert26193/lab-server-ops#31-对于-linux-管理员)
-	- [3.2 对于普通用户](https://github.com/Albert26193/lab-server-ops#32-对于普通用户)
-- [4. 配置](https://github.com/Albert26193/lab-server-ops#4-配置)
-- [5. 开发计划](https://github.com/Albert26193/lab-server-ops#5-开发计划)
+## 1. Introduction
 
-## 1.简介
+### 1.1 Overview
 
-### 1.1 概览
-
-- 该项目的目标对象：
-  - `Linux` 系统管理员
-  - 个人 `Mac` 用户
+- The target audience for this project:
+  - `Linux` system administrators
+  - Personal `Mac` users
   
 ---
 
-- 此项目旨在提供更佳的终端使用体验：
-  - 对于管理员：
-    1. 简化分发用户的流程（包括权限隔离、设置分组、分发密钥、配置 `zsh/vim/tmux` 等常用工具等功能）；
-    2.  提供便捷的用户广播功能；
-  - 对于用户：
-      1. 依靠 `oh-my-zsh` 和其生态下的插件框架，得到便捷舒适的 `Shell` 体验。
-      2. 依靠本项目`shell` 编程提供的脚本，实现模糊跳转、历史记录模糊搜索等一系列功能。
+- This project aims to provide a better terminal usage experience:
+  - For administrators:
+    1. Simplify the user distribution process (including permission isolation, group setting, key distribution, configuration of commonly used tools such as `zsh/vim/tmux`, etc.);
+    2. Provide convenient user broadcast function;
+  - For users:
+      1. Rely on `oh-my-zsh` and its plugin ecosystem to get a convenient and comfortable `Shell` experience.
+      2. Rely on the scripts provided by the `shell` programming of this project to implement a series of functions such as fuzzy jumping and history record fuzzy search.
 
-### 1.2 分支说明
+### 1.2 Branch Description
 
-- 本项目一共有 `3` 个分支：
-  1. `linux` 分支： 适配于 `Linux kernel >= 5` 的主流 `Linux` 系统，为**管理员**提供完整的功能。
-  2. `linux-minimum` 分支：适配于 `Linux kernel < 5` 的主流 `linux` 系统，为**管理员**提供部分功能。
-  3. `mac-personal` 分支：适配于 `macOS`，为**个人用户**提供部分功能。
+- This project has a total of `3` branches:
+  1. `linux` Branch: Suitable for mainstream `Linux` systems with `Linux kernel >= 5`, providing administrators with complete functions.
+  2. `linux-minimum` Branch: Suitable for mainstream `linux` systems with `Linux kernel < 5`, providing administrators with some functions.
+  3. `mac-personal` Branch: Suitable for `macOS`, providing individual users with some functions.
 
-| 分支名        | 适配系统                                                | 管理员功能             | 用户功能        |
-| ------------- | ------------------------------------------------------- | ---------------------- | --------------- |
-| linux         | `Ubuntu(>= 19.04)`  `Debian/Raspbian >= 10.0`           | 1.分发用户；2.用户广播 | 1. 常用工具配置 2. 便捷增强脚本 |
-| linux-minimum | `Ubuntu(< 19.04)`  `Debian/Raspbian < 10.0` `CentOS7/8` | 1. 分发用户；2.用户广播                       | 1. 常用用户配置                |
-| mac-personal  | `MacOS >= 11.0`                                         | 无                       | 1. 便捷增强脚本                |
+| Branch Name   | Adapted System                                          | Administrator Functions     | User Functions |
+| ------------- | ------------------------------------------------------- | --------------------------- | -------------- |
+| linux         | `Ubuntu(>= 19.04)`  `Debian/Raspbian >= 10.0`           | 1. User distribution; 2. User broadcast | 1. Common tool configuration 2. Convenience enhancement script |
+| linux-minimum | `Ubuntu(< 19.04)`  `Debian/Raspbian < 10.0` `CentOS7/8` | 1. User distribution; 2. User broadcast | 1. Common user configuration |
+| mac-personal  | `MacOS >= 11.0`                                         | No                          | 1. Convenience enhancement script |
 
-### 1.3 功能预览
+### 1.3 Feature Preview
 
-> 模糊跳转功能极大程度上依赖于 `fzf` 和 `fd` 这两个现代化工具，本项目仅仅只是一个胶水层的缝合工具。
+> The fuzzy jumping function largely relies on the two modern tools `fzf` and `fd`. This project is only a stitching tool for the glue layer.
 
-#### 1.3.1 分发用户功能
+#### 1.3.1 User Distribution Feature
 
-- 管理员分发用户的功能是完全交互式的，可以选择：用户分组、用户权限 `visudo` 设置、用户密钥分发等一系列功能。
+- The administrator's user distribution function is fully interactive and can choose a series of functions such as user grouping, user permission `visudo` settings, user key distribution, etc.
 
 ![new-user.gif](https://img-20221128.oss-cn-shanghai.aliyuncs.com/img-2023-05/new-user.gif)
 
-#### 1.3.2 用户广播功能
+#### 1.3.2 User Broadcast Feature
 
-- 用户广播的本质在于，所有的用户都会加载 `/opt/lab-server-ops/lso_user/script_broadcast/broadcast.sh` 
-- 管理员只需要修改这个文件，就可以实现用户广播功能。
+- The essence of user broadcasting is that all users will load `/opt/lab-server-ops/lso_user/script_broadcast/broadcast.sh`
+- Administrators only need to modify this file to implement the user broadcast function.
 
 ```shell
 #.zshrc
@@ -75,48 +74,48 @@ bash "/opt/lab-server-ops/lso_user/script_broadcast/broadcast.sh"
 
 ```
 
-#### 1.3.3 用户基本配置
+#### 1.3.3 User Basic Configuration
 
-- 经过分发产生的用户，基础工具具备预先配置
-- 用户目录下的 `.vimrc/.zshrc/.tmux.conf` 都得到了预先配置
-- 用户目录下的 `.ssh` 的公私密钥都得到了预先配置
-#### 1.3.4 便捷性增强功能
+- Users generated through distribution have pre-configured basic tools
+- The `.vimrc/.zshrc/.tmux.conf` under the user's directory have been pre-configured
+- The public and private keys under the user's directory `.ssh` have been pre-configured
+#### 1.3.4 Convenience Enhancement Feature
 
-- 可以在目录间模糊跳转、模糊编辑
-- 可以模糊查询历史记录
+- You can make fuzzy jumps and edits between directories
+- You can fuzzy query the history record
 
 ![command.gif](https://img-20221128.oss-cn-shanghai.aliyuncs.com/img-2023-05/command.gif)
 
-## 2. 安装
+## 2. Installation
 
-### 2.1 确认分支
+### 2.1 Confirm Branch
 
-- 请确保您的系统为 `Deiban/Raspbian/Ubuntu/CentOS/MacOS` 其中之一。
-- 如果您的系统为 `Ubuntu(>= 19.04)` 或 `Debian/Raspbian >= 10.0`， 请执行
+- Please make sure your system is one of `Deiban/Raspbian/Ubuntu/CentOS/MacOS`.
+- If your system is `Ubuntu(>= 19.04)` or `Debian/Raspbian >= 10.0`, please execute
 
 ```shell
 git checkout linux
 ```
 
-- 如果您的系统为 `Ubuntu(< 19.04)` 或 `Debian/Raspbian < 10.0` 或 `CentOS7/8`，请执行 
+- If your system is `Ubuntu(< 19.04)` or `Debian/Raspbian < 10.0` or `CentOS7/8`, please execute 
 
 ```shell
 git checkout linux-minimum
 ```
 
-- 如果您的系统为 `macOS` 请执行
+- If your system is `macOS` please execute
 
 ```shell
 git checkout mac-personal
 ```
 
-> 该项目具备自动检测操作系统的功能，如果分支不符合要求，**将会执行自动切换**
+> This project has the function of automatically detecting the operating system. If the branch does not meet the requirements, **automatic switching will be performed**
 
-### 2.2 安装过程
+### 2.2 Installation Process
 
-#### 2.2.1 `linux` 分支
+#### 2.2.1 `linux` Branch
 
-1. 拉取该项目
+1. Pull the project
 
 ```shell
 git clone https://github.com/Albert26193/lab-server-ops.git
@@ -125,7 +124,7 @@ git clone https://github.com/Albert26193/lab-server-ops.git
 git checkout linux
 ```
 
-2. 安装依赖
+2. Install dependencies
 
 ```shell
 # enter project
@@ -135,7 +134,7 @@ cd ./install
 sudo bash install_dependency.sh
 ```
 
-> 以下依赖将会被安装
+> The following dependencies will be installed
 
 ```shell
     local install=(
@@ -153,30 +152,30 @@ sudo bash install_dependency.sh
     )
 ```
 
-3. 安装项目
+3. Install the project
 
 ```shell
 sudo bash install.sh
 ```
 
-4. 添加管理员命令入口
+4. Add administrator command entry
 
-  > 请按照你的实际场景，将如下命令添加到你的 `.zshrc/.bashrc` 当中
+  > Please add the following command to your `.zshrc/.bashrc` according to your actual situation
 
 ```shell
 source "/opt/lab-server-ops/lso_admin/lso.sh"
 ```
 
-> 然后执行如下命令，重新加载配置文件
+> Then execute the following command to reload the configuration file
 
 ```shell
 source ~/.zshrc
 # or  source ~/.bashrc
 ```
 
-#### 2.2.2 `linux-minimum` 分支
+#### 2.2.2 `linux-minimum` Branch
 
-1. 拉取该项目
+1. Pull the project
 
 ```shell
 git clone https://github.com/Albert26193/lab-server-ops.git
@@ -185,7 +184,7 @@ git clone https://github.com/Albert26193/lab-server-ops.git
 git checkout linux-minimum
 ```
 
-2. 安装依赖
+2. Install dependencies
 
 ```shell
 # enter project
@@ -195,7 +194,7 @@ cd ./install
 sudo bash install_dependency.sh
 ```
 
-> 以下依赖将会被安装
+> The following dependencies will be installed
 
 ```shell
     local install=(
@@ -208,30 +207,30 @@ sudo bash install_dependency.sh
     )
 ```
 
-3.  安装项目
+3.  Install the project
 
 ```shell
 sudo bash install.sh
 ```
 
-4. 添加管理员命令入口
+4. Add administrator command entry
 
-  > 请按照你的实际场景，将如下命令添加到你的 `.zshrc/.bashrc` 当中
+  > Please add the following command to your `.zshrc/.bashrc` according to your actual situation
 
 ```shell
 source "/opt/lab-server-ops/lso_admin/lso.sh"
 ```
 
-> 然后执行如下命令，重新加载配置文件
+> Then execute the following command to reload the configuration file
 
 ```shell
 source ~/.zshrc
 # or  source ~/.bashrc
 ```
 
-#### 2.2.3`mac-personal` 分支
+#### 2.2.3`mac-personal` Branch
 
-1. 拉取该项目
+1. Pull the project
 
 ```shell
 git clone https://github.com/Albert26193/lab-server-ops.git
@@ -240,9 +239,9 @@ git clone https://github.com/Albert26193/lab-server-ops.git
 git checkout mac-personal
 ```
 
-2. 安装依赖
+2. Install dependencies
 
-- 🛑 你需要提前确保本地安装了 `brew`
+- 🛑 You need to ensure that `brew` is installed locally in advance
 
 ```shell
 # enter project
@@ -252,7 +251,7 @@ cd ./install
 bash install_dependency.sh
 ```
 
-> 以下依赖将会被安装
+> The following dependencies will be installed
 
 ```shell
     local install=(
@@ -270,41 +269,41 @@ bash install_dependency.sh
     )
 ```
 
-3. 安装项目
+3. Install the project
 
 ```shell
 bash install.sh
 ```
 
-## 3. 使用
+## 3. Usage
 
-###  3.1 对于 `Linux` 管理员
+###  3.1 For `Linux` Administrators
 
-  - 安装完毕后，你的 `.zshrc` 或 `.bashrc` 当中，应该已经添加了命令入口
+  - After the installation is complete, your `.zshrc` or `.bashrc` should have added the command entry
 
 ```shell
 source "/opt/lab-server-ops/lso_admin/lso.sh"
 ```
 
-- 然后，执行如下命令
+- Then, execute the following command
 
 ```shell
 lso_admin
 ```
 
-- 输出如下
+- The output is as follows
 
 ![image.png](https://img-20221128.oss-cn-shanghai.aliyuncs.com/img-2023-05/20240118165851.png)
 
-- 在交互式面板当中，你将有两个选项
-    1. 增加全新用户：`useradd`，输入 `1` 即可
-    2. 为已有用户添加 `zsh` 相关配置：`addzsh`，输入 `2` 即可
+- In the interactive panel, you will have two options
+    1. Add new users: `useradd`, enter `1` 
+    2. Add `zsh` related configuration for existing users: `addzsh`, enter `2`
 
-- 接着，你可以交互式地选择用户设置（分组、密钥、建立软链接等）🍺️
+- Then, you can interactively select user settings (grouping, key, creating symbolic links, etc.) 🍺️
 
-### 3.2 对于普通用户
+### 3.2 For Ordinary Users
 
-- 普通用户能够获取的命令可以在 `.zshrc` 当中查看
+- The commands that ordinary users can get can be viewed in `.zshrc`
 
 ```shell
 # ~/.zshrc
@@ -322,19 +321,19 @@ alias "pon"="lso_proxy_on"
 alias "poff"="lso_proxy_off"
 ```
 
-- `fs`：`fuzzy search` 模糊查找，接收两个参数，可以对目录进行模糊匹配，其配置请参考 `~/.lso.env`
-- `fj`：`fuzzy jump` 模糊跳转，接收两个参数，可以对目录进行模糊跳转，其配置请参考 `~/.lso.env`
-- `fe`： `fuzzy edit` 模糊编辑，接收两个参数，可以对目录进行模糊编辑，其配置请参考 `~/.lso.env`，编辑器默认为 `vim` ，你可以替换为其他编辑器。
-- `hh`：`fuzzy history` 模糊历史匹配，接收两个参数，可以对所有 `zsh` 的历史记录进行模糊查找和匹配。
-- `pon`： `proxy on`，可以将当前 `shell` 的流量进行转发， 接收两个参数，参数1 为 目标服务器IP地址，参数2 为目标服务器端口
-- `poff`: `proxy off`，关闭代理
+- `fs`: `fuzzy search` fuzzy search, accepts two parameters, can perform fuzzy matching on directories, its configuration please refer to `~/.lso.env`
+- `fj`: `fuzzy jump` fuzzy jump, accepts two parameters, can perform fuzzy jump on directories, its configuration please refer to `~/.lso.env`
+- `fe`: `fuzzy edit` fuzzy edit, accepts two parameters, can perform fuzzy edit on directories, its configuration please refer to `~/.lso.env`, the editor defaults to `vim`, you can replace it with other editors.
+- `hh`: `fuzzy history` fuzzy history match, accepts two parameters, can perform fuzzy search and match on all `zsh` history records.
+- `pon`: `proxy on`, can forward the current `shell` traffic, accepts two parameters, parameter 1 is the target server IP address, parameter 2 is the target server port
+- `poff`: `proxy off`, turn off proxy
 
-> 如果 `.zshrc` 当中没有相关命令，说明 `Linux` 版本不够，加载的是 `linux-minimum` 相关命令
+> If there are no related commands in `.zshrc`, it means that the `Linux` version is not enough, and the `linux-minimum` related commands are loaded
 
-## 4. 配置
+## 4. Configuration
 
-- 配置部分针对于 `.lso.env` 文件，这个文件控制了模糊调整和索引的范围，你可以自由添加 `ignore` 的目录和查询的范围目录。
-- 默认配置如下
+- The configuration part is for the `.lso.env` file, this file controls the range of fuzzy adjustment and indexing, you can freely add `ignore` directories and query range directories.
+- The default configuration is as follows
 
 ```shell
 #!/bin/bash
@@ -402,14 +401,11 @@ lso_search_ignore_dirs=(
 # if your machine is not powerful enough(RAM <= 1GiB), set it to false
 # otherwise, set it to true(Recommend)
 lso_search_preview=true
-#lso_search_preview=false
-
-lso_editor="vim"
-#lso_editor="nvim"
+#lso_search
 ```
 
-## 5. 开发计划
+## 5. Development Plan
 
-1. 增加命令审计功能
-2. 增加删除用户相关的管理员功能
-3. 增加网络、磁盘相关的管理员功能
+1. Add command audit function
+2. Add administrator functions related to deleting users
+3. Add administrator functions related to network and disk
