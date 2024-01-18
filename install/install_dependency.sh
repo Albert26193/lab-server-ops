@@ -60,7 +60,7 @@ function lso_install_dependency() {
 
     local to_install_list=()
     for package in "${all_install_list[@]}"; do
-        if ! command -v ${package}; then
+        if ! command -v ${package} &>/dev/null; then
             lso_print_red "[ X ]"
             lso_print_red "${package}"
             lso_print_white_line "is not installed"

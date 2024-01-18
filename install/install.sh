@@ -84,7 +84,7 @@ function install_lso {
 
     lso_print_green_line "LSO files are deployed to ${target_dir} sucessfully. Congratulations! 🍺️"
 
-    printf "---------------------------------------------\n"
+    echo "---------------------------------------------"
     lso_print_info_line "TIP: "
     lso_print_white_line "add below to your ~/.bashrc or ~/.zshrc:"
     lso_print_green_line "   source '"${target_dir}/lso_admin/lso.sh"'"
