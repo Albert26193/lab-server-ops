@@ -1,25 +1,25 @@
 
 # lab-server-ops 说明文档
 
-- [1.简介](#1-简介)
-	- [1.1 概览](#11-概览)
-	- [1.2 分支说明](#12-分支说明)
-	- [1.3 功能预览](#13-功能预览)
-		- [1.3.1 分发用户功能](#131-分发用户功能)
-		- [1.3.2 用户广播功能](#132-用户广播功能)
-		- [1.3.3 用户基本配置](#133-用户基本配置)
-		- [1.3.4 便捷性增强功能](#134-便捷性增强功能)
-- [2. 安装](#2-安装)
-	- [2.1 确认分支](#21-确认分支)
-	- [2.2 安装过程](#22-安装过程)
-		- [2.2.1 `linux` 分支](#221-linux-分支)
-		- [2.2.2 `linux-minimum` 分支](#222-linux-minimum-分支)
-		- [2.2.3`mac-personal` 分支](#223-mac-personal-分支)
-- [3. 使用](#3-使用)
-	- [3.1 对于 `Linux` 管理员](#31-对于-linux-管理员)
-	- [3.2 对于普通用户](#32-对于普通用户)
-- [4. 配置](#4-配置)
-- [5. 开发计划](#5-开发计划)
+- [1.简介](https://github.com/Albert26193/lab-server-ops#1-简介)
+	- [1.1 概览](https://github.com/Albert26193/lab-server-ops#11-概览)
+	- [1.2 分支说明](https://github.com/Albert26193/lab-server-ops#12-分支说明)
+	- [1.3 功能预览](https://github.com/Albert26193/lab-server-ops#13-功能预览)
+		- [1.3.1 分发用户功能](https://github.com/Albert26193/lab-server-ops#131-分发用户功能)
+		- [1.3.2 用户广播功能](https://github.com/Albert26193/lab-server-ops#132-用户广播功能)
+		- [1.3.3 用户基本配置](https://github.com/Albert26193/lab-server-ops#133-用户基本配置)
+		- [1.3.4 便捷性增强功能](https://github.com/Albert26193/lab-server-ops#134-便捷性增强功能)
+- [2. 安装](https://github.com/Albert26193/lab-server-ops#2-安装)
+	- [2.1 确认分支](https://github.com/Albert26193/lab-server-ops#21-确认分支)
+	- [2.2 安装过程](https://github.com/Albert26193/lab-server-ops#22-安装过程)
+		- [2.2.1 `linux` 分支](https://github.com/Albert26193/lab-server-ops#221-linux-分支)
+		- [2.2.2 `linux-minimum` 分支](https://github.com/Albert26193/lab-server-ops#222-linux-minimum-分支)
+		- [2.2.3`mac-personal` 分支](https://github.com/Albert26193/lab-server-ops#223-mac-personal-分支)
+- [3. 使用](https://github.com/Albert26193/lab-server-ops#3-使用)
+	- [3.1 对于 `Linux` 管理员](https://github.com/Albert26193/lab-server-ops#31-对于-linux-管理员)
+	- [3.2 对于普通用户](https://github.com/Albert26193/lab-server-ops#32-对于普通用户)
+- [4. 配置](https://github.com/Albert26193/lab-server-ops#4-配置)
+- [5. 开发计划](https://github.com/Albert26193/lab-server-ops#5-开发计划)
 
 ## 1.简介
 
@@ -129,7 +129,7 @@ git checkout linux
 
 ```shell
 # enter project
-cd lab-server-ops
+cd ./install
 
 # install dependency
 sudo bash install_dependency.sh
@@ -189,7 +189,7 @@ git checkout linux-minimum
 
 ```shell
 # enter project
-cd lab-server-ops
+cd ./install
 
 # install dependency
 sudo bash install_dependency.sh
@@ -246,7 +246,7 @@ git checkout mac-personal
 
 ```shell
 # enter project
-cd lab-server-ops
+cd ./install
 
 # install dependency
 bash install_dependency.sh
