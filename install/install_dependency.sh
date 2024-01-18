@@ -26,9 +26,16 @@ function lso_install_dependency() {
 
     # check branch rule
     if lso_branch_rule && lso_check_branch; then
-        lso_print_green_line "branch rule check success..."
+        lso_print_green_line "branch rule check success... "
     else
         lso_print_white_line "branch rule check failed, exit now..."
+        return 1
+    fi
+
+    local current_os="$(lso_check_os)"
+
+    if [[ ${current_os} == "macOS" ]]; then
+        lso_print_red_line "Redo: bash install/install.sh"
         return 1
     fi
 
@@ -49,7 +56,6 @@ function lso_install_dependency() {
         "nvim"
     )
 
-    local current_os="$(lso_check_os)"
     local all_install_list=()
 
     # TODO: add more os to test
