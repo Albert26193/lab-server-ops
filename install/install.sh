@@ -18,8 +18,8 @@ function install_lso {
     fi
 
     # Check if the script is executed as root
-    if [[ "$(id -u)" -ne 0 ]]; then
-        lso_print_error_line "Please run this script as root." >&2
+    if [[ "$(id -u)" -eq 0 ]]; then
+        lso_print_error_line "Don't run this script as root." >&2
         return 1
     fi
 
@@ -35,7 +35,7 @@ function install_lso {
 
     if [[ ! -d "${target_dir}" ]]; then
         lso_print_warning_line "${target_dir} not existed, create it"
-        bash -c "mkdir ${target_dir}"
+        sudo bash -c "mkdir ${target_dir}"
     fi
 
     if ! lso_yn_prompt "Do you want to copy ${LSO_COLOR_GREEN}${git_root}/lso (current dir)${LSO_COLOR_RESET} to ${LSO_COLOR_GREEN}${target_dir}(install dir)${LSO_COLOR_RESET} ?"; then
@@ -57,12 +57,12 @@ function install_lso {
             lso_print_white_line "Exit Now..."
             return 1
         fi
-        bash -c "rm -rf ${target_dir}/*"
+        sudo bash -c "rm -rf ${target_dir}/*"
         lso_print_green_line "${target_dir} is clear now."
     fi
 
-    bash -c "cp -r ${git_root}/lso/lso_user ${target_dir}"
-    bash -c "cp -r ${git_root}/lso/lso_utils ${target_dir}"
+    sudo bash -c "cp -r ${git_root}/lso/lso_user ${target_dir}"
+    sudo bash -c "cp -r ${git_root}/lso/lso_utils ${target_dir}"
 
     if [[ -d "${target_dir}/lso_user" ]] &&
         [[ -d "${target_dir}/lso_utils" ]]; then
@@ -81,6 +81,7 @@ function install_lso {
     else
         lso_print_white_line "copy ~/.lso.env"
         cp "${git_root}/lso/files_copy/.lso.env" "${HOME}/.lso.env"
+        chown "${USER}" "${HOME}/.lso.env"
     fi
 
     if cat "${HOME}/.zshrc" | grep -q "/opt/lab-server-ops/lso_user/lso.sh"; then
