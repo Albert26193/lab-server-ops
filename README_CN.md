@@ -21,6 +21,8 @@
 - [4. 配置](https://github.com/Albert26193/lab-server-ops#4-配置)
 - [5. 开发计划](https://github.com/Albert26193/lab-server-ops#5-开发计划)
 
+[en](https://github.com/Albert26193/lab-server-ops)
+
 ## 1.简介
 
 ### 1.1 概览

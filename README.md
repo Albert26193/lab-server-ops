@@ -20,6 +20,8 @@
 - [4. Configuration](https://github.com/Albert26193/lab-server-ops#4-configuration)
 - [5. Development Plan](https://github.com/Albert26193/lab-server-ops#5-development-plan)
 
+[中文](https://github.com/Albert26193/lab-server-ops#lab-server-ops-%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3)
+
 ## 1. Introduction
 
 ### 1.1 Overview
