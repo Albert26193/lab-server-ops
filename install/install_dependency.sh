@@ -41,6 +41,11 @@ function lso_install_dependency() {
     )
 
     local current_os="$(lso_check_os)"
+    if [[ ${current_os} == "macOS" ]]; then
+        lso_print_red_line "Redo: bash install/install.sh"
+        return 1
+    fi
+
     local all_install_list=()
 
     # TODO: add more os to test

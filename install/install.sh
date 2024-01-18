@@ -31,6 +31,12 @@ function install_lso {
         return 1
     fi
 
+    local current_os="$(lso_check_os)"
+    if [[ ${current_os} == "macOS" ]]; then
+        lso_print_red_line "Redo: bash install/install.sh"
+        return 1
+    fi
+
     local target_dir="/opt/lab-server-ops"
 
     if [[ ! -d "${target_dir}" ]]; then
