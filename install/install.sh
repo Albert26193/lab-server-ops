@@ -31,12 +31,6 @@ function install_lso {
         return 1
     fi
 
-    local current_os="$(lso_check_os)"
-    if [[ ${current_os} == "macOS" ]]; then
-        lso_print_red_line "Redo: bash install/install.sh"
-        return 1
-    fi
-
     local target_dir="/opt/lab-server-ops"
 
     if [[ ! -d "${target_dir}" ]]; then
@@ -67,10 +61,12 @@ function install_lso {
         lso_print_green_line "${target_dir} is clear now."
     fi
 
+    bash -c "cp -r ${git_root}/lso/lso_admin ${target_dir}"
     bash -c "cp -r ${git_root}/lso/lso_user ${target_dir}"
     bash -c "cp -r ${git_root}/lso/lso_utils ${target_dir}"
 
-    if [[ -d "${target_dir}/lso_user" ]] &&
+    if [[ -d "${target_dir}/lso_admin" ]] &&
+        [[ -d "${target_dir}/lso_user" ]] &&
         [[ -d "${target_dir}/lso_utils" ]]; then
         lso_print_white "copy successfully, ls -al"
         lso_print_info "${target_dir}"
@@ -82,43 +78,13 @@ function install_lso {
 
     lso_print_green_line "LSO files are deployed to ${target_dir} sucessfully. Congratulations! 🍺️"
 
-    if [[ -e "${HOME}/.lso.env" ]]; then
-        lso_print_white_line "already have ~/.lso.env"
-    else
-        lso_print_white_line "copy ~/.lso.env"
-        cp "${git_root}/lso/files_copy/.lso.env" "${HOME}/.lso.env"
-    fi
-
-    if cat "${HOME}/.zshrc" | grep -q "/opt/lab-server-ops/lso_user/lso.sh"; then
-        lso_print_white_line "already have lso script in ~/.zshrc"
-        return 0
-    fi
-
-    echo -e "---------------------------------------------\n"
+    printf "---------------------------------------------\n"
     lso_print_info_line "TIP: "
-    lso_print_white_line "have already added below to your ~/.bashrc or ~/.zshrc:"
-    lso_print_green_line "   source ${HOME}/.lso.env"
-    lso_print_green_line "   source '/opt/lab-server-ops/lso_user/lso.sh'"
-    lso_print_green_line "   alias "fs"="lso_fuzzy_search""
-    lso_print_green_line "   alias "fj"="lso_fuzzy_jump""
-    lso_print_green_line "   alias "fe"="lso_fuzzy_edit""
-    lso_print_green_line "   alias "hh"="lso_fuzzy_history""
-    lso_print_green_line "   alias "pon"="lso_proxy_on""
-    lso_print_green_line "   alias "poff"="lso_proxy_off""
-
-    echo '#------------------- lso -------------------
-source ${HOME}/.lso.env
-source "/opt/lab-server-ops/lso_user/lso.sh"
-
-alias "fs"="lso_fuzzy_search"
-alias "fj"="lso_fuzzy_jump"
-alias "fe"="lso_fuzzy_edit"
-alias "hh"="lso_fuzzy_history"
-alias "pon"="lso_proxy_on"
-alias "poff"="lso_proxy_off"
-#------------------- lso -------------------' >>"${HOME}/.zshrc"
-
-    lso_print_white_line "then, exec 'source ~/.zshrc'"
+    lso_print_white_line "add below to your ~/.bashrc or ~/.zshrc:"
+    lso_print_green_line "   source '"${target_dir}/lso_admin/lso.sh"'"
+    lso_print_white "then, use command: "
+    lso_print_cyan "lso_admin"
+    lso_print_white_line " to manage your server."
 
     return 0
 }
