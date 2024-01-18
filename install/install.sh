@@ -80,7 +80,6 @@ function install_lso {
         lso_print_white_line "already have ~/.lso.env"
     else
         lso_print_white_line "copy ~/.lso.env"
-        read any_key
         cp "${git_root}/lso/files_copy/.lso.env" "${HOME}/.lso.env"
     fi
 
