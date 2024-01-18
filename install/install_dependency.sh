@@ -51,7 +51,7 @@ function lso_install_dependency() {
     # TODO: add more os to test
     case "${current_os}" in
     "Debian" | "Ubuntu" | "Raspbian")
-        all_install_list=("${common_install[@]}" "${debian_family_install[@]}")
+        all_install_list=("${common_install[@]}")
         ;;
     *)
         all_install_list=("${common_install[@]}")
@@ -60,7 +60,7 @@ function lso_install_dependency() {
 
     local to_install_list=()
     for package in "${all_install_list[@]}"; do
-        if ! dpkg -l | grep -q "^ii[ ]* ${package}"; then
+        if ! command -v ${package}; then
             lso_print_red "[ X ]"
             lso_print_red "${package}"
             lso_print_white_line "is not installed"
